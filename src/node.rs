@@ -3,10 +3,8 @@ use crate::{
     node_values::NodeValues,
     nodes::{add_node::AddNode, constant_node::ConstantNode, subtract_node::SubtractNode},
 };
-use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Serialize, Deserialize)]
-#[serde(tag = "type")]
+#[derive(Debug)]
 pub(crate) enum Node {
     AddNode(AddNode),
     SubtractNode(SubtractNode),

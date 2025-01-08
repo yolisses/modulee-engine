@@ -1,13 +1,12 @@
 use crate::{node_trait::NodeTrait, node_values::NodeValues};
-use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug)]
 pub(crate) struct InputIds {
     pub(crate) input1: usize,
     pub(crate) input2: usize,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug)]
 pub(crate) struct SubtractNode {
     pub(crate) id: usize,
     pub(crate) input_ids: InputIds,

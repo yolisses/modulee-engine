@@ -10,16 +10,6 @@ impl Graph {
         Graph { nodes: Vec::new() }
     }
 
-    pub fn set_nodes(&mut self, nodes_data: JsValue) -> Result<(), Error> {
-        match serde_wasm_bindgen::from_value(nodes_data) {
-            Ok(nodes) => {
-                self.nodes = nodes;
-                Ok(())
-            }
-            Err(_) => Err(Error::new("Invalid nodes data".to_owned())),
-        }
-    }
-
     pub fn process(&mut self) -> f64 {
         let mut node_values = NodeValues::new();
         self.nodes.iter_mut().for_each(|node| {
