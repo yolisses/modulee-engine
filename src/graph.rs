@@ -10,6 +10,10 @@ impl Graph {
         Graph { nodes: Vec::new() }
     }
 
+    pub fn get_debug_value(&self) -> f64 {
+        42.
+    }
+
     pub fn process(&mut self) -> f64 {
         let mut node_values = NodeValues::new();
         self.nodes.iter_mut().for_each(|node| {
