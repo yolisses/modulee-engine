@@ -11,6 +11,7 @@ use crate::{
 #[derive(Debug)]
 pub struct Graph {
     nodes: Vec<Node>,
+    debug_string: String,
 }
 
 impl Graph {
@@ -23,15 +24,23 @@ impl Graph {
             Node::TriangleWaveNode(TriangleWaveNode::new(4, 3)),
             Node::OutputNode(OutputNode::new(5, 4)),
         ];
-        Graph { nodes: dev_nodes }
+        Graph {
+            nodes: dev_nodes,
+            debug_string: "test1".to_owned(),
+        }
     }
 
     pub fn get_debug_value(&self) -> f32 {
         42.
     }
 
-    pub fn set_debug_string(&self, value: &str) {
-        print!("Received string: {}", value);
+    pub fn get_debug_string(&self) -> String {
+        self.debug_string.clone()
+    }
+
+    pub fn set_debug_string(&mut self, value: &str) {
+        println!("Received string: {}", value);
+        self.debug_string = value.to_owned();
     }
 
     pub fn get_output_value(&self) -> f32 {
