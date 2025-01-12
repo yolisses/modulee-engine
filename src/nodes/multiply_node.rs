@@ -22,7 +22,7 @@ impl MultiplyNode {
 }
 
 impl NodeTrait for MultiplyNode {
-    fn process(&mut self, node_values: &NodeValues) -> f64 {
+    fn process(&mut self, node_values: &NodeValues) -> f32 {
         let input1 = node_values.get(&self.input_ids.input1).unwrap();
         let input2 = node_values.get(&self.input_ids.input2).unwrap();
         input1 * input2

@@ -2,7 +2,7 @@ use crate::{node_trait::NodeTrait, node_values::NodeValues};
 
 #[derive(Debug)]
 pub(crate) struct Extras {
-    pub(crate) value: f64,
+    pub(crate) value: f32,
 }
 
 #[derive(Debug)]
@@ -12,7 +12,7 @@ pub(crate) struct ConstantNode {
 }
 
 impl ConstantNode {
-    pub(crate) fn new(id: usize, value: f64) -> Self {
+    pub(crate) fn new(id: usize, value: f32) -> Self {
         Self {
             id,
             extras: Extras { value },
@@ -21,7 +21,7 @@ impl ConstantNode {
 }
 
 impl NodeTrait for ConstantNode {
-    fn process(&mut self, _node_values: &NodeValues) -> f64 {
+    fn process(&mut self, _node_values: &NodeValues) -> f32 {
         self.extras.value
     }
 

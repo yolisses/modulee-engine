@@ -6,7 +6,7 @@ pub(crate) struct InputIds {}
 /// Returns the current time in seconds
 #[derive(Debug)]
 pub(crate) struct TimeNode {
-    value: f64,
+    value: f32,
     pub(crate) id: usize,
     pub(crate) input_ids: InputIds,
 }
@@ -22,7 +22,7 @@ impl TimeNode {
 }
 
 impl NodeTrait for TimeNode {
-    fn process(&mut self, _node_values: &NodeValues) -> f64 {
+    fn process(&mut self, _node_values: &NodeValues) -> f32 {
         self.value += 1. / SAMPLE_RATE;
         self.value
     }
