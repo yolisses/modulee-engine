@@ -14,15 +14,21 @@ impl Graph {
         42.
     }
 
-    pub fn process(&mut self) -> f64 {
+    pub fn get_output_value(&self) -> f64 {
+        for node in &self.nodes {
+            match node {
+                Node::OutputNode(output_node) => return output_node.get_value(),
+                _ => (),
+            }
+        }
+        0.
+    }
+
+    pub fn process(&mut self) {
         let mut node_values = NodeValues::new();
         self.nodes.iter_mut().for_each(|node| {
             let output = node.process(&node_values);
             node_values.insert(node.get_id(), output);
         });
-
-        // TODO remove this hard coded value by a OutputNode last value
-        let output_node_id = 3;
-        node_values[&output_node_id]
     }
 }

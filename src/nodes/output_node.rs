@@ -13,6 +13,12 @@ pub(crate) struct OutputNode {
     pub(crate) input_ids: InputIds,
 }
 
+impl OutputNode {
+    pub(crate) fn get_value(&self) -> f64 {
+        self.value
+    }
+}
+
 impl NodeTrait for OutputNode {
     fn process(&mut self, node_values: &NodeValues) -> f64 {
         let input = node_values.get(&self.input_ids.input).unwrap();
