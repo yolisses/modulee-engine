@@ -6,3 +6,4 @@ pub(crate) mod output_node;
 pub(crate) mod phase_node;
 pub(crate) mod subtract_node;
 pub(crate) mod time_node;
+pub(crate) mod triangle_wave_node;
