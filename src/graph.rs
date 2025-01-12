@@ -30,6 +30,10 @@ impl Graph {
         42.
     }
 
+    pub fn set_debug_string(&self, value: &str) {
+        print!("Received string: {}", value);
+    }
+
     pub fn get_output_value(&self) -> f32 {
         for node in &self.nodes {
             match node {
