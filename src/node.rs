@@ -4,7 +4,7 @@ use crate::{
     nodes::{
         add_node::AddNode, constant_node::ConstantNode, divide_node::DivideNode,
         multiply_node::MultiplyNode, output_node::OutputNode, phase_node::PhaseNode,
-        subtract_node::SubtractNode, time_node::TimeNode,
+        subtract_node::SubtractNode, time_node::TimeNode, triangle_wave_node::TriangleWaveNode,
     },
 };
 
@@ -18,6 +18,7 @@ pub(crate) enum Node {
     SubtractNode(SubtractNode),
     ConstantNode(ConstantNode),
     MultiplyNode(MultiplyNode),
+    TriangleWaveNode(TriangleWaveNode),
 }
 
 impl NodeTrait for Node {
@@ -31,6 +32,7 @@ impl NodeTrait for Node {
             Node::SubtractNode(subtract_node) => subtract_node.process(node_values),
             Node::ConstantNode(constant_node) => constant_node.process(node_values),
             Node::MultiplyNode(multiply_node) => multiply_node.process(node_values),
+            Node::TriangleWaveNode(triangle_wave_node) => triangle_wave_node.process(node_values),
         }
     }
 
@@ -44,6 +46,7 @@ impl NodeTrait for Node {
             Node::SubtractNode(subtract_node) => subtract_node.get_id(),
             Node::ConstantNode(constant_node) => constant_node.get_id(),
             Node::MultiplyNode(multiply_node) => multiply_node.get_id(),
+            Node::TriangleWaveNode(triangle_wave_node) => triangle_wave_node.get_id(),
         }
     }
 }
