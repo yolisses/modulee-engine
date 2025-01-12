@@ -3,8 +3,8 @@ use crate::{
     node_values::NodeValues,
     nodes::{
         add_node::AddNode, constant_node::ConstantNode, divide_node::DivideNode,
-        multiply_node::MultiplyNode, output_node::OutputNode, subtract_node::SubtractNode,
-        time_node::TimeNode,
+        multiply_node::MultiplyNode, output_node::OutputNode, phase_node::PhaseNode,
+        subtract_node::SubtractNode, time_node::TimeNode,
     },
 };
 
@@ -12,6 +12,7 @@ use crate::{
 pub(crate) enum Node {
     AddNode(AddNode),
     TimeNode(TimeNode),
+    PhaseNode(PhaseNode),
     DivideNode(DivideNode),
     OutputNode(OutputNode),
     SubtractNode(SubtractNode),
@@ -24,6 +25,7 @@ impl NodeTrait for Node {
         match self {
             Node::AddNode(add_node) => add_node.process(node_values),
             Node::TimeNode(time_node) => time_node.process(node_values),
+            Node::PhaseNode(phase_node) => phase_node.process(node_values),
             Node::OutputNode(output_node) => output_node.process(node_values),
             Node::DivideNode(divide_node) => divide_node.process(node_values),
             Node::SubtractNode(subtract_node) => subtract_node.process(node_values),
@@ -36,6 +38,7 @@ impl NodeTrait for Node {
         match self {
             Node::AddNode(add_node) => add_node.get_id(),
             Node::TimeNode(time_node) => time_node.get_id(),
+            Node::PhaseNode(phase_node) => phase_node.get_id(),
             Node::OutputNode(output_node) => output_node.get_id(),
             Node::DivideNode(divide_node) => divide_node.get_id(),
             Node::SubtractNode(subtract_node) => subtract_node.get_id(),
