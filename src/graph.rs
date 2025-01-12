@@ -9,7 +9,10 @@ pub struct Graph {
 
 impl Graph {
     pub fn new() -> Self {
-        let dev_nodes: Vec<Node> = vec![Node::TimeNode(TimeNode::new(1))];
+        let dev_nodes: Vec<Node> = vec![
+            //
+            Node::TimeNode(TimeNode::new(1)),
+        ];
         Graph { nodes: dev_nodes }
     }
 
