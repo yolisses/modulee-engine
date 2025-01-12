@@ -45,4 +45,11 @@ impl Graph {
             node_values.insert(node.get_id(), output);
         });
     }
+
+    pub fn process_block(&mut self, buffer: &mut [f64], length: usize) {
+        for index in 0..length {
+            self.process();
+            buffer[index] = self.get_output_value();
+        }
+    }
 }
