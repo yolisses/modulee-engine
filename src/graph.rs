@@ -25,11 +25,11 @@ impl Graph {
         Graph { nodes: dev_nodes }
     }
 
-    pub fn get_debug_value(&self) -> f64 {
+    pub fn get_debug_value(&self) -> f32 {
         42.
     }
 
-    pub fn get_output_value(&self) -> f64 {
+    pub fn get_output_value(&self) -> f32 {
         for node in &self.nodes {
             match node {
                 Node::OutputNode(output_node) => return output_node.get_value(),
@@ -47,7 +47,7 @@ impl Graph {
         });
     }
 
-    pub fn process_block(&mut self, buffer: &mut [f64], length: usize) {
+    pub fn process_block(&mut self, buffer: &mut [f32], length: usize) {
         for index in 0..length {
             self.process();
             buffer[index] = self.get_output_value();

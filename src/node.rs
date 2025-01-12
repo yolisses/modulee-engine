@@ -21,7 +21,7 @@ pub(crate) enum Node {
 }
 
 impl NodeTrait for Node {
-    fn process(&mut self, node_values: &NodeValues) -> f64 {
+    fn process(&mut self, node_values: &NodeValues) -> f32 {
         match self {
             Node::AddNode(add_node) => add_node.process(node_values),
             Node::TimeNode(time_node) => time_node.process(node_values),

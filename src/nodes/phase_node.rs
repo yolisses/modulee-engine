@@ -24,7 +24,7 @@ impl PhaseNode {
 }
 
 impl NodeTrait for PhaseNode {
-    fn process(&mut self, node_values: &NodeValues) -> f64 {
+    fn process(&mut self, node_values: &NodeValues) -> f32 {
         let time = node_values.get(&self.input_ids.time).unwrap();
         let frequency = node_values.get(&self.input_ids.frequency).unwrap();
 
