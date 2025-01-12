@@ -3,7 +3,7 @@ use crate::{
     node_trait::NodeTrait,
     node_values::NodeValues,
     nodes::{
-        constant_node::ConstantNode, multiply_node::MultiplyNode, phase_node::PhaseNode,
+        constant_node::ConstantNode, output_node::OutputNode, phase_node::PhaseNode,
         time_node::TimeNode,
     },
 };
@@ -20,6 +20,7 @@ impl Graph {
             Node::TimeNode(TimeNode::new(1)),
             Node::ConstantNode(ConstantNode::new(2, 440.)),
             Node::PhaseNode(PhaseNode::new(3, 1, 2)),
+            Node::OutputNode(OutputNode::new(4, 3)),
         ];
         Graph { nodes: dev_nodes }
     }

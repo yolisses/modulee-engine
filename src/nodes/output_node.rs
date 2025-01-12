@@ -14,6 +14,14 @@ pub(crate) struct OutputNode {
 }
 
 impl OutputNode {
+    pub(crate) fn new(id: usize, input: usize) -> Self {
+        Self {
+            id,
+            value: 0.,
+            input_ids: InputIds { input },
+        }
+    }
+
     pub(crate) fn get_value(&self) -> f64 {
         self.value
     }
