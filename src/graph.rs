@@ -1,5 +1,11 @@
 use crate::{
-    node::Node, node_trait::NodeTrait, node_values::NodeValues, nodes::time_node::TimeNode,
+    node::Node,
+    node_trait::NodeTrait,
+    node_values::NodeValues,
+    nodes::{
+        constant_node::ConstantNode, multiply_node::MultiplyNode, phase_node::PhaseNode,
+        time_node::TimeNode,
+    },
 };
 
 #[derive(Debug)]
@@ -12,6 +18,8 @@ impl Graph {
         let dev_nodes: Vec<Node> = vec![
             //
             Node::TimeNode(TimeNode::new(1)),
+            Node::ConstantNode(ConstantNode::new(2, 440.)),
+            Node::PhaseNode(PhaseNode::new(3, 1, 2)),
         ];
         Graph { nodes: dev_nodes }
     }
