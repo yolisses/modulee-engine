@@ -1,4 +1,6 @@
-use crate::{node::Node, node_trait::NodeTrait, node_values::NodeValues};
+use crate::{
+    node::Node, node_trait::NodeTrait, node_values::NodeValues, nodes::time_node::TimeNode,
+};
 
 #[derive(Debug)]
 pub struct Graph {
@@ -7,7 +9,8 @@ pub struct Graph {
 
 impl Graph {
     pub fn new() -> Self {
-        Graph { nodes: Vec::new() }
+        let dev_nodes: Vec<Node> = vec![Node::TimeNode(TimeNode::new(1))];
+        Graph { nodes: dev_nodes }
     }
 
     pub fn get_debug_value(&self) -> f64 {
