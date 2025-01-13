@@ -7,6 +7,7 @@ use crate::{
         time_node::TimeNode, triangle_wave_node::TriangleWaveNode,
     },
 };
+use serde_json::Result;
 
 #[derive(Debug)]
 pub struct Graph {
@@ -28,6 +29,12 @@ impl Graph {
             nodes: dev_nodes,
             debug_string: "test1".to_owned(),
         }
+    }
+
+    pub fn set_nodes_from_json(&mut self, nodes_json: &str) -> Result<()> {
+        self.nodes = serde_json::from_str(nodes_json)?;
+        println!("Nodes: {:?}", self.nodes);
+        Ok(())
     }
 
     pub fn get_debug_value(&self) -> f32 {

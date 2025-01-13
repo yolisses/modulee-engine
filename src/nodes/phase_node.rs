@@ -1,6 +1,7 @@
 use crate::{node_trait::NodeTrait, node_values::NodeValues};
+use serde::Deserialize;
 
-#[derive(Debug)]
+#[derive(Debug, Deserialize)]
 pub(crate) struct InputIds {
     pub(crate) time: usize,
     pub(crate) frequency: usize,
@@ -8,7 +9,7 @@ pub(crate) struct InputIds {
 
 /// Returns the phase value between 0 and 1
 /// given a time and a frequency
-#[derive(Debug)]
+#[derive(Debug, Deserialize)]
 pub(crate) struct PhaseNode {
     pub(crate) id: usize,
     pub(crate) input_ids: InputIds,

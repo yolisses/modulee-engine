@@ -1,12 +1,13 @@
 use crate::{node_trait::NodeTrait, node_values::NodeValues};
+use serde::Deserialize;
 
-#[derive(Debug)]
+#[derive(Debug, Deserialize)]
 pub(crate) struct InputIds {
     pub(crate) input: usize,
 }
 
 /// Saves the input value in a accessible way
-#[derive(Debug)]
+#[derive(Debug, Deserialize)]
 pub(crate) struct OutputNode {
     value: f32,
     pub(crate) id: usize,

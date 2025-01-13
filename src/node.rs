@@ -7,8 +7,10 @@ use crate::{
         subtract_node::SubtractNode, time_node::TimeNode, triangle_wave_node::TriangleWaveNode,
     },
 };
+use serde::Deserialize;
 
-#[derive(Debug)]
+#[derive(Debug, Deserialize)]
+#[serde(tag = "type")]
 pub(crate) enum Node {
     AddNode(AddNode),
     TimeNode(TimeNode),

@@ -1,10 +1,11 @@
 use crate::{node_trait::NodeTrait, node_values::NodeValues, sample_rate::SAMPLE_RATE};
+use serde::Deserialize;
 
-#[derive(Debug)]
+#[derive(Debug, Deserialize)]
 pub(crate) struct InputIds {}
 
 /// Returns the current time in seconds
-#[derive(Debug)]
+#[derive(Debug, Deserialize)]
 pub(crate) struct TimeNode {
     value: f32,
     pub(crate) id: usize,
