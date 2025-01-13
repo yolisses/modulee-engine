@@ -1,11 +1,12 @@
 use crate::{node_trait::NodeTrait, node_values::NodeValues};
+use serde::Deserialize;
 
-#[derive(Debug)]
+#[derive(Debug, Deserialize)]
 pub(crate) struct Extras {
     pub(crate) value: f32,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Deserialize)]
 pub(crate) struct ConstantNode {
     pub(crate) id: usize,
     pub(crate) extras: Extras,
