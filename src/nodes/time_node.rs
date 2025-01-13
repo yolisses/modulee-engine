@@ -7,6 +7,7 @@ pub(crate) struct InputIds {}
 /// Returns the current time in seconds
 #[derive(Debug, Deserialize)]
 pub(crate) struct TimeNode {
+    #[serde(skip)]
     value: f32,
     pub(crate) id: usize,
     pub(crate) input_ids: InputIds,
