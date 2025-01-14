@@ -1,13 +1,12 @@
-use super::inputs_mapping::InputsMapping;
-use std::collections::HashMap;
+use super::{inputs_mapping::InputsMapping, shifts::Shifts};
 
-type Shifts = HashMap<usize, usize>;
-
-fn update_shifts(
+// Check optimization of preventing recalculations when reusing the counter to
+// multiple calls
+pub(crate) fn update_shifts(
     node_id: usize,
     shifts: &mut Shifts,
     counter: &mut usize,
-    inputs_mapping: &mut InputsMapping,
+    inputs_mapping: &InputsMapping,
 ) {
     *counter += 1;
     shifts.insert(node_id, *counter);
@@ -31,25 +30,25 @@ mod tests {
     fn test_update_shifts_without_inputs() {
         let node_id = 1;
         let mut counter = 0;
-        let mut shifts: Shifts = HashMap::new();
-        let mut inputs_mapping: InputsMapping =
-            HashMap::from([(1, vec![]), (2, vec![3]), (3, vec![])]);
+        let mut shifts: Shifts = Shifts::new();
+        let inputs_mapping: InputsMapping =
+            InputsMapping::from([(1, vec![]), (2, vec![3]), (3, vec![])]);
 
-        update_shifts(node_id, &mut shifts, &mut counter, &mut inputs_mapping);
+        update_shifts(node_id, &mut shifts, &mut counter, &inputs_mapping);
 
         /*
         1 -> 1
         */
 
-        assert_eq!(shifts, HashMap::from([(1, 1)]))
+        assert_eq!(shifts, Shifts::from([(1, 1)]))
     }
 
     #[test]
     fn test_update_shifts_directly() {
         let node_id = 1;
         let mut counter = 0;
-        let mut shifts: Shifts = HashMap::new();
-        let mut inputs_mapping: InputsMapping = HashMap::from([
+        let mut shifts: Shifts = Shifts::new();
+        let inputs_mapping: InputsMapping = InputsMapping::from([
             (1, vec![2, 3]),
             (2, vec![5]),
             (3, vec![]),
@@ -57,7 +56,7 @@ mod tests {
             (5, vec![]),
         ]);
 
-        update_shifts(node_id, &mut shifts, &mut counter, &mut inputs_mapping);
+        update_shifts(node_id, &mut shifts, &mut counter, &inputs_mapping);
 
         /*
         1 -> 1
@@ -66,15 +65,15 @@ mod tests {
             3 -> 4
         */
 
-        assert_eq!(shifts, HashMap::from([(1, 1), (2, 2), (5, 3), (3, 4),]))
+        assert_eq!(shifts, Shifts::from([(1, 1), (2, 2), (5, 3), (3, 4),]))
     }
 
     #[test]
     fn test_update_shifts_with_recalculation() {
         let node_id = 1;
         let mut counter = 0;
-        let mut shifts: Shifts = HashMap::new();
-        let mut inputs_mapping: InputsMapping = HashMap::from([
+        let mut shifts: Shifts = Shifts::new();
+        let inputs_mapping: InputsMapping = InputsMapping::from([
             (1, vec![2, 3]),
             (2, vec![5]),
             (3, vec![5]),
@@ -82,7 +81,7 @@ mod tests {
             (5, vec![]),
         ]);
 
-        update_shifts(node_id, &mut shifts, &mut counter, &mut inputs_mapping);
+        update_shifts(node_id, &mut shifts, &mut counter, &inputs_mapping);
 
         /*
         1 -> 1
@@ -92,15 +91,15 @@ mod tests {
                 5 -> 5
         */
 
-        assert_eq!(shifts, HashMap::from([(1, 1), (2, 2), (3, 4), (5, 5),]))
+        assert_eq!(shifts, Shifts::from([(1, 1), (2, 2), (3, 4), (5, 5),]))
     }
 
     #[test]
     fn test_update_shifts_with_long_sequence() {
         let node_id = 3;
         let mut counter = 0;
-        let mut shifts: Shifts = HashMap::new();
-        let mut inputs_mapping: InputsMapping = HashMap::from([
+        let mut shifts: Shifts = Shifts::new();
+        let inputs_mapping: InputsMapping = InputsMapping::from([
             (2, vec![]),
             (3, vec![4, 7]),
             (7, vec![1, 6]),
@@ -110,7 +109,7 @@ mod tests {
             (4, vec![5, 2]),
         ]);
 
-        update_shifts(node_id, &mut shifts, &mut counter, &mut inputs_mapping);
+        update_shifts(node_id, &mut shifts, &mut counter, &inputs_mapping);
 
         /*
         3 -> 1
@@ -126,7 +125,7 @@ mod tests {
 
         assert_eq!(
             shifts,
-            HashMap::from([(3, 1), (4, 2), (5, 3), (7, 5), (1, 6), (6, 7), (2, 8),])
+            Shifts::from([(3, 1), (4, 2), (5, 3), (7, 5), (1, 6), (6, 7), (2, 8),])
         )
     }
 }
