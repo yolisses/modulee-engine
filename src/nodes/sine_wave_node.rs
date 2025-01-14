@@ -30,4 +30,8 @@ impl NodeTrait for SineWaveNode {
     fn get_id(&self) -> usize {
         self.id
     }
+
+    fn get_input_ids(&self) -> Vec<usize> {
+        vec![self.input_ids.phase]
+    }
 }
