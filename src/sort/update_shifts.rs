@@ -11,8 +11,14 @@ fn update_shifts(
 ) {
     *counter += 1;
     shifts.insert(node_id, *counter);
+    let current_counter = *counter;
     let input_ids = inputs_mapping[&node_id].clone();
     for input_id in input_ids {
+        if let Some(shift) = shifts.get(&input_id) {
+            if *shift > current_counter {
+                return;
+            }
+        }
         update_shifts(input_id, shifts, counter, inputs_mapping);
     }
 }
@@ -111,16 +117,16 @@ mod tests {
             4 -> 2
                 5 -> 3
                     2 -> 4
-                2 -> 5
-            7 -> 6
-                1 -> 7
-                6 -> 8
-                    2 -> 9
+                2
+            7 -> 5
+                1 -> 6
+                6 -> 7
+                    2 -> 8
         */
 
         assert_eq!(
             shifts,
-            HashMap::from([(3, 1), (4, 2), (5, 3), (7, 6), (1, 7), (6, 8), (2, 9),])
+            HashMap::from([(3, 1), (4, 2), (5, 3), (7, 5), (1, 6), (6, 7), (2, 8),])
         )
     }
 }
