@@ -55,4 +55,19 @@ impl NodeTrait for Node {
             Node::TriangleWaveNode(triangle_wave_node) => triangle_wave_node.get_id(),
         }
     }
+
+    fn get_input_ids(&self) -> Vec<usize> {
+        match self {
+            Node::AddNode(add_node) => add_node.get_input_ids(),
+            Node::TimeNode(time_node) => time_node.get_input_ids(),
+            Node::PhaseNode(phase_node) => phase_node.get_input_ids(),
+            Node::DivideNode(divide_node) => divide_node.get_input_ids(),
+            Node::OutputNode(output_node) => output_node.get_input_ids(),
+            Node::SubtractNode(subtract_node) => subtract_node.get_input_ids(),
+            Node::ConstantNode(constant_node) => constant_node.get_input_ids(),
+            Node::MultiplyNode(multiply_node) => multiply_node.get_input_ids(),
+            Node::SineWaveNode(sine_wave_node) => sine_wave_node.get_input_ids(),
+            Node::TriangleWaveNode(triangle_wave_node) => triangle_wave_node.get_input_ids(),
+        }
+    }
 }

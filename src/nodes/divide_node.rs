@@ -23,4 +23,8 @@ impl NodeTrait for DivideNode {
     fn get_id(&self) -> usize {
         self.id
     }
+
+    fn get_input_ids(&self) -> Vec<usize> {
+        vec![self.input_ids.input1, self.input_ids.input2]
+    }
 }

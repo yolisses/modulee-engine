@@ -32,4 +32,8 @@ impl NodeTrait for TimeNode {
     fn get_id(&self) -> usize {
         self.id
     }
+
+    fn get_input_ids(&self) -> Vec<usize> {
+        vec![]
+    }
 }
