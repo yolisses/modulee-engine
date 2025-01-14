@@ -1,4 +1,4 @@
-use crate::{node_trait::NodeTrait, node_values::NodeValues};
+use crate::{node_trait::NodeTrait, node_values::NodeValues, sort::has_id::HasId};
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
@@ -20,11 +20,13 @@ impl NodeTrait for DivideNode {
         input1 / input2
     }
 
-    fn get_id(&self) -> usize {
-        self.id
-    }
-
     fn get_input_ids(&self) -> Vec<usize> {
         vec![self.input_ids.input1, self.input_ids.input2]
+    }
+}
+
+impl HasId for DivideNode {
+    fn get_id(&self) -> usize {
+        self.id
     }
 }

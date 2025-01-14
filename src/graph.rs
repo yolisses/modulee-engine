@@ -6,6 +6,7 @@ use crate::{
         constant_node::ConstantNode, output_node::OutputNode, phase_node::PhaseNode,
         time_node::TimeNode, triangle_wave_node::TriangleWaveNode,
     },
+    sort::has_id::HasId,
 };
 use serde_json::Result;
 

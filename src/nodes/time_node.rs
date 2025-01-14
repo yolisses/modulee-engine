@@ -1,4 +1,6 @@
-use crate::{node_trait::NodeTrait, node_values::NodeValues, sample_rate::SAMPLE_RATE};
+use crate::{
+    node_trait::NodeTrait, node_values::NodeValues, sample_rate::SAMPLE_RATE, sort::has_id::HasId,
+};
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
@@ -29,11 +31,13 @@ impl NodeTrait for TimeNode {
         self.value
     }
 
-    fn get_id(&self) -> usize {
-        self.id
-    }
-
     fn get_input_ids(&self) -> Vec<usize> {
         vec![]
+    }
+}
+
+impl HasId for TimeNode {
+    fn get_id(&self) -> usize {
+        self.id
     }
 }
