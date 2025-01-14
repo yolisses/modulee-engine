@@ -1,24 +1,19 @@
 use super::{inputs_mapping::InputsMapping, shifts::Shifts};
 
-// Check optimization of preventing recalculations when reusing the counter to
-// multiple calls
 pub(crate) fn update_shifts(
     node_id: usize,
     shifts: &mut Shifts,
     counter: &mut usize,
     inputs_mapping: &InputsMapping,
 ) {
-    *counter += 1;
-    shifts.insert(node_id, *counter);
-    let current_counter = *counter;
     let input_ids = inputs_mapping[&node_id].clone();
     for input_id in input_ids {
-        if let Some(shift) = shifts.get(&input_id) {
-            if *shift > current_counter {
-                return;
-            }
-        }
         update_shifts(input_id, shifts, counter, inputs_mapping);
+    }
+
+    if !shifts.contains_key(&node_id) {
+        *counter += 1;
+        shifts.insert(node_id, *counter);
     }
 }
 
@@ -59,13 +54,13 @@ mod tests {
         update_shifts(node_id, &mut shifts, &mut counter, &inputs_mapping);
 
         /*
-        1 -> 1
+        1 -> 4
             2 -> 2
-                5 -> 3
-            3 -> 4
+                5 -> 1
+            3 -> 3
         */
 
-        assert_eq!(shifts, Shifts::from([(1, 1), (2, 2), (5, 3), (3, 4),]))
+        assert_eq!(shifts, Shifts::from([(1, 4), (2, 2), (5, 1), (3, 3),]))
     }
 
     #[test]
@@ -84,14 +79,14 @@ mod tests {
         update_shifts(node_id, &mut shifts, &mut counter, &inputs_mapping);
 
         /*
-        1 -> 1
+        1 -> 4
             2 -> 2
-                5 -> 3
-            3 -> 4
-                5 -> 5
+                5 -> 1
+            3 -> 3
+                5
         */
 
-        assert_eq!(shifts, Shifts::from([(1, 1), (2, 2), (3, 4), (5, 5),]))
+        assert_eq!(shifts, Shifts::from([(5, 1), (2, 2), (3, 3), (1, 4),]))
     }
 
     #[test]
@@ -112,20 +107,20 @@ mod tests {
         update_shifts(node_id, &mut shifts, &mut counter, &inputs_mapping);
 
         /*
-        3 -> 1
-            4 -> 2
-                5 -> 3
-                    2 -> 4
+        3 -> 7
+            4 -> 3
+                5 -> 2
+                    2 -> 1
                 2
-            7 -> 5
-                1 -> 6
-                6 -> 7
-                    2 -> 8
+            7 -> 6
+                1 -> 4
+                6 -> 5
+                    2
         */
 
         assert_eq!(
             shifts,
-            Shifts::from([(3, 1), (4, 2), (5, 3), (7, 5), (1, 6), (6, 7), (2, 8),])
+            Shifts::from([(2, 1), (5, 2), (4, 3), (1, 4), (6, 5), (7, 6), (3, 7),])
         )
     }
 }
