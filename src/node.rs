@@ -7,6 +7,7 @@ use crate::{
         sine_wave_node::SineWaveNode, subtract_node::SubtractNode, time_node::TimeNode,
         triangle_wave_node::TriangleWaveNode,
     },
+    sort::has_id::HasId,
 };
 use serde::Deserialize;
 
@@ -41,21 +42,6 @@ impl NodeTrait for Node {
         }
     }
 
-    fn get_id(&self) -> usize {
-        match self {
-            Node::AddNode(add_node) => add_node.get_id(),
-            Node::TimeNode(time_node) => time_node.get_id(),
-            Node::PhaseNode(phase_node) => phase_node.get_id(),
-            Node::OutputNode(output_node) => output_node.get_id(),
-            Node::DivideNode(divide_node) => divide_node.get_id(),
-            Node::SubtractNode(subtract_node) => subtract_node.get_id(),
-            Node::ConstantNode(constant_node) => constant_node.get_id(),
-            Node::MultiplyNode(multiply_node) => multiply_node.get_id(),
-            Node::SineWaveNode(sine_wave_node) => sine_wave_node.get_id(),
-            Node::TriangleWaveNode(triangle_wave_node) => triangle_wave_node.get_id(),
-        }
-    }
-
     fn get_input_ids(&self) -> Vec<usize> {
         match self {
             Node::AddNode(add_node) => add_node.get_input_ids(),
@@ -68,6 +54,23 @@ impl NodeTrait for Node {
             Node::MultiplyNode(multiply_node) => multiply_node.get_input_ids(),
             Node::SineWaveNode(sine_wave_node) => sine_wave_node.get_input_ids(),
             Node::TriangleWaveNode(triangle_wave_node) => triangle_wave_node.get_input_ids(),
+        }
+    }
+}
+
+impl HasId for Node {
+    fn get_id(&self) -> usize {
+        match self {
+            Node::AddNode(add_node) => add_node.get_id(),
+            Node::TimeNode(time_node) => time_node.get_id(),
+            Node::PhaseNode(phase_node) => phase_node.get_id(),
+            Node::OutputNode(output_node) => output_node.get_id(),
+            Node::DivideNode(divide_node) => divide_node.get_id(),
+            Node::SubtractNode(subtract_node) => subtract_node.get_id(),
+            Node::ConstantNode(constant_node) => constant_node.get_id(),
+            Node::MultiplyNode(multiply_node) => multiply_node.get_id(),
+            Node::SineWaveNode(sine_wave_node) => sine_wave_node.get_id(),
+            Node::TriangleWaveNode(triangle_wave_node) => triangle_wave_node.get_id(),
         }
     }
 }

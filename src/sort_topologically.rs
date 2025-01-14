@@ -27,13 +27,15 @@ fn update_shifts(
     counter
 }
 
-pub(crate) fn sort_topologically(nodes: &Vec<Node>) -> &Vec<Node> {
+pub(crate) fn sort_topologically(nodes: Vec<Node>) -> Vec<Node> {
+    let node_ids: Vec<usize> = nodes.into_iter().map(|node| node.get_id()).collect();
+
     let nodes_by_id = get_nodes_by_id(nodes);
     let mut shifts: HashMap<usize, usize> = HashMap::new();
 
     let mut counter = 0;
-    for node in nodes {
-        counter = update_shifts(&mut shifts, &nodes_by_id, node.get_id(), counter)
+    for node_id in node_ids {
+        counter = update_shifts(&mut shifts, &nodes_by_id, node_id, counter)
     }
 
     // Return nodes sorted by shift

@@ -1,4 +1,4 @@
-use crate::{node_trait::NodeTrait, node_values::NodeValues};
+use crate::{node_trait::NodeTrait, node_values::NodeValues, sort::has_id::HasId};
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
@@ -27,11 +27,13 @@ impl NodeTrait for SineWaveNode {
         (phase * 2.0 * std::f32::consts::PI).sin()
     }
 
-    fn get_id(&self) -> usize {
-        self.id
-    }
-
     fn get_input_ids(&self) -> Vec<usize> {
         vec![self.input_ids.phase]
+    }
+}
+
+impl HasId for SineWaveNode {
+    fn get_id(&self) -> usize {
+        self.id
     }
 }

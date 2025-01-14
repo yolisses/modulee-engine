@@ -1,4 +1,4 @@
-use crate::{node_trait::NodeTrait, node_values::NodeValues};
+use crate::{node_trait::NodeTrait, node_values::NodeValues, sort::has_id::HasId};
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
@@ -33,11 +33,13 @@ impl NodeTrait for PhaseNode {
         product - product.floor()
     }
 
-    fn get_id(&self) -> usize {
-        self.id
-    }
-
     fn get_input_ids(&self) -> Vec<usize> {
         vec![self.input_ids.time, self.input_ids.frequency]
+    }
+}
+
+impl HasId for PhaseNode {
+    fn get_id(&self) -> usize {
+        self.id
     }
 }

@@ -1,4 +1,4 @@
-use crate::{node_trait::NodeTrait, node_values::NodeValues};
+use crate::{node_trait::NodeTrait, node_values::NodeValues, sort::has_id::HasId};
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
@@ -26,11 +26,13 @@ impl NodeTrait for ConstantNode {
         self.extras.value
     }
 
-    fn get_id(&self) -> usize {
-        self.id
-    }
-
     fn get_input_ids(&self) -> Vec<usize> {
         vec![]
+    }
+}
+
+impl HasId for ConstantNode {
+    fn get_id(&self) -> usize {
+        self.id
     }
 }
