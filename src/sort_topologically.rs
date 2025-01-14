@@ -1,3 +1,55 @@
-use crate::node::Node;
+use crate::{
+    get_nodes_by_id::get_nodes_by_id,
+    node::{self, Node},
+    node_trait::NodeTrait,
+    nodes_by_id::NodesById,
+};
+use std::collections::HashMap;
 
-pub(crate) fn sort_topologically(nodes: Vec<Node>) {}
+type Shifts = HashMap<usize, usize>;
+
+fn update_shifts(
+    shifts: &mut Shifts,
+    nodes_by_id: &NodesById,
+    node_id: usize,
+    counter: usize,
+) -> usize {
+    let mut counter = counter + 1;
+    shifts.insert(node_id, counter);
+    match nodes_by_id.get(&node_id) {
+        Some(node) => {
+            for input_node_id in node.get_input_ids() {
+                counter = update_shifts(shifts, nodes_by_id, input_node_id, counter)
+            }
+        }
+        None => panic!("Node not found with id {}", node_id),
+    }
+    counter
+}
+
+pub(crate) fn sort_topologically(nodes: &Vec<Node>) -> &Vec<Node> {
+    let nodes_by_id = get_nodes_by_id(nodes);
+    let mut shifts: HashMap<usize, usize> = HashMap::new();
+
+    let mut counter = 0;
+    for node in nodes {
+        counter = update_shifts(&mut shifts, &nodes_by_id, node.get_id(), counter)
+    }
+
+    // Return nodes sorted by shift
+    nodes
+}
+
+#[cfg(test)]
+mod tests {
+    // Note this useful idiom: importing names from outer (for mod tests) scope.
+    use super::*;
+
+    #[test]
+    fn test_update_shifts() {
+        let mut shifts: Shifts = HashMap::new();
+        shifts.insert(1, 1);
+        shifts.insert(2, 2);
+        shifts.insert(3, 3);
+    }
+}
