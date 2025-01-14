@@ -1,5 +1,4 @@
 pub mod graph;
-mod my_trait;
 mod node;
 mod node_trait;
 mod node_values;
