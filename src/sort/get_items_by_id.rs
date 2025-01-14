@@ -11,10 +11,8 @@ pub(crate) fn get_items_by_id<T: HasId>(nodes: Vec<T>) -> ItemsById<T> {
 
 #[cfg(test)]
 mod tests {
-    use crate::sort::has_id::HasId;
-
-    // Note this useful idiom: importing names from outer (for mod tests) scope.
     use super::*;
+    use crate::sort::has_id::HasId;
 
     #[derive(Debug, PartialEq)]
     struct MockItem {

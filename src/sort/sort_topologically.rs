@@ -1,16 +1,11 @@
-use crate::{
-    get_nodes_by_id::get_nodes_by_id,
-    node::{self, Node},
-    node_trait::NodeTrait,
-    nodes_by_id::NodesById,
-};
+use super::{get_items_by_id::get_items_by_id, has_id::HasId, items_by_id::ItemsById};
+use crate::{node::Node, node_trait::NodeTrait};
 use std::collections::HashMap;
-
 type Shifts = HashMap<usize, usize>;
 
 fn update_shifts(
     shifts: &mut Shifts,
-    nodes_by_id: &NodesById,
+    nodes_by_id: &ItemsById<Node>,
     node_id: usize,
     counter: usize,
 ) -> usize {
@@ -27,24 +22,23 @@ fn update_shifts(
     counter
 }
 
-pub(crate) fn sort_topologically(nodes: Vec<Node>) -> Vec<Node> {
-    let node_ids: Vec<usize> = nodes.into_iter().map(|node| node.get_id()).collect();
+// pub(crate) fn sort_topologically(nodes: Vec<Node>) -> Vec<Node> {
+//     let node_ids: Vec<usize> = nodes.into_iter().map(|node| node.get_id()).collect();
 
-    let nodes_by_id = get_nodes_by_id(nodes);
-    let mut shifts: HashMap<usize, usize> = HashMap::new();
+//     let nodes_by_id = get_items_by_id(nodes);
+//     let mut shifts: HashMap<usize, usize> = HashMap::new();
 
-    let mut counter = 0;
-    for node_id in node_ids {
-        counter = update_shifts(&mut shifts, &nodes_by_id, node_id, counter)
-    }
+//     let mut counter = 0;
+//     for node_id in node_ids {
+//         counter = update_shifts(&mut shifts, &nodes_by_id, node_id, counter)
+//     }
 
-    // Return nodes sorted by shift
-    nodes
-}
+//     // Return nodes sorted by shift
+//     nodes
+// }
 
 #[cfg(test)]
 mod tests {
-    // Note this useful idiom: importing names from outer (for mod tests) scope.
     use super::*;
 
     #[test]
