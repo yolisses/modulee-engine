@@ -6,15 +6,17 @@ pub(crate) fn update_shifts(
     counter: &mut usize,
     inputs_mapping: &InputsMapping,
 ) {
+    if shifts.contains_key(&node_id) {
+        return;
+    }
+
     let input_ids = inputs_mapping[&node_id].clone();
     for input_id in input_ids {
         update_shifts(input_id, shifts, counter, inputs_mapping);
     }
 
-    if !shifts.contains_key(&node_id) {
-        *counter += 1;
-        shifts.insert(node_id, *counter);
-    }
+    *counter += 1;
+    shifts.insert(node_id, *counter);
 }
 
 #[cfg(test)]
