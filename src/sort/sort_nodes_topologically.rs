@@ -32,8 +32,8 @@ mod tests {
             vec![
                 Node::ConstantNode(ConstantNode::new(0, 0.0)),
                 Node::ConstantNode(ConstantNode::new(795039224, 42.0)),
-                Node::OutputNode(OutputNode::new(805174500, 904106764)),
                 Node::AddNode(AddNode::new(904106764, 0, 0)),
+                Node::OutputNode(OutputNode::new(805174500, 904106764)),
             ]
         );
     }
