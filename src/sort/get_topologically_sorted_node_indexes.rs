@@ -1,6 +1,6 @@
 use super::{inputs_mapping::InputsMapping, shifts::Shifts, update_shifts::update_shifts};
 
-pub(crate) fn get_topologically_sorted_ids(inputs_mapping: &InputsMapping) -> Vec<usize> {
+pub(crate) fn get_topologically_sorted_node_indexes(inputs_mapping: &InputsMapping) -> Shifts {
     let mut counter = 0;
     let mut shifts: Shifts = Shifts::new();
 
@@ -12,9 +12,7 @@ pub(crate) fn get_topologically_sorted_ids(inputs_mapping: &InputsMapping) -> Ve
         update_shifts(node_id, &mut shifts, &mut counter, &inputs_mapping);
     }
 
-    let mut sorted_ids: Vec<_> = shifts.keys().cloned().collect();
-    sorted_ids.sort_by_key(|id| shifts[id]);
-    sorted_ids
+    shifts
 }
 
 #[cfg(test)]
@@ -22,10 +20,10 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_get_topologically_sorted_ids_without_inputs() {
+    fn test_get_topologically_sorted_node_indexes_without_inputs() {
         let inputs_mapping: InputsMapping =
             InputsMapping::from([(1, vec![]), (2, vec![3]), (3, vec![])]);
-        let topologically_sorted_ids = get_topologically_sorted_ids(&inputs_mapping);
+        let topologically_sorted_ids = get_topologically_sorted_node_indexes(&inputs_mapping);
 
         println!("{:?}", inputs_mapping);
 
@@ -36,11 +34,14 @@ mod tests {
         3
         */
 
-        assert_eq!(topologically_sorted_ids, vec![1, 3, 2]);
+        assert_eq!(
+            topologically_sorted_ids,
+            Shifts::from([(1, 1), (3, 2), (2, 3)])
+        );
     }
 
     #[test]
-    fn test_get_topologically_sorted_ids_directly() {
+    fn test_get_topologically_sorted_node_indexes_directly() {
         let inputs_mapping: InputsMapping = InputsMapping::from([
             (1, vec![2, 3]),
             (2, vec![5]),
@@ -49,7 +50,7 @@ mod tests {
             (5, vec![]),
         ]);
 
-        let topologically_sorted_ids = get_topologically_sorted_ids(&inputs_mapping);
+        let topologically_sorted_ids = get_topologically_sorted_node_indexes(&inputs_mapping);
 
         /*
         1 -> 4
@@ -62,11 +63,14 @@ mod tests {
         5
         */
 
-        assert_eq!(topologically_sorted_ids, vec![5, 2, 3, 1, 4]);
+        assert_eq!(
+            topologically_sorted_ids,
+            Shifts::from([(5, 1), (2, 2), (3, 3), (1, 4), (4, 5)])
+        );
     }
 
     #[test]
-    fn test_get_topologically_sorted_ids_with_recalculation() {
+    fn test_get_topologically_sorted_node_indexes_with_recalculation() {
         let inputs_mapping: InputsMapping = InputsMapping::from([
             (1, vec![2, 3]),
             (2, vec![5]),
@@ -75,7 +79,7 @@ mod tests {
             (5, vec![]),
         ]);
 
-        let topologically_sorted_ids = get_topologically_sorted_ids(&inputs_mapping);
+        let topologically_sorted_ids = get_topologically_sorted_node_indexes(&inputs_mapping);
 
         /*
         1 -> 4
@@ -89,11 +93,14 @@ mod tests {
         5
         */
 
-        assert_eq!(topologically_sorted_ids, vec![5, 2, 3, 1, 4]);
+        assert_eq!(
+            topologically_sorted_ids,
+            Shifts::from([(5, 1), (2, 2), (3, 3), (1, 4), (4, 5)])
+        );
     }
 
     #[test]
-    fn test_get_topologically_sorted_ids_with_long_sequence() {
+    fn test_get_topologically_sorted_node_indexes_with_long_sequence() {
         let inputs_mapping: InputsMapping = InputsMapping::from([
             (2, vec![]),
             (3, vec![4, 7]),
@@ -104,7 +111,7 @@ mod tests {
             (4, vec![5, 2]),
         ]);
 
-        let topologically_sorted_ids = get_topologically_sorted_ids(&inputs_mapping);
+        let topologically_sorted_ids = get_topologically_sorted_node_indexes(&inputs_mapping);
 
         /*
         1 -> 1
@@ -124,6 +131,9 @@ mod tests {
         7
         */
 
-        assert_eq!(topologically_sorted_ids, vec![1, 2, 5, 4, 6, 7, 3]);
+        assert_eq!(
+            topologically_sorted_ids,
+            Shifts::from([(1, 1), (2, 2), (5, 3), (4, 4), (6, 5), (7, 6), (3, 7)])
+        );
     }
 }
