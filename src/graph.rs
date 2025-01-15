@@ -6,7 +6,7 @@ use crate::{
         constant_node::ConstantNode, output_node::OutputNode, phase_node::PhaseNode,
         time_node::TimeNode, triangle_wave_node::TriangleWaveNode,
     },
-    sort::has_id::HasId,
+    sort::{has_id::HasId, sort_nodes_topologically::sort_nodes_topologically},
 };
 use serde_json::Result;
 
@@ -34,6 +34,7 @@ impl Graph {
 
     pub fn set_nodes_from_json(&mut self, nodes_json: &str) -> Result<()> {
         self.nodes = serde_json::from_str(nodes_json)?;
+        sort_nodes_topologically(&mut self.nodes);
         println!("Nodes: {:?}", self.nodes);
         Ok(())
     }
