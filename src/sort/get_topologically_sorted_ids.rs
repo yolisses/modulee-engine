@@ -8,12 +8,10 @@ pub(crate) fn get_topologically_sorted_ids(inputs_mapping: &InputsMapping) -> Ve
     // keys order
     let mut node_ids: Vec<_> = inputs_mapping.keys().cloned().collect();
     node_ids.sort();
-    println!("{:?}", node_ids);
     for node_id in node_ids {
         update_shifts(node_id, &mut shifts, &mut counter, &inputs_mapping);
     }
 
-    println!("{:?}", shifts);
     let mut sorted_ids: Vec<_> = shifts.keys().cloned().collect();
     sorted_ids.sort_by_key(|id| shifts[id]);
     sorted_ids
@@ -32,13 +30,13 @@ mod tests {
         println!("{:?}", inputs_mapping);
 
         /*
-        1
-        2
-            3
+        1 -> 1
+        2 -> 3
+            3 -> 2
         3
         */
 
-        assert_eq!(topologically_sorted_ids, vec![1, 2, 3]);
+        assert_eq!(topologically_sorted_ids, vec![1, 3, 2]);
     }
 
     #[test]
@@ -54,14 +52,17 @@ mod tests {
         let topologically_sorted_ids = get_topologically_sorted_ids(&inputs_mapping);
 
         /*
-        1
-            2
-                5
-            3
-        4
+        1 -> 4
+            2 -> 2
+                5 -> 1
+            3 -> 3
+        2
+        3
+        4 -> 5
+        5
         */
 
-        assert_eq!(topologically_sorted_ids, vec![1, 2, 5, 3, 4]);
+        assert_eq!(topologically_sorted_ids, vec![5, 2, 3, 1, 4]);
     }
 
     #[test]
@@ -77,14 +78,18 @@ mod tests {
         let topologically_sorted_ids = get_topologically_sorted_ids(&inputs_mapping);
 
         /*
-        1 -> 1
+        1 -> 4
             2 -> 2
-                5 -> 3
-            3 -> 4
-                5 -> 5
+                5 -> 1
+            3 -> 3
+                5
+        2
+        3
+        4 -> 5
+        5
         */
 
-        assert_eq!(topologically_sorted_ids, vec![1, 2, 3, 5]);
+        assert_eq!(topologically_sorted_ids, vec![5, 2, 3, 1, 4]);
     }
 
     #[test]
@@ -102,17 +107,23 @@ mod tests {
         let topologically_sorted_ids = get_topologically_sorted_ids(&inputs_mapping);
 
         /*
-        3 -> 1
-            4 -> 2
+        1 -> 1
+        2 -> 2
+        3 -> 7
+            4 -> 4
                 5 -> 3
-                    2 -> 4
+                    2
                 2
-            7 -> 5
-                1 -> 6
-                6 -> 7
-                    2 -> 8
+            7 -> 6
+                1
+                6 -> 5
+                    2
+        4
+        5
+        6
+        7
         */
 
-        assert_eq!(topologically_sorted_ids, vec![3, 4, 5, 7, 1, 6, 2]);
+        assert_eq!(topologically_sorted_ids, vec![1, 2, 5, 4, 6, 7, 3]);
     }
 }
