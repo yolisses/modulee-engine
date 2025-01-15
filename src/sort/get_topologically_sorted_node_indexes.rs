@@ -136,4 +136,26 @@ mod tests {
             Shifts::from([(1, 1), (2, 2), (5, 3), (4, 4), (6, 5), (7, 6), (3, 7)])
         );
     }
+
+    #[test]
+    fn test_get_topologically_sorted_node_test5() {
+        let inputs_mapping: InputsMapping =
+            InputsMapping::from([(0, vec![]), (7, vec![]), (8, vec![9]), (9, vec![0, 0])]);
+
+        let topologically_sorted_ids = get_topologically_sorted_node_indexes(&inputs_mapping);
+
+        /*
+        0 -> 1
+        7 -> 2
+        8 -> 4
+            9 -> 3
+                0
+                0
+        */
+
+        assert_eq!(
+            topologically_sorted_ids,
+            Shifts::from([(0, 1), (7, 2), (9, 3), (8, 4)])
+        );
+    }
 }
