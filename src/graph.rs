@@ -1,11 +1,8 @@
 use crate::{
+    dev_nodes::get_dev_nodes,
     node::Node,
     node_trait::NodeTrait,
     node_values::NodeValues,
-    nodes::{
-        constant_node::ConstantNode, output_node::OutputNode, phase_node::PhaseNode,
-        time_node::TimeNode, triangle_wave_node::TriangleWaveNode,
-    },
     sort::{has_id::HasId, sort_nodes_topologically::sort_nodes_topologically},
 };
 use serde_json::Result;
@@ -18,16 +15,8 @@ pub struct Graph {
 
 impl Graph {
     pub fn new() -> Self {
-        let dev_nodes: Vec<Node> = vec![
-            //
-            Node::TimeNode(TimeNode::new(1)),
-            Node::ConstantNode(ConstantNode::new(2, 440.)),
-            Node::PhaseNode(PhaseNode::new(3, 1, 2)),
-            Node::TriangleWaveNode(TriangleWaveNode::new(4, 3)),
-            Node::OutputNode(OutputNode::new(5, 4)),
-        ];
         Graph {
-            nodes: dev_nodes,
+            nodes: get_dev_nodes(),
             debug_string: "test1".to_owned(),
         }
     }
