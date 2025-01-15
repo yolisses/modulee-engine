@@ -3,11 +3,11 @@ use crate::{
 };
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, PartialEq, Deserialize)]
 pub(crate) struct InputIds {}
 
 /// Returns the current time in seconds
-#[derive(Debug, Deserialize)]
+#[derive(Debug, PartialEq, Deserialize)]
 pub(crate) struct TimeNode {
     #[serde(skip)]
     value: f32,

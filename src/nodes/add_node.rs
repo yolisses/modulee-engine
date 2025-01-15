@@ -2,16 +2,25 @@ use crate::sort::has_id::HasId;
 use crate::{node_trait::NodeTrait, node_values::NodeValues};
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, PartialEq, Deserialize)]
 pub(crate) struct InputIds {
     pub(crate) input1: usize,
     pub(crate) input2: usize,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, PartialEq, Deserialize)]
 pub(crate) struct AddNode {
     pub(crate) id: usize,
     pub(crate) input_ids: InputIds,
+}
+
+impl AddNode {
+    pub(crate) fn new(id: usize, input1: usize, input2: usize) -> Self {
+        Self {
+            id,
+            input_ids: InputIds { input1, input2 },
+        }
+    }
 }
 
 impl NodeTrait for AddNode {
