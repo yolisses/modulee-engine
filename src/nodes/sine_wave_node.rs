@@ -1,12 +1,12 @@
 use crate::{node_trait::NodeTrait, node_values::NodeValues, sort::has_id::HasId};
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, PartialEq, Deserialize)]
 pub(crate) struct InputIds {
     pub(crate) phase: usize,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, PartialEq, Deserialize)]
 pub(crate) struct SineWaveNode {
     pub(crate) id: usize,
     pub(crate) input_ids: InputIds,
