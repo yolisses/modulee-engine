@@ -1,5 +1,4 @@
 use crate::{
-    dev_nodes::get_dev_nodes,
     node::Node,
     node_trait::NodeTrait,
     node_values::NodeValues,
@@ -16,7 +15,7 @@ pub struct Graph {
 impl Graph {
     pub fn new() -> Self {
         Graph {
-            nodes: get_dev_nodes(),
+            nodes: vec![],
             debug_string: "test1".to_owned(),
         }
     }
