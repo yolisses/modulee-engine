@@ -2,6 +2,7 @@ use crate::{
     node::Node,
     node_trait::NodeTrait,
     node_values::NodeValues,
+    nodes::pitch_node::{self, PitchNode},
     sort::{has_id::HasId, sort_nodes_topologically::sort_nodes_topologically},
 };
 use serde_json::Result;
@@ -21,6 +22,15 @@ impl Graph {
         sort_nodes_topologically(&mut self.nodes);
         println!("Nodes: {:?}", self.nodes);
         Ok(())
+    }
+
+    /// This is for development. It will be replaced by set_note_on
+    pub fn set_pitch(&mut self, pitch: f32) {
+        for node in &mut self.nodes {
+            if let Node::PitchNode(pitch_node) = node {
+                pitch_node.set_pitch(pitch);
+            }
+        }
     }
 
     pub fn get_output_value(&self) -> f32 {
