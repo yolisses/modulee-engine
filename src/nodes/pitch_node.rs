@@ -3,7 +3,7 @@ use serde::Deserialize;
 
 #[derive(Debug, PartialEq, Deserialize)]
 pub(crate) struct Extras {
-    pub(crate) pitch: f32,
+    pitch: f32,
 }
 
 #[derive(Debug, PartialEq, Deserialize)]

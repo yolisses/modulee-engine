@@ -4,14 +4,14 @@ use serde::Deserialize;
 
 #[derive(Debug, PartialEq, Deserialize)]
 pub(crate) struct InputIds {
-    pub(crate) input1: usize,
-    pub(crate) input2: usize,
+    input1: usize,
+    input2: usize,
 }
 
 #[derive(Debug, PartialEq, Deserialize)]
 pub(crate) struct AddNode {
-    pub(crate) id: usize,
-    pub(crate) input_ids: InputIds,
+    id: usize,
+    input_ids: InputIds,
 }
 
 impl AddNode {
