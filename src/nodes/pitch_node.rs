@@ -8,8 +8,8 @@ pub(crate) struct Extras {
 
 #[derive(Debug, PartialEq, Deserialize)]
 pub(crate) struct PitchNode {
-    pub(crate) id: usize,
-    pub(crate) extras: Extras,
+    id: usize,
+    extras: Extras,
 }
 
 impl PitchNode {
@@ -18,6 +18,10 @@ impl PitchNode {
             id,
             extras: Extras { pitch },
         }
+    }
+
+    pub(crate) fn set_pitch(&mut self, pitch: f32) {
+        self.extras.pitch = pitch;
     }
 }
 
