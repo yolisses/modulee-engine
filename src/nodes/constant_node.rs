@@ -3,13 +3,13 @@ use serde::Deserialize;
 
 #[derive(Debug, PartialEq, Deserialize)]
 pub(crate) struct Extras {
-    pub(crate) value: f32,
+    value: f32,
 }
 
 #[derive(Debug, PartialEq, Deserialize)]
 pub(crate) struct ConstantNode {
-    pub(crate) id: usize,
-    pub(crate) extras: Extras,
+    id: usize,
+    extras: Extras,
 }
 
 impl ConstantNode {

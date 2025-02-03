@@ -11,8 +11,8 @@ pub(crate) struct InputIds {}
 pub(crate) struct TimeNode {
     #[serde(skip)]
     value: f32,
-    pub(crate) id: usize,
-    pub(crate) input_ids: InputIds,
+    id: usize,
+    input_ids: InputIds,
 }
 
 impl TimeNode {

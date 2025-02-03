@@ -3,13 +3,13 @@ use serde::Deserialize;
 
 #[derive(Debug, PartialEq, Deserialize)]
 pub(crate) struct InputIds {
-    pub(crate) phase: usize,
+    phase: usize,
 }
 
 #[derive(Debug, PartialEq, Deserialize)]
 pub(crate) struct TriangleWaveNode {
-    pub(crate) id: usize,
-    pub(crate) input_ids: InputIds,
+    id: usize,
+    input_ids: InputIds,
 }
 
 impl TriangleWaveNode {

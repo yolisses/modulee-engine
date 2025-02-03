@@ -3,7 +3,7 @@ use serde::Deserialize;
 
 #[derive(Debug, PartialEq, Deserialize)]
 pub(crate) struct InputIds {
-    pub(crate) input: usize,
+    input: usize,
 }
 
 /// Saves the input value in a accessible way
@@ -11,8 +11,8 @@ pub(crate) struct InputIds {
 pub(crate) struct OutputNode {
     #[serde(skip)]
     value: f32,
-    pub(crate) id: usize,
-    pub(crate) input_ids: InputIds,
+    id: usize,
+    input_ids: InputIds,
 }
 
 impl OutputNode {
