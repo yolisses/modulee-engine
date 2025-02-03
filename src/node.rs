@@ -3,9 +3,9 @@ use crate::{
     node_values::NodeValues,
     nodes::{
         add_node::AddNode, constant_node::ConstantNode, divide_node::DivideNode,
-        multiply_node::MultiplyNode, output_node::OutputNode, phase_node::PhaseNode,
-        pitch_node::PitchNode, sine_wave_node::SineWaveNode, subtract_node::SubtractNode,
-        time_node::TimeNode, triangle_wave_node::TriangleWaveNode,
+        frequency_node::FrequencyNode, multiply_node::MultiplyNode, output_node::OutputNode,
+        phase_node::PhaseNode, pitch_node::PitchNode, sine_wave_node::SineWaveNode,
+        subtract_node::SubtractNode, time_node::TimeNode, triangle_wave_node::TriangleWaveNode,
     },
     sort::has_id::HasId,
 };
@@ -24,8 +24,11 @@ pub(crate) enum Node {
     ConstantNode(ConstantNode),
     MultiplyNode(MultiplyNode),
     SineWaveNode(SineWaveNode),
+    FrequencyNode(FrequencyNode),
     TriangleWaveNode(TriangleWaveNode),
 }
+
+// TODO create a macro to reduce the code duplication
 
 impl NodeTrait for Node {
     fn process(&mut self, node_values: &NodeValues) -> f32 {
@@ -40,6 +43,7 @@ impl NodeTrait for Node {
             Node::ConstantNode(node) => node.process(node_values),
             Node::MultiplyNode(node) => node.process(node_values),
             Node::SineWaveNode(node) => node.process(node_values),
+            Node::FrequencyNode(node) => node.process(node_values),
             Node::TriangleWaveNode(node) => node.process(node_values),
         }
     }
@@ -56,6 +60,7 @@ impl NodeTrait for Node {
             Node::ConstantNode(node) => node.get_input_ids(),
             Node::MultiplyNode(node) => node.get_input_ids(),
             Node::SineWaveNode(node) => node.get_input_ids(),
+            Node::FrequencyNode(node) => node.get_input_ids(),
             Node::TriangleWaveNode(node) => node.get_input_ids(),
         }
     }
@@ -74,6 +79,7 @@ impl HasId for Node {
             Node::ConstantNode(node) => node.get_id(),
             Node::MultiplyNode(node) => node.get_id(),
             Node::SineWaveNode(node) => node.get_id(),
+            Node::FrequencyNode(node) => node.get_id(),
             Node::TriangleWaveNode(node) => node.get_id(),
         }
     }
