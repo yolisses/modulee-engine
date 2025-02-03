@@ -4,8 +4,8 @@ use crate::{
     nodes::{
         add_node::AddNode, constant_node::ConstantNode, divide_node::DivideNode,
         multiply_node::MultiplyNode, output_node::OutputNode, phase_node::PhaseNode,
-        sine_wave_node::SineWaveNode, subtract_node::SubtractNode, time_node::TimeNode,
-        triangle_wave_node::TriangleWaveNode,
+        pitch_node::PitchNode, sine_wave_node::SineWaveNode, subtract_node::SubtractNode,
+        time_node::TimeNode, triangle_wave_node::TriangleWaveNode,
     },
     sort::has_id::HasId,
 };
@@ -17,6 +17,7 @@ pub(crate) enum Node {
     AddNode(AddNode),
     TimeNode(TimeNode),
     PhaseNode(PhaseNode),
+    PitchNode(PitchNode),
     DivideNode(DivideNode),
     OutputNode(OutputNode),
     SubtractNode(SubtractNode),
@@ -29,31 +30,33 @@ pub(crate) enum Node {
 impl NodeTrait for Node {
     fn process(&mut self, node_values: &NodeValues) -> f32 {
         match self {
-            Node::AddNode(add_node) => add_node.process(node_values),
-            Node::TimeNode(time_node) => time_node.process(node_values),
-            Node::PhaseNode(phase_node) => phase_node.process(node_values),
-            Node::OutputNode(output_node) => output_node.process(node_values),
-            Node::DivideNode(divide_node) => divide_node.process(node_values),
-            Node::SubtractNode(subtract_node) => subtract_node.process(node_values),
-            Node::ConstantNode(constant_node) => constant_node.process(node_values),
-            Node::MultiplyNode(multiply_node) => multiply_node.process(node_values),
-            Node::SineWaveNode(sine_wave_node) => sine_wave_node.process(node_values),
-            Node::TriangleWaveNode(triangle_wave_node) => triangle_wave_node.process(node_values),
+            Node::AddNode(node) => node.process(node_values),
+            Node::TimeNode(node) => node.process(node_values),
+            Node::PhaseNode(node) => node.process(node_values),
+            Node::PitchNode(node) => node.process(node_values),
+            Node::OutputNode(node) => node.process(node_values),
+            Node::DivideNode(node) => node.process(node_values),
+            Node::SubtractNode(node) => node.process(node_values),
+            Node::ConstantNode(node) => node.process(node_values),
+            Node::MultiplyNode(node) => node.process(node_values),
+            Node::SineWaveNode(node) => node.process(node_values),
+            Node::TriangleWaveNode(node) => node.process(node_values),
         }
     }
 
     fn get_input_ids(&self) -> Vec<usize> {
         match self {
-            Node::AddNode(add_node) => add_node.get_input_ids(),
-            Node::TimeNode(time_node) => time_node.get_input_ids(),
-            Node::PhaseNode(phase_node) => phase_node.get_input_ids(),
-            Node::DivideNode(divide_node) => divide_node.get_input_ids(),
-            Node::OutputNode(output_node) => output_node.get_input_ids(),
-            Node::SubtractNode(subtract_node) => subtract_node.get_input_ids(),
-            Node::ConstantNode(constant_node) => constant_node.get_input_ids(),
-            Node::MultiplyNode(multiply_node) => multiply_node.get_input_ids(),
-            Node::SineWaveNode(sine_wave_node) => sine_wave_node.get_input_ids(),
-            Node::TriangleWaveNode(triangle_wave_node) => triangle_wave_node.get_input_ids(),
+            Node::AddNode(node) => node.get_input_ids(),
+            Node::TimeNode(node) => node.get_input_ids(),
+            Node::PhaseNode(node) => node.get_input_ids(),
+            Node::PitchNode(node) => node.get_input_ids(),
+            Node::DivideNode(node) => node.get_input_ids(),
+            Node::OutputNode(node) => node.get_input_ids(),
+            Node::SubtractNode(node) => node.get_input_ids(),
+            Node::ConstantNode(node) => node.get_input_ids(),
+            Node::MultiplyNode(node) => node.get_input_ids(),
+            Node::SineWaveNode(node) => node.get_input_ids(),
+            Node::TriangleWaveNode(node) => node.get_input_ids(),
         }
     }
 }
@@ -61,16 +64,17 @@ impl NodeTrait for Node {
 impl HasId for Node {
     fn get_id(&self) -> usize {
         match self {
-            Node::AddNode(add_node) => add_node.get_id(),
-            Node::TimeNode(time_node) => time_node.get_id(),
-            Node::PhaseNode(phase_node) => phase_node.get_id(),
-            Node::OutputNode(output_node) => output_node.get_id(),
-            Node::DivideNode(divide_node) => divide_node.get_id(),
-            Node::SubtractNode(subtract_node) => subtract_node.get_id(),
-            Node::ConstantNode(constant_node) => constant_node.get_id(),
-            Node::MultiplyNode(multiply_node) => multiply_node.get_id(),
-            Node::SineWaveNode(sine_wave_node) => sine_wave_node.get_id(),
-            Node::TriangleWaveNode(triangle_wave_node) => triangle_wave_node.get_id(),
+            Node::AddNode(node) => node.get_id(),
+            Node::TimeNode(node) => node.get_id(),
+            Node::PhaseNode(node) => node.get_id(),
+            Node::PitchNode(node) => node.get_id(),
+            Node::OutputNode(node) => node.get_id(),
+            Node::DivideNode(node) => node.get_id(),
+            Node::SubtractNode(node) => node.get_id(),
+            Node::ConstantNode(node) => node.get_id(),
+            Node::MultiplyNode(node) => node.get_id(),
+            Node::SineWaveNode(node) => node.get_id(),
+            Node::TriangleWaveNode(node) => node.get_id(),
         }
     }
 }
