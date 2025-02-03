@@ -9,15 +9,11 @@ use serde_json::Result;
 #[derive(Debug)]
 pub struct Graph {
     nodes: Vec<Node>,
-    debug_string: String,
 }
 
 impl Graph {
     pub fn new() -> Self {
-        Graph {
-            nodes: vec![],
-            debug_string: "test1".to_owned(),
-        }
+        Graph { nodes: vec![] }
     }
 
     pub fn set_nodes_from_json(&mut self, nodes_json: &str) -> Result<()> {
@@ -25,19 +21,6 @@ impl Graph {
         sort_nodes_topologically(&mut self.nodes);
         println!("Nodes: {:?}", self.nodes);
         Ok(())
-    }
-
-    pub fn get_debug_value(&self) -> f32 {
-        42.
-    }
-
-    pub fn get_debug_string(&self) -> String {
-        self.debug_string.clone()
-    }
-
-    pub fn set_debug_string(&mut self, value: &str) {
-        println!("Received string: {}", value);
-        self.debug_string = value.to_owned();
     }
 
     pub fn get_output_value(&self) -> f32 {
