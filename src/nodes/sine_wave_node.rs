@@ -12,15 +12,6 @@ pub(crate) struct SineWaveNode {
     input_ids: InputIds,
 }
 
-impl SineWaveNode {
-    pub(crate) fn new(id: usize, phase: usize) -> Self {
-        Self {
-            id,
-            input_ids: InputIds { phase },
-        }
-    }
-}
-
 impl NodeTrait for SineWaveNode {
     fn process(&mut self, node_values: &NodeValues) -> f32 {
         let phase = node_values.get(&self.input_ids.phase).unwrap();

@@ -12,15 +12,6 @@ pub(crate) struct ConstantNode {
     extras: Extras,
 }
 
-impl ConstantNode {
-    pub(crate) fn new(id: usize, value: f32) -> Self {
-        Self {
-            id,
-            extras: Extras { value },
-        }
-    }
-}
-
 impl NodeTrait for ConstantNode {
     fn process(&mut self, _node_values: &NodeValues) -> f32 {
         self.extras.value

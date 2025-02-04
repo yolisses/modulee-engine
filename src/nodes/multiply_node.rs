@@ -13,15 +13,6 @@ pub(crate) struct MultiplyNode {
     input_ids: InputIds,
 }
 
-impl MultiplyNode {
-    pub(crate) fn new(id: usize, input1: usize, input2: usize) -> Self {
-        Self {
-            id,
-            input_ids: InputIds { input1, input2 },
-        }
-    }
-}
-
 impl NodeTrait for MultiplyNode {
     fn process(&mut self, node_values: &NodeValues) -> f32 {
         let input1 = node_values.get(&self.input_ids.input1).unwrap();

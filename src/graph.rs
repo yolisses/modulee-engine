@@ -2,7 +2,6 @@ use crate::{
     node::Node,
     node_trait::NodeTrait,
     node_values::NodeValues,
-    nodes::pitch_node::{self, PitchNode},
     sort::{has_id::HasId, sort_nodes_topologically::sort_nodes_topologically},
 };
 use serde_json::Result;

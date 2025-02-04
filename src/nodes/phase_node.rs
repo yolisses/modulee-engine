@@ -7,21 +7,11 @@ pub(crate) struct InputIds {
     frequency: usize,
 }
 
-/// Returns the phase value between 0 and 1
-/// given a time and a frequency
+/// Returns the phase value between 0 and 1 given a time and a frequency
 #[derive(Debug, PartialEq, Deserialize)]
 pub(crate) struct PhaseNode {
     id: usize,
     input_ids: InputIds,
-}
-
-impl PhaseNode {
-    pub(crate) fn new(id: usize, time: usize, frequency: usize) -> Self {
-        Self {
-            id,
-            input_ids: InputIds { time, frequency },
-        }
-    }
 }
 
 impl NodeTrait for PhaseNode {

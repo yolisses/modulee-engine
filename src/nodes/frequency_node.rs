@@ -6,20 +6,11 @@ pub(crate) struct InputIds {
     pitch: usize,
 }
 
+/// Receives a pitch in the MIDI format and returns the frequency of the pitch
 #[derive(Debug, PartialEq, Deserialize)]
 pub(crate) struct FrequencyNode {
     id: usize,
     input_ids: InputIds,
-}
-
-/// Receives a pitch in the MIDI format and returns the frequency of the pitch
-impl FrequencyNode {
-    pub(crate) fn new(id: usize, pitch: usize) -> Self {
-        Self {
-            id,
-            input_ids: InputIds { pitch },
-        }
-    }
 }
 
 impl NodeTrait for FrequencyNode {

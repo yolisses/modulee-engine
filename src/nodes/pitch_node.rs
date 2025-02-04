@@ -13,13 +13,6 @@ pub(crate) struct PitchNode {
 }
 
 impl PitchNode {
-    pub(crate) fn new(id: usize, pitch: f32) -> Self {
-        Self {
-            id,
-            extras: Extras { pitch },
-        }
-    }
-
     pub(crate) fn set_pitch(&mut self, pitch: f32) {
         self.extras.pitch = pitch;
     }
