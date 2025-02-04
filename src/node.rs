@@ -11,8 +11,8 @@ use crate::{
 };
 use serde::Deserialize;
 
-#[serde(tag = "type")]
 #[derive(Debug, PartialEq, Deserialize)]
+#[serde(tag = "type")]
 pub(crate) enum Node {
     AddNode(AddNode),
     TimeNode(TimeNode),
