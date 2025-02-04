@@ -15,16 +15,6 @@ pub(crate) struct TimeNode {
     input_ids: InputIds,
 }
 
-impl TimeNode {
-    pub(crate) fn new(id: usize) -> Self {
-        Self {
-            id,
-            value: 0.,
-            input_ids: InputIds {},
-        }
-    }
-}
-
 impl NodeTrait for TimeNode {
     fn process(&mut self, _node_values: &NodeValues) -> f32 {
         self.value += 1. / SAMPLE_RATE;
