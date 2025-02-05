@@ -21,7 +21,7 @@ impl NodeTrait for PhaseNode {
     fn process(&mut self, node_values: &NodeValues) -> f32 {
         let frequency = node_values.get(&self.input_ids.frequency).unwrap();
 
-        self.phase += 1. / (frequency * SAMPLE_RATE);
+        self.phase += frequency / SAMPLE_RATE;
         self.phase %= 1.;
         self.phase
     }
