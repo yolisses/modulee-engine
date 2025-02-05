@@ -8,12 +8,17 @@ use serde_json::Result;
 
 #[derive(Debug)]
 pub struct Graph {
+    last_pitch: f32,
     nodes: Vec<Node>,
 }
 
+// TODO make polyphonic
 impl Graph {
     pub fn new() -> Self {
-        Graph { nodes: vec![] }
+        Graph {
+            nodes: vec![],
+            last_pitch: 0.,
+        }
     }
 
     pub fn set_nodes_from_json(&mut self, nodes_json: &str) -> Result<()> {
@@ -54,6 +59,32 @@ impl Graph {
         for index in 0..length {
             self.process();
             buffer[index] = self.get_output_value();
+        }
+    }
+
+    pub fn set_note_on(&mut self, pitch: f32) {
+        for node in &mut self.nodes {
+            match node {
+                Node::PitchNode(pitch_node) => {
+                    pitch_node.set_pitch(pitch);
+                }
+                Node::GateNode(gate_node) => {
+                    gate_node.set_is_active(true);
+                }
+                _ => (),
+            }
+        }
+        self.last_pitch = pitch;
+    }
+
+    pub fn set_note_off(&mut self, pitch: f32) {
+        if self.last_pitch != pitch {
+            return;
+        }
+        for node in &mut self.nodes {
+            if let Node::GateNode(gate_node) = node {
+                gate_node.set_is_active(false);
+            }
         }
     }
 }
