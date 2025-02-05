@@ -3,9 +3,10 @@ use crate::{
     node_values::NodeValues,
     nodes::{
         add_node::AddNode, constant_node::ConstantNode, divide_node::DivideNode,
-        frequency_node::FrequencyNode, multiply_node::MultiplyNode, output_node::OutputNode,
-        phase_node::PhaseNode, pitch_node::PitchNode, sine_wave_node::SineWaveNode,
-        subtract_node::SubtractNode, time_node::TimeNode, triangle_wave_node::TriangleWaveNode,
+        frequency_node::FrequencyNode, gate_node::GateNode, multiply_node::MultiplyNode,
+        output_node::OutputNode, phase_node::PhaseNode, pitch_node::PitchNode,
+        sine_wave_node::SineWaveNode, subtract_node::SubtractNode, time_node::TimeNode,
+        triangle_wave_node::TriangleWaveNode,
     },
     sort::has_id::HasId,
 };
@@ -15,6 +16,7 @@ use serde::Deserialize;
 #[serde(tag = "type")]
 pub(crate) enum Node {
     AddNode(AddNode),
+    GateNode(GateNode),
     TimeNode(TimeNode),
     PhaseNode(PhaseNode),
     PitchNode(PitchNode),
@@ -34,6 +36,7 @@ impl NodeTrait for Node {
     fn process(&mut self, node_values: &NodeValues) -> f32 {
         match self {
             Node::AddNode(node) => node.process(node_values),
+            Node::GateNode(node) => node.process(node_values),
             Node::TimeNode(node) => node.process(node_values),
             Node::PhaseNode(node) => node.process(node_values),
             Node::PitchNode(node) => node.process(node_values),
@@ -51,6 +54,7 @@ impl NodeTrait for Node {
     fn get_input_ids(&self) -> Vec<usize> {
         match self {
             Node::AddNode(node) => node.get_input_ids(),
+            Node::GateNode(node) => node.get_input_ids(),
             Node::TimeNode(node) => node.get_input_ids(),
             Node::PhaseNode(node) => node.get_input_ids(),
             Node::PitchNode(node) => node.get_input_ids(),
@@ -70,6 +74,7 @@ impl HasId for Node {
     fn get_id(&self) -> usize {
         match self {
             Node::AddNode(node) => node.get_id(),
+            Node::GateNode(node) => node.get_id(),
             Node::TimeNode(node) => node.get_id(),
             Node::PhaseNode(node) => node.get_id(),
             Node::PitchNode(node) => node.get_id(),
