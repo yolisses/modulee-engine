@@ -1,17 +1,18 @@
 use crate::{get_items_by_id::get_items_by_id, group::Group, groups_by_id::GroupsById};
 use std::collections::HashMap;
 
+// TODO find a better name for this
 #[derive(Debug, Default)]
 pub struct Graph {
-    main_group_id: usize,
     groups_by_id: GroupsById,
+    main_group_id: Option<usize>,
 }
 
 // TODO make polyphonic
 impl Graph {
-    pub fn new(main_group_id: usize) -> Self {
+    pub fn new() -> Self {
         Graph {
-            main_group_id,
+            main_group_id: None,
             groups_by_id: HashMap::new(),
         }
     }
@@ -32,13 +33,21 @@ impl Graph {
     }
 
     pub fn get_output_value(&self) -> f32 {
-        let main_group = self.groups_by_id.get(&self.main_group_id).unwrap();
-        main_group.get_output_value()
+        if let Some(main_group_id) = self.main_group_id {
+            let main_group = self.groups_by_id.get(&main_group_id).unwrap();
+            main_group.get_output_value()
+        } else {
+            return 0.;
+        }
     }
 
     pub fn process(&mut self) {
-        let main_group = self.groups_by_id.get_mut(&self.main_group_id).unwrap();
-        main_group.process();
+        // TODO try to find a most elegant solution than just returning if
+        // main_group_id is not present
+        if let Some(main_group_id) = self.main_group_id {
+            let main_group = self.groups_by_id.get_mut(&main_group_id).unwrap();
+            main_group.process();
+        }
     }
 
     pub fn process_block(&mut self, buffer: &mut [f32], length: usize) {
