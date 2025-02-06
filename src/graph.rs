@@ -1,5 +1,4 @@
 use crate::{get_items_by_id::get_items_by_id, group::Group, groups_by_id::GroupsById};
-use serde_json::Result;
 use std::collections::HashMap;
 
 #[derive(Debug, Default)]
@@ -17,11 +16,14 @@ impl Graph {
         }
     }
 
-    pub fn set_groups_from_json(&mut self, groups_json: &str) -> Result<()> {
+    pub fn set_groups_from_json(
+        &mut self,
+        groups_json: &str,
+    ) -> Result<(), Box<dyn std::error::Error>> {
         let mut groups: Vec<Group> = serde_json::from_str(groups_json)?;
 
         for group in &mut groups {
-            group.sort_nodes_topologically();
+            group.sort_nodes_topologically()?
         }
 
         self.groups_by_id = get_items_by_id(groups);
