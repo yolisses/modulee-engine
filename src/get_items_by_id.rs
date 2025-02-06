@@ -13,7 +13,7 @@ pub(crate) fn get_items_by_id<T: HasId>(items: Vec<T>) -> HashMap<usize, T> {
 mod tests {
     use super::*;
 
-    #[derive(Debug)]
+    #[derive(Debug, PartialEq)]
     struct TestItem {
         id: usize,
         value: String,
