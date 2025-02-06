@@ -18,7 +18,12 @@ impl Graph {
     }
 
     pub fn set_groups_from_json(&mut self, groups_json: &str) -> Result<()> {
-        let groups: Vec<Group> = serde_json::from_str(groups_json)?;
+        let mut groups: Vec<Group> = serde_json::from_str(groups_json)?;
+
+        for group in &mut groups {
+            group.sort_nodes_topologically();
+        }
+
         self.groups_by_id = get_items_by_id(groups);
         println!("Groups: {:?}", self.groups_by_id);
         Ok(())

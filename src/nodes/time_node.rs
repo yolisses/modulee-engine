@@ -1,5 +1,5 @@
 use crate::{
-    node_trait::NodeTrait, values_by_id::ValuesById, sample_rate::SAMPLE_RATE, sort::has_id::HasId,
+    node_trait::NodeTrait, sample_rate::SAMPLE_RATE, sort::has_id::HasId, values_by_id::ValuesById,
 };
 use serde::Deserialize;
 
