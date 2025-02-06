@@ -17,7 +17,8 @@ impl Graph {
     }
 
     pub fn get_output_value(&self) -> f32 {
-        todo!()
+        let main_group = self.groups_by_id.get(&self.main_group_id).unwrap();
+        main_group.get_output_value()
     }
 
     pub fn process(&mut self) {
