@@ -5,3 +5,4 @@ mod inputs_mapping;
 mod shifts;
 pub(crate) mod sort_nodes_topologically;
 mod update_shifts;
+mod validate_inputs_mapping;
