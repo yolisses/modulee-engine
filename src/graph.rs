@@ -1,5 +1,6 @@
 use crate::{get_items_by_id::get_items_by_id, group::Group, groups_by_id::GroupsById};
 use serde_json::Result;
+use std::collections::HashMap;
 
 #[derive(Debug, Default)]
 pub struct Graph {
@@ -9,6 +10,13 @@ pub struct Graph {
 
 // TODO make polyphonic
 impl Graph {
+    pub fn new(main_group_id: usize) -> Self {
+        Graph {
+            main_group_id,
+            groups_by_id: HashMap::new(),
+        }
+    }
+
     pub fn set_groups_from_json(&mut self, groups_json: &str) -> Result<()> {
         let groups: Vec<Group> = serde_json::from_str(groups_json)?;
         self.groups_by_id = get_items_by_id(groups);
