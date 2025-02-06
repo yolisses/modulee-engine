@@ -28,14 +28,6 @@ impl HasId for Group {
 
 // TODO make polyphonic
 impl Group {
-    pub fn new(id: usize) -> Self {
-        Group {
-            id,
-            nodes: vec![],
-            last_pitch: 0.,
-        }
-    }
-
     pub fn set_nodes_from_json(&mut self, nodes_json: &str) -> Result<()> {
         self.nodes = serde_json::from_str(nodes_json)?;
         sort_nodes_topologically(&mut self.nodes);
