@@ -1,7 +1,7 @@
 use crate::{graph::Graph, node_trait::NodeTrait, sort::has_id::HasId, values_by_id::ValuesById};
 use serde::Deserialize;
 
-#[derive(Debug, PartialEq, Deserialize)]
+#[derive(Debug, Deserialize)]
 pub(crate) struct InputIds {
     frequency: usize,
 }

@@ -1,13 +1,13 @@
 use crate::{node_trait::NodeTrait, values_by_id::ValuesById, sort::has_id::HasId};
 use serde::Deserialize;
 
-#[derive(Debug, PartialEq, Deserialize)]
+#[derive(Debug, Deserialize)]
 pub(crate) struct InputIds {
     input: usize,
 }
 
 /// Saves the input value in a accessible way
-#[derive(Debug, PartialEq, Deserialize)]
+#[derive(Debug, Deserialize)]
 pub(crate) struct OutputNode {
     #[serde(skip)]
     value: f32,

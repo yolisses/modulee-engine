@@ -1,7 +1,7 @@
-use crate::{node_trait::NodeTrait, values_by_id::ValuesById, sort::has_id::HasId};
+use crate::{node_trait::NodeTrait, sort::has_id::HasId, values_by_id::ValuesById};
 use serde::Deserialize;
 
-#[derive(Debug, PartialEq, Deserialize)]
+#[derive(Debug, Deserialize)]
 pub(crate) struct GateNode {
     id: usize,
     #[serde(skip)]

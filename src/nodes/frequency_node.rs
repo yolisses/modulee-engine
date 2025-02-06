@@ -1,13 +1,13 @@
-use crate::{node_trait::NodeTrait, values_by_id::ValuesById, sort::has_id::HasId};
+use crate::{node_trait::NodeTrait, sort::has_id::HasId, values_by_id::ValuesById};
 use serde::Deserialize;
 
-#[derive(Debug, PartialEq, Deserialize)]
+#[derive(Debug, Deserialize)]
 pub(crate) struct InputIds {
     pitch: usize,
 }
 
 /// Receives a pitch in the MIDI format and returns the frequency of the pitch
-#[derive(Debug, PartialEq, Deserialize)]
+#[derive(Debug, Deserialize)]
 pub(crate) struct FrequencyNode {
     id: usize,
     input_ids: InputIds,
