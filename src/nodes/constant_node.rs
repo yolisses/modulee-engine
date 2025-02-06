@@ -1,4 +1,4 @@
-use crate::{node_trait::NodeTrait, node_values::NodeValues, sort::has_id::HasId};
+use crate::{node_trait::NodeTrait, values_by_id::ValuesById, sort::has_id::HasId};
 use serde::Deserialize;
 
 #[derive(Debug, PartialEq, Deserialize)]
@@ -13,7 +13,7 @@ pub(crate) struct ConstantNode {
 }
 
 impl NodeTrait for ConstantNode {
-    fn process(&mut self, _node_values: &NodeValues) -> f32 {
+    fn process(&mut self, _node_values: &ValuesById) -> f32 {
         self.extras.value
     }
 

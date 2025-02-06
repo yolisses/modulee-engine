@@ -1,7 +1,7 @@
 use crate::{
     node::Node,
     node_trait::NodeTrait,
-    node_values::NodeValues,
+    values_by_id::ValuesById,
     sort::{has_id::HasId, sort_nodes_topologically::sort_nodes_topologically},
 };
 use serde_json::Result;
@@ -48,7 +48,7 @@ impl Group {
     }
 
     pub fn process(&mut self) {
-        let mut node_values = NodeValues::new();
+        let mut node_values = ValuesById::new();
         self.nodes.iter_mut().for_each(|node| {
             let output = node.process(&node_values);
             node_values.insert(node.get_id(), output);

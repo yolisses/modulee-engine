@@ -1,5 +1,5 @@
 use crate::{
-    node_trait::NodeTrait, node_values::NodeValues, sample_rate::SAMPLE_RATE, sort::has_id::HasId,
+    node_trait::NodeTrait, values_by_id::ValuesById, sample_rate::SAMPLE_RATE, sort::has_id::HasId,
 };
 use serde::Deserialize;
 
@@ -16,7 +16,7 @@ pub(crate) struct TimeNode {
 }
 
 impl NodeTrait for TimeNode {
-    fn process(&mut self, _node_values: &NodeValues) -> f32 {
+    fn process(&mut self, _node_values: &ValuesById) -> f32 {
         self.value += 1. / SAMPLE_RATE;
         self.value
     }

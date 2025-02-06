@@ -1,5 +1,5 @@
 use crate::sort::has_id::HasId;
-use crate::{node_trait::NodeTrait, node_values::NodeValues};
+use crate::{node_trait::NodeTrait, values_by_id::ValuesById};
 use serde::Deserialize;
 
 #[derive(Debug, PartialEq, Deserialize)]
@@ -15,7 +15,7 @@ pub(crate) struct AddNode {
 }
 
 impl NodeTrait for AddNode {
-    fn process(&mut self, node_values: &NodeValues) -> f32 {
+    fn process(&mut self, node_values: &ValuesById) -> f32 {
         let input1 = node_values.get(&self.input_ids.input1).unwrap();
         let input2 = node_values.get(&self.input_ids.input2).unwrap();
         input1 + input2
