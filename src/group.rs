@@ -28,11 +28,8 @@ impl HasId for Group {
 
 // TODO make polyphonic
 impl Group {
-    pub fn set_nodes_from_json(&mut self, nodes_json: &str) -> Result<()> {
-        self.nodes = serde_json::from_str(nodes_json)?;
+    pub(crate) fn sort_nodes_topologically(&mut self) {
         sort_nodes_topologically(&mut self.nodes);
-        println!("Nodes: {:?}", self.nodes);
-        Ok(())
     }
 
     /// This is for development. It will be replaced by set_note_on
