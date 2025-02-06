@@ -3,7 +3,6 @@ use serde_json::Result;
 
 #[derive(Debug, Default)]
 pub struct Graph {
-    last_pitch: f32,
     main_group_id: usize,
     groups_by_id: GroupsById,
 }

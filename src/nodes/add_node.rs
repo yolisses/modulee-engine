@@ -2,13 +2,13 @@ use crate::sort::has_id::HasId;
 use crate::{node_trait::NodeTrait, values_by_id::ValuesById};
 use serde::Deserialize;
 
-#[derive(Debug, PartialEq, Deserialize)]
+#[derive(Debug, Deserialize)]
 pub(crate) struct InputIds {
     input1: usize,
     input2: usize,
 }
 
-#[derive(Debug, PartialEq, Deserialize)]
+#[derive(Debug, Deserialize)]
 pub(crate) struct AddNode {
     id: usize,
     input_ids: InputIds,

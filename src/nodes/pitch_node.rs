@@ -1,7 +1,7 @@
 use crate::{node_trait::NodeTrait, values_by_id::ValuesById, sort::has_id::HasId};
 use serde::Deserialize;
 
-#[derive(Debug, PartialEq, Deserialize)]
+#[derive(Debug, Deserialize)]
 pub(crate) struct PitchNode {
     id: usize,
     #[serde(skip)]
