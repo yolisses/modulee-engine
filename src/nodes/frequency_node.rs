@@ -1,4 +1,4 @@
-use crate::{node_trait::NodeTrait, node_values::NodeValues, sort::has_id::HasId};
+use crate::{node_trait::NodeTrait, values_by_id::ValuesById, sort::has_id::HasId};
 use serde::Deserialize;
 
 #[derive(Debug, PartialEq, Deserialize)]
@@ -14,7 +14,7 @@ pub(crate) struct FrequencyNode {
 }
 
 impl NodeTrait for FrequencyNode {
-    fn process(&mut self, node_values: &NodeValues) -> f32 {
+    fn process(&mut self, node_values: &ValuesById) -> f32 {
         let pitch = node_values.get(&self.input_ids.pitch).unwrap();
         440.0 * 2.0_f32.powf((pitch - 69.0) / 12.0)
     }

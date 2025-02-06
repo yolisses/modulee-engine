@@ -1,6 +1,6 @@
 use crate::{
     node_trait::NodeTrait,
-    node_values::NodeValues,
+    values_by_id::ValuesById,
     nodes::{
         add_node::AddNode, constant_node::ConstantNode, divide_node::DivideNode,
         frequency_node::FrequencyNode, gate_node::GateNode, multiply_node::MultiplyNode,
@@ -33,7 +33,7 @@ pub(crate) enum Node {
 // TODO create a macro to reduce the code duplication
 
 impl NodeTrait for Node {
-    fn process(&mut self, node_values: &NodeValues) -> f32 {
+    fn process(&mut self, node_values: &ValuesById) -> f32 {
         match self {
             Node::AddNode(node) => node.process(node_values),
             Node::GateNode(node) => node.process(node_values),
