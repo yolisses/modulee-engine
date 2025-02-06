@@ -5,13 +5,13 @@ use crate::{
     values_by_id::ValuesById,
 };
 use serde::Deserialize;
-use serde_json::Result;
 
 #[derive(Debug, Deserialize)]
 pub struct Group {
     id: usize,
-    last_pitch: f32,
     nodes: Vec<Node>,
+    #[serde(skip)]
+    last_pitch: f32,
 }
 
 impl PartialEq for Group {
