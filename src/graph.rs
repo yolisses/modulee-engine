@@ -1,58 +1,29 @@
-use crate::{
-    node::Node,
-    node_trait::NodeTrait,
-    sort::{has_id::HasId, sort_nodes_topologically::sort_nodes_topologically},
-    values_by_id::ValuesById,
-};
+use crate::{get_items_by_id::get_items_by_id, group::Group, groups_by_id::GroupsById};
 use serde_json::Result;
 
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct Graph {
     last_pitch: f32,
-    nodes: Vec<Node>,
+    main_group_id: usize,
+    groups_by_id: GroupsById,
 }
 
 // TODO make polyphonic
 impl Graph {
-    pub fn new() -> Self {
-        Graph {
-            nodes: vec![],
-            last_pitch: 0.,
-        }
-    }
-
-    pub fn set_nodes_from_json(&mut self, nodes_json: &str) -> Result<()> {
-        self.nodes = serde_json::from_str(nodes_json)?;
-        sort_nodes_topologically(&mut self.nodes);
-        println!("Nodes: {:?}", self.nodes);
+    pub fn set_groups_from_json(&mut self, groups_json: &str) -> Result<()> {
+        let groups: Vec<Group> = serde_json::from_str(groups_json)?;
+        self.groups_by_id = get_items_by_id(groups);
+        println!("Groups: {:?}", self.groups_by_id);
         Ok(())
     }
 
-    /// This is for development. It will be replaced by set_note_on
-    pub fn set_pitch(&mut self, pitch: f32) {
-        for node in &mut self.nodes {
-            if let Node::PitchNode(pitch_node) = node {
-                pitch_node.set_pitch(pitch);
-            }
-        }
-    }
-
     pub fn get_output_value(&self) -> f32 {
-        for node in &self.nodes {
-            match node {
-                Node::OutputNode(output_node) => return output_node.get_value(),
-                _ => (),
-            }
-        }
-        0.
+        todo!()
     }
 
     pub fn process(&mut self) {
-        let mut node_values = ValuesById::new();
-        self.nodes.iter_mut().for_each(|node| {
-            let output = node.process(&node_values);
-            node_values.insert(node.get_id(), output);
-        });
+        let main_group = self.groups_by_id.get_mut(&self.main_group_id).unwrap();
+        main_group.process();
     }
 
     pub fn process_block(&mut self, buffer: &mut [f32], length: usize) {
@@ -63,28 +34,14 @@ impl Graph {
     }
 
     pub fn set_note_on(&mut self, pitch: f32) {
-        for node in &mut self.nodes {
-            match node {
-                Node::PitchNode(pitch_node) => {
-                    pitch_node.set_pitch(pitch);
-                }
-                Node::GateNode(gate_node) => {
-                    gate_node.set_is_active(true);
-                }
-                _ => (),
-            }
+        for (_, group) in &mut self.groups_by_id {
+            group.set_note_on(pitch);
         }
-        self.last_pitch = pitch;
     }
 
     pub fn set_note_off(&mut self, pitch: f32) {
-        if self.last_pitch != pitch {
-            return;
-        }
-        for node in &mut self.nodes {
-            if let Node::GateNode(gate_node) = node {
-                gate_node.set_is_active(false);
-            }
+        for (_, group) in &mut self.groups_by_id {
+            group.set_note_off(pitch);
         }
     }
 }

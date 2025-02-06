@@ -1,21 +1,36 @@
 use crate::{
     node::Node,
     node_trait::NodeTrait,
-    values_by_id::ValuesById,
     sort::{has_id::HasId, sort_nodes_topologically::sort_nodes_topologically},
+    values_by_id::ValuesById,
 };
+use serde::Deserialize;
 use serde_json::Result;
 
-#[derive(Debug)]
+#[derive(Debug, Deserialize)]
 pub struct Group {
+    id: usize,
     last_pitch: f32,
     nodes: Vec<Node>,
 }
 
+impl PartialEq for Group {
+    fn eq(&self, other: &Self) -> bool {
+        self.id == other.id
+    }
+}
+
+impl HasId for Group {
+    fn get_id(&self) -> usize {
+        self.id
+    }
+}
+
 // TODO make polyphonic
 impl Group {
-    pub fn new() -> Self {
+    pub fn new(id: usize) -> Self {
         Group {
+            id,
             nodes: vec![],
             last_pitch: 0.,
         }
@@ -53,13 +68,6 @@ impl Group {
             let output = node.process(&node_values);
             node_values.insert(node.get_id(), output);
         });
-    }
-
-    pub fn process_block(&mut self, buffer: &mut [f32], length: usize) {
-        for index in 0..length {
-            self.process();
-            buffer[index] = self.get_output_value();
-        }
     }
 
     pub fn set_note_on(&mut self, pitch: f32) {

@@ -1,6 +1,5 @@
 use crate::{
     node_trait::NodeTrait,
-    values_by_id::ValuesById,
     nodes::{
         add_node::AddNode, constant_node::ConstantNode, divide_node::DivideNode,
         frequency_node::FrequencyNode, gate_node::GateNode, multiply_node::MultiplyNode,
@@ -9,10 +8,11 @@ use crate::{
         triangle_wave_node::TriangleWaveNode,
     },
     sort::has_id::HasId,
+    values_by_id::ValuesById,
 };
 use serde::Deserialize;
 
-#[derive(Debug, PartialEq, Deserialize)]
+#[derive(Debug, Deserialize)]
 #[serde(tag = "type")]
 pub(crate) enum Node {
     AddNode(AddNode),
