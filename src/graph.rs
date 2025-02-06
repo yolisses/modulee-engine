@@ -68,4 +68,8 @@ impl Graph {
             group.set_note_off(pitch);
         }
     }
+
+    pub fn set_main_group_id(&mut self, main_group_id: usize) {
+        self.main_group_id = Some(main_group_id)
+    }
 }
