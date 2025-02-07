@@ -9,10 +9,10 @@ pub(crate) struct InputIds {
 /// Saves the input value in a accessible way
 #[derive(Debug, Deserialize)]
 pub(crate) struct OutputNode {
-    #[serde(skip)]
-    value: f32,
     id: usize,
     input_ids: InputIds,
+    #[serde(skip)]
+    value: f32,
 }
 
 impl OutputNode {
