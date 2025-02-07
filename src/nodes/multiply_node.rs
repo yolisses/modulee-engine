@@ -15,8 +15,8 @@ pub(crate) struct MultiplyNode {
 
 impl NodeTrait for MultiplyNode {
     fn process(&mut self, node_values: &mut ValuesById) {
-        let input1 = node_values.get(&self.input_ids.input1).unwrap();
-        let input2 = node_values.get(&self.input_ids.input2).unwrap();
+        let input1 = node_values[&self.input_ids.input1];
+        let input2 = node_values[&self.input_ids.input2];
         let value = input1 * input2;
         node_values.insert(self.id, value);
     }

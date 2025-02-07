@@ -14,7 +14,7 @@ pub(crate) struct SineWaveNode {
 
 impl NodeTrait for SineWaveNode {
     fn process(&mut self, node_values: &mut ValuesById) {
-        let phase = node_values.get(&self.input_ids.phase).unwrap();
+        let phase = node_values[&self.input_ids.phase];
         let value = (phase * 2.0 * std::f32::consts::PI).sin();
         node_values.insert(self.id, value);
     }

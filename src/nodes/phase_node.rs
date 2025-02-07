@@ -19,7 +19,7 @@ pub(crate) struct PhaseNode {
 
 impl NodeTrait for PhaseNode {
     fn process(&mut self, node_values: &mut ValuesById) {
-        let frequency = node_values.get(&self.input_ids.frequency).unwrap();
+        let frequency = node_values[&self.input_ids.frequency];
 
         self.phase += frequency / SAMPLE_RATE;
         self.phase %= 1.;

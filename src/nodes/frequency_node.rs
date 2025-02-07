@@ -15,7 +15,7 @@ pub(crate) struct FrequencyNode {
 
 impl NodeTrait for FrequencyNode {
     fn process(&mut self, node_values: &mut ValuesById) {
-        let pitch = node_values.get(&self.input_ids.pitch).unwrap();
+        let pitch = node_values[&self.input_ids.pitch];
         let value = 440.0 * 2.0_f32.powf((pitch - 69.0) / 12.0);
         node_values.insert(self.id, value);
     }

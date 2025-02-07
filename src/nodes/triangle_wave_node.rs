@@ -14,7 +14,7 @@ pub(crate) struct TriangleWaveNode {
 
 impl NodeTrait for TriangleWaveNode {
     fn process(&mut self, node_values: &mut ValuesById) {
-        let phase = node_values.get(&self.input_ids.phase).unwrap();
+        let phase = node_values[&self.input_ids.phase];
         let t = phase % 1.0;
         let value = if t < 0.5 {
             4.0 * t - 1.0
