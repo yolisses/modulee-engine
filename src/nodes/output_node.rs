@@ -22,11 +22,10 @@ impl OutputNode {
 }
 
 impl NodeTrait for OutputNode {
-    fn process(&mut self, node_values: &mut ValuesById) {
+    fn process(&mut self, node_values: &ValuesById) -> f32 {
         let input = node_values[&self.input_ids.input];
         self.value = input;
-        let value = self.value;
-        node_values.insert(self.id, value);
+        self.value
     }
 
     fn get_input_ids(&self) -> Vec<usize> {

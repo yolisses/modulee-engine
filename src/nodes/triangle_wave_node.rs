@@ -13,15 +13,14 @@ pub(crate) struct TriangleWaveNode {
 }
 
 impl NodeTrait for TriangleWaveNode {
-    fn process(&mut self, node_values: &mut ValuesById) {
+    fn process(&mut self, node_values: &ValuesById) -> f32 {
         let phase = node_values[&self.input_ids.phase];
         let t = phase % 1.0;
-        let value = if t < 0.5 {
+        if t < 0.5 {
             4.0 * t - 1.0
         } else {
             3.0 - 4.0 * t
-        };
-        node_values.insert(self.id, value);
+        }
     }
 
     fn get_input_ids(&self) -> Vec<usize> {

@@ -12,10 +12,9 @@ pub(crate) struct TimeNode {
 }
 
 impl NodeTrait for TimeNode {
-    fn process(&mut self, node_values: &mut ValuesById) {
+    fn process(&mut self, _node_values: &ValuesById) -> f32 {
         self.value += 1. / SAMPLE_RATE;
-        let value = self.value;
-        node_values.insert(self.id, value);
+        self.value
     }
 
     fn get_input_ids(&self) -> Vec<usize> {
