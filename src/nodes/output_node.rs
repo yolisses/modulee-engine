@@ -23,8 +23,8 @@ impl OutputNode {
 
 impl NodeTrait for OutputNode {
     fn process(&mut self, node_values: &mut ValuesById) {
-        let input = node_values.get(&self.input_ids.input).unwrap();
-        self.value = *input;
+        let input = node_values[&self.input_ids.input];
+        self.value = input;
         let value = self.value;
         node_values.insert(self.id, value);
     }
