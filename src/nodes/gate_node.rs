@@ -15,12 +15,9 @@ impl GateNode {
 }
 
 impl NodeTrait for GateNode {
-    fn process(&mut self, _node_values: &ValuesById) -> f32 {
-        if self.is_active {
-            1.
-        } else {
-            0.
-        }
+    fn process(&mut self, node_values: &mut ValuesById) {
+        let value = if self.is_active { 1. } else { 0. };
+        node_values.insert(self.id, value);
     }
 
     fn get_input_ids(&self) -> Vec<usize> {

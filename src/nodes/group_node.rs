@@ -10,9 +10,11 @@ pub(crate) struct GroupNode {
 }
 
 impl NodeTrait for GroupNode {
-    fn process(&mut self, _node_values: &ValuesById) -> f32 {
+    fn process(&mut self, node_values: &mut ValuesById) {
         self.graph.process();
-        self.graph.get_output_value()
+        // TODO use all outputs
+        let value = self.graph.get_output_value();
+        node_values.insert(self.id, value);
     }
 
     fn get_input_ids(&self) -> Vec<usize> {

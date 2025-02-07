@@ -1,5 +1,5 @@
 use crate::{
-    node_trait::NodeTrait, values_by_id::ValuesById, sample_rate::SAMPLE_RATE, sort::has_id::HasId,
+    node_trait::NodeTrait, sample_rate::SAMPLE_RATE, sort::has_id::HasId, values_by_id::ValuesById,
 };
 use serde::Deserialize;
 
@@ -18,12 +18,13 @@ pub(crate) struct PhaseNode {
 }
 
 impl NodeTrait for PhaseNode {
-    fn process(&mut self, node_values: &ValuesById) -> f32 {
+    fn process(&mut self, node_values: &mut ValuesById) {
         let frequency = node_values.get(&self.input_ids.frequency).unwrap();
 
         self.phase += frequency / SAMPLE_RATE;
         self.phase %= 1.;
-        self.phase
+        let value = self.phase;
+        node_values.insert(self.id, value);
     }
 
     fn get_input_ids(&self) -> Vec<usize> {

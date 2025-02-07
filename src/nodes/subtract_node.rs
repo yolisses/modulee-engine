@@ -1,4 +1,4 @@
-use crate::{node_trait::NodeTrait, values_by_id::ValuesById, sort::has_id::HasId};
+use crate::{node_trait::NodeTrait, sort::has_id::HasId, values_by_id::ValuesById};
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
@@ -14,10 +14,11 @@ pub(crate) struct SubtractNode {
 }
 
 impl NodeTrait for SubtractNode {
-    fn process(&mut self, node_values: &ValuesById) -> f32 {
+    fn process(&mut self, node_values: &mut ValuesById) {
         let input1 = node_values.get(&self.input_ids.input1).unwrap();
         let input2 = node_values.get(&self.input_ids.input2).unwrap();
-        input1 - input2
+        let value = input1 - input2;
+        node_values.insert(self.id, value);
     }
 
     fn get_input_ids(&self) -> Vec<usize> {
