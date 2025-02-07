@@ -28,7 +28,7 @@ impl Graph {
         }
 
         self.groups_by_id = get_items_by_id(groups);
-        println!("Groups: {:?}", self.groups_by_id);
+
         Ok(())
     }
 
