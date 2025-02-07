@@ -32,15 +32,6 @@ impl Group {
         sort_nodes_topologically(&mut self.nodes)
     }
 
-    /// This is for development. It will be replaced by set_note_on
-    pub fn set_pitch(&mut self, pitch: f32) {
-        for node in &mut self.nodes {
-            if let Node::PitchNode(pitch_node) = node {
-                pitch_node.set_pitch(pitch);
-            }
-        }
-    }
-
     pub fn get_output_value(&self) -> f32 {
         for node in &self.nodes {
             match node {
