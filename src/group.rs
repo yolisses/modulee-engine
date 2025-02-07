@@ -45,7 +45,8 @@ impl Group {
     pub fn process(&mut self) {
         let mut node_values = ValuesById::new();
         for node in &mut self.nodes {
-            node.process(&mut node_values);
+            let value = node.process(&node_values);
+            node_values.insert(node.get_id(), value);
         }
     }
 
