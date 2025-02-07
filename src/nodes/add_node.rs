@@ -15,10 +15,11 @@ pub(crate) struct AddNode {
 }
 
 impl NodeTrait for AddNode {
-    fn process(&mut self, node_values: &ValuesById) -> f32 {
+    fn process(&mut self, node_values: &mut ValuesById) {
         let input1 = node_values.get(&self.input_ids.input1).unwrap();
         let input2 = node_values.get(&self.input_ids.input2).unwrap();
-        input1 + input2
+        let value = input1 + input2;
+        node_values.insert(self.id, value);
     }
 
     fn get_input_ids(&self) -> Vec<usize> {

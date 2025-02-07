@@ -13,8 +13,9 @@ pub(crate) struct ConstantNode {
 }
 
 impl NodeTrait for ConstantNode {
-    fn process(&mut self, _node_values: &ValuesById) -> f32 {
-        self.extras.value
+    fn process(&mut self, node_values: &mut ValuesById) {
+        let value = self.extras.value;
+        node_values.insert(self.id, value);
     }
 
     fn get_input_ids(&self) -> Vec<usize> {

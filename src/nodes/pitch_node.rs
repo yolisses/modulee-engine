@@ -1,4 +1,4 @@
-use crate::{node_trait::NodeTrait, values_by_id::ValuesById, sort::has_id::HasId};
+use crate::{node_trait::NodeTrait, sort::has_id::HasId, values_by_id::ValuesById};
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
@@ -15,8 +15,9 @@ impl PitchNode {
 }
 
 impl NodeTrait for PitchNode {
-    fn process(&mut self, _node_values: &ValuesById) -> f32 {
-        self.pitch
+    fn process(&mut self, node_values: &mut ValuesById) {
+        let value = self.pitch;
+        node_values.insert(self.id, value);
     }
 
     fn get_input_ids(&self) -> Vec<usize> {

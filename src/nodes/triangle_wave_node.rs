@@ -1,4 +1,4 @@
-use crate::{node_trait::NodeTrait, values_by_id::ValuesById, sort::has_id::HasId};
+use crate::{node_trait::NodeTrait, sort::has_id::HasId, values_by_id::ValuesById};
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
@@ -13,14 +13,15 @@ pub(crate) struct TriangleWaveNode {
 }
 
 impl NodeTrait for TriangleWaveNode {
-    fn process(&mut self, node_values: &ValuesById) -> f32 {
+    fn process(&mut self, node_values: &mut ValuesById) {
         let phase = node_values.get(&self.input_ids.phase).unwrap();
         let t = phase % 1.0;
-        if t < 0.5 {
+        let value = if t < 0.5 {
             4.0 * t - 1.0
         } else {
             3.0 - 4.0 * t
-        }
+        };
+        node_values.insert(self.id, value);
     }
 
     fn get_input_ids(&self) -> Vec<usize> {

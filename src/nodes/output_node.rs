@@ -1,4 +1,4 @@
-use crate::{node_trait::NodeTrait, values_by_id::ValuesById, sort::has_id::HasId};
+use crate::{node_trait::NodeTrait, sort::has_id::HasId, values_by_id::ValuesById};
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
@@ -22,10 +22,11 @@ impl OutputNode {
 }
 
 impl NodeTrait for OutputNode {
-    fn process(&mut self, node_values: &ValuesById) -> f32 {
+    fn process(&mut self, node_values: &mut ValuesById) {
         let input = node_values.get(&self.input_ids.input).unwrap();
         self.value = *input;
-        self.value
+        let value = self.value;
+        node_values.insert(self.id, value);
     }
 
     fn get_input_ids(&self) -> Vec<usize> {
