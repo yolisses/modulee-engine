@@ -34,7 +34,7 @@ pub(crate) enum Node {
 // TODO create a macro to reduce the code duplication
 
 impl NodeTrait for Node {
-    fn process(&mut self, node_values: &mut ValuesById) {
+    fn process(&mut self, node_values: &ValuesById) -> f32{
         match self {
             Node::AddNode(node) => node.process(node_values),
             Node::GateNode(node) => node.process(node_values),

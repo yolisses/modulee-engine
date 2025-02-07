@@ -15,9 +15,8 @@ impl PitchNode {
 }
 
 impl NodeTrait for PitchNode {
-    fn process(&mut self, node_values: &mut ValuesById) {
-        let value = self.pitch;
-        node_values.insert(self.id, value);
+    fn process(&mut self, _node_values: &ValuesById) -> f32 {
+        self.pitch
     }
 
     fn get_input_ids(&self) -> Vec<usize> {

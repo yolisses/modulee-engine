@@ -18,13 +18,12 @@ pub(crate) struct PhaseNode {
 }
 
 impl NodeTrait for PhaseNode {
-    fn process(&mut self, node_values: &mut ValuesById) {
+    fn process(&mut self, node_values: &ValuesById) -> f32 {
         let frequency = node_values[&self.input_ids.frequency];
 
         self.phase += frequency / SAMPLE_RATE;
         self.phase %= 1.;
-        let value = self.phase;
-        node_values.insert(self.id, value);
+        self.phase
     }
 
     fn get_input_ids(&self) -> Vec<usize> {

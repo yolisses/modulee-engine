@@ -14,11 +14,10 @@ pub(crate) struct DivideNode {
 }
 
 impl NodeTrait for DivideNode {
-    fn process(&mut self, node_values: &mut ValuesById) {
+    fn process(&mut self, node_values: &ValuesById) -> f32 {
         let input1 = node_values[&self.input_ids.input1];
         let input2 = node_values[&self.input_ids.input2];
-        let value = input1 / input2;
-        node_values.insert(self.id, value);
+        input1 / input2
     }
 
     fn get_input_ids(&self) -> Vec<usize> {
