@@ -33,10 +33,17 @@ impl Group {
         sort_nodes_topologically(&mut self.nodes)
     }
 
-    pub(crate) fn update_input_nodes(&mut self, input_values: HashMap<usize, f32>) {
+    // This may be a violation of the responsibility division, but improves
+    // performance
+    pub(crate) fn update_input_nodes(
+        &mut self,
+        node_values: &ValuesById,
+        input_target_ids: &HashMap<usize, usize>,
+    ) {
         for node in &mut self.nodes {
             if let Node::InputNode(input_node) = node {
-                let value = input_values[&input_node.get_id()];
+                let target_id = input_target_ids[&input_node.get_id()];
+                let value = node_values[&target_id];
                 input_node.set_value(value);
             }
         }
