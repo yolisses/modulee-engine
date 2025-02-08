@@ -18,14 +18,8 @@ pub(crate) struct GroupNode {
 
 impl NodeTrait for GroupNode {
     fn process(&mut self, node_values: &ValuesById) -> f32 {
-        // Set input nodes
-        let mut input_values = HashMap::new();
-        for (input_id, target_id) in &self.extras.input_target_ids {
-            let target_value = node_values[target_id];
-            input_values.insert(*input_id, target_value);
-        }
-        self.group.update_input_nodes(input_values);
-
+        self.group
+            .update_input_nodes(node_values, &self.extras.input_target_ids);
         self.group.process();
         // TODO use all outputs
         self.group.get_output_value()
