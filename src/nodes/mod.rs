@@ -4,6 +4,7 @@ pub(crate) mod divide_node;
 pub(crate) mod frequency_node;
 pub(crate) mod gate_node;
 pub(crate) mod group_node;
+pub(crate) mod input_node;
 pub(crate) mod multiply_node;
 pub(crate) mod output_node;
 pub(crate) mod phase_node;
