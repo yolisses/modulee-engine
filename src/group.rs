@@ -5,8 +5,9 @@ use crate::{
     values_by_id::ValuesById,
 };
 use serde::Deserialize;
+use std::collections::HashMap;
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Default)]
 pub struct Group {
     id: usize,
     nodes: Vec<Node>,
@@ -30,6 +31,15 @@ impl HasId for Group {
 impl Group {
     pub(crate) fn sort_nodes_topologically(&mut self) -> Result<(), String> {
         sort_nodes_topologically(&mut self.nodes)
+    }
+
+    pub(crate) fn update_input_nodes(&mut self, input_values: HashMap<usize, f32>) {
+        for node in &mut self.nodes {
+            if let Node::InputNode(input_node) = node {
+                let value = input_values[&input_node.get_id()];
+                input_node.set_value(value);
+            }
+        }
     }
 
     pub fn get_output_value(&self) -> f32 {

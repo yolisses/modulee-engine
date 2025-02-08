@@ -6,7 +6,6 @@ pub(crate) struct InputIds {
     input: usize,
 }
 
-/// Saves the input value in a accessible way
 #[derive(Debug, Deserialize)]
 pub(crate) struct OutputNode {
     id: usize,
