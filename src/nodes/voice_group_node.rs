@@ -1,6 +1,6 @@
 use crate::{
     group::Group, node_trait::NodeTrait, sort::has_id::HasId, values_by_id::ValuesById,
-    voice_group::VoiceGroup,
+    voice::Voice,
 };
 use serde::Deserialize;
 use std::collections::HashMap;
@@ -12,39 +12,41 @@ pub(crate) struct Extras {
 
 /// Returns the phase value between 0 and 1 given a time and a frequency
 #[derive(Debug, Deserialize, Clone)]
-pub(crate) struct VoiceGroupNode {
+pub(crate) struct VoicesGroupNode {
     id: usize,
     extras: Extras,
     #[serde(skip)]
     group: Group,
     #[serde(skip)]
-    voice_groups: Vec<VoiceGroup>,
+    voices: Vec<Voice>,
 }
 
-impl VoiceGroupNode {
+impl VoicesGroupNode {
     pub fn set_note_on(&mut self, pitch: f32) {
         let group = self.group.clone();
-        let mut voice_group = VoiceGroup::new(pitch, group);
-        voice_group.set_note_on(pitch);
-        self.voice_groups.push(voice_group);
+        let mut voice_group = Voice::new(pitch, group);
+        voice_group.group.set_note_on(pitch);
+        self.voices.push(voice_group);
     }
 
     pub fn set_note_off(&mut self, pitch: f32) {
-        for voice_group in &mut self.voice_groups {
-            if voice_group.get_pitch() == pitch {
-                voice_group.set_note_off(pitch);
+        for voice_group in &mut self.voices {
+            if voice_group.pitch == pitch {
+                voice_group.group.set_note_off(pitch);
             }
         }
     }
 }
 
-impl NodeTrait for VoiceGroupNode {
+impl NodeTrait for VoicesGroupNode {
     fn process(&mut self, node_values: &ValuesById) -> f32 {
         let mut sum = 0.;
-        for voice_group in &mut self.voice_groups {
-            voice_group.update_input_nodes(node_values, &self.extras.input_target_ids);
-            voice_group.process();
-            sum += voice_group.get_output_value()
+        for voice in &mut self.voices {
+            voice
+                .group
+                .update_input_nodes(node_values, &self.extras.input_target_ids);
+            voice.group.process();
+            sum += voice.group.get_output_value()
         }
         sum
     }
@@ -54,7 +56,7 @@ impl NodeTrait for VoiceGroupNode {
     }
 }
 
-impl HasId for VoiceGroupNode {
+impl HasId for VoicesGroupNode {
     fn get_id(&self) -> usize {
         self.id
     }
