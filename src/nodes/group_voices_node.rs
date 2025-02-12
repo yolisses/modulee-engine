@@ -12,7 +12,7 @@ pub(crate) struct Extras {
 
 /// Returns the phase value between 0 and 1 given a time and a frequency
 #[derive(Debug, Deserialize, Clone)]
-pub(crate) struct VoicesGroupNode {
+pub(crate) struct GroupVoicesNode {
     id: usize,
     extras: Extras,
     #[serde(skip)]
@@ -21,7 +21,7 @@ pub(crate) struct VoicesGroupNode {
     voices: Vec<Voice>,
 }
 
-impl VoicesGroupNode {
+impl GroupVoicesNode {
     pub fn set_note_on(&mut self, pitch: f32) {
         let group = self.group.clone();
         let mut voice_group = Voice::new(pitch, group);
@@ -38,7 +38,7 @@ impl VoicesGroupNode {
     }
 }
 
-impl NodeTrait for VoicesGroupNode {
+impl NodeTrait for GroupVoicesNode {
     fn process(&mut self, node_values: &ValuesById) -> f32 {
         let mut sum = 0.;
         for voice in &mut self.voices {
@@ -56,7 +56,7 @@ impl NodeTrait for VoicesGroupNode {
     }
 }
 
-impl HasId for VoicesGroupNode {
+impl HasId for GroupVoicesNode {
     fn get_id(&self) -> usize {
         self.id
     }
