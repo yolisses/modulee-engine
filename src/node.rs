@@ -3,10 +3,10 @@ use crate::{
     nodes::{
         add_node::AddNode, constant_node::ConstantNode, divide_node::DivideNode,
         frequency_node::FrequencyNode, gate_node::GateNode, group_node::GroupNode,
-        input_node::InputNode, multiply_node::MultiplyNode, output_node::OutputNode,
-        phase_node::PhaseNode, pitch_node::PitchNode, sine_wave_node::SineWaveNode,
-        subtract_node::SubtractNode, time_node::TimeNode, triangle_wave_node::TriangleWaveNode,
-        voice_group_node::VoicesGroupNode,
+        group_voices_node::GroupVoicesNode, input_node::InputNode, multiply_node::MultiplyNode,
+        output_node::OutputNode, phase_node::PhaseNode, pitch_node::PitchNode,
+        sine_wave_node::SineWaveNode, subtract_node::SubtractNode, time_node::TimeNode,
+        triangle_wave_node::TriangleWaveNode,
     },
     sort::has_id::HasId,
     values_by_id::ValuesById,
@@ -30,7 +30,7 @@ pub(crate) enum Node {
     MultiplyNode(MultiplyNode),
     SineWaveNode(SineWaveNode),
     FrequencyNode(FrequencyNode),
-    VoicesGroupNode(VoicesGroupNode),
+    GroupVoicesNode(GroupVoicesNode),
     TriangleWaveNode(TriangleWaveNode),
 }
 
@@ -53,7 +53,7 @@ impl NodeTrait for Node {
             Node::MultiplyNode(node) => node.process(node_values),
             Node::SineWaveNode(node) => node.process(node_values),
             Node::FrequencyNode(node) => node.process(node_values),
-            Node::VoicesGroupNode(node) => node.process(node_values),
+            Node::GroupVoicesNode(node) => node.process(node_values),
             Node::TriangleWaveNode(node) => node.process(node_values),
         }
     }
@@ -74,7 +74,7 @@ impl NodeTrait for Node {
             Node::MultiplyNode(node) => node.get_input_ids(),
             Node::SineWaveNode(node) => node.get_input_ids(),
             Node::FrequencyNode(node) => node.get_input_ids(),
-            Node::VoicesGroupNode(node) => node.get_input_ids(),
+            Node::GroupVoicesNode(node) => node.get_input_ids(),
             Node::TriangleWaveNode(node) => node.get_input_ids(),
         }
     }
@@ -97,7 +97,7 @@ impl HasId for Node {
             Node::MultiplyNode(node) => node.get_id(),
             Node::SineWaveNode(node) => node.get_id(),
             Node::FrequencyNode(node) => node.get_id(),
-            Node::VoicesGroupNode(node) => node.get_id(),
+            Node::GroupVoicesNode(node) => node.get_id(),
             Node::TriangleWaveNode(node) => node.get_id(),
         }
     }
