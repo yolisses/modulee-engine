@@ -13,3 +13,4 @@ pub(crate) mod sine_wave_node;
 pub(crate) mod subtract_node;
 pub(crate) mod time_node;
 pub(crate) mod triangle_wave_node;
+pub(crate) mod voice_group_node;

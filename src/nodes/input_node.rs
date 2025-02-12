@@ -1,7 +1,7 @@
 use crate::{node_trait::NodeTrait, sort::has_id::HasId, values_by_id::ValuesById};
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub(crate) struct InputNode {
     id: usize,
     #[serde(skip)]

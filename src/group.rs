@@ -7,7 +7,7 @@ use crate::{
 use serde::Deserialize;
 use std::collections::HashMap;
 
-#[derive(Debug, Deserialize, Default)]
+#[derive(Debug, Deserialize, Default, Clone)]
 pub struct Group {
     id: usize,
     nodes: Vec<Node>,
@@ -76,6 +76,9 @@ impl Group {
                 Node::GateNode(gate_node) => {
                     gate_node.set_is_active(true);
                 }
+                Node::VoiceGroupNode(voice_group_node) => {
+                    voice_group_node.set_note_on(pitch);
+                }
                 _ => (),
             }
         }
@@ -87,8 +90,14 @@ impl Group {
             return;
         }
         for node in &mut self.nodes {
-            if let Node::GateNode(gate_node) = node {
-                gate_node.set_is_active(false);
+            match node {
+                Node::GateNode(gate_node) => {
+                    gate_node.set_is_active(false);
+                }
+                Node::VoiceGroupNode(voice_group_node) => {
+                    voice_group_node.set_note_off(pitch);
+                }
+                _ => (),
             }
         }
     }

@@ -1,13 +1,13 @@
 use crate::{node_trait::NodeTrait, sort::has_id::HasId, values_by_id::ValuesById};
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub(crate) struct InputIds {
     input1: usize,
     input2: usize,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub(crate) struct MultiplyNode {
     id: usize,
     input_ids: InputIds,

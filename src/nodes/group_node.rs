@@ -2,13 +2,13 @@ use crate::{group::Group, node_trait::NodeTrait, sort::has_id::HasId, values_by_
 use serde::Deserialize;
 use std::collections::HashMap;
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub(crate) struct Extras {
     input_target_ids: HashMap<usize, usize>,
 }
 
 /// Returns the phase value between 0 and 1 given a time and a frequency
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub(crate) struct GroupNode {
     id: usize,
     extras: Extras,
