@@ -3,13 +3,13 @@ use crate::{
 };
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub(crate) struct InputIds {
     frequency: usize,
 }
 
 /// Returns the phase value between 0 and 1 given a time and a frequency
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub(crate) struct PhaseNode {
     id: usize,
     input_ids: InputIds,

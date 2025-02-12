@@ -4,7 +4,7 @@ use crate::{
 use serde::Deserialize;
 
 /// Returns the current time in seconds
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub(crate) struct TimeNode {
     id: usize,
     #[serde(skip)]
