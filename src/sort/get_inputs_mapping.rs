@@ -1,8 +1,8 @@
-use super::{has_id::HasId, inputs_mapping::InputsMapping};
-use crate::{node::Node, node_trait::NodeTrait};
+use super::inputs_mapping::InputsMapping;
+use crate::node_trait::NodeTrait;
 use std::collections::HashMap;
 
-pub(crate) fn get_inputs_mapping(nodes: &Vec<Node>) -> InputsMapping {
+pub(crate) fn get_inputs_mapping(nodes: &Vec<impl NodeTrait>) -> InputsMapping {
     let mut inputs_mapping: InputsMapping = HashMap::new();
 
     for node in nodes {
