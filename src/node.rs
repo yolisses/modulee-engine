@@ -1,3 +1,5 @@
+use std::error::Error;
+
 use crate::{
     node_trait::NodeTrait,
     nodes::{
@@ -35,6 +37,11 @@ pub(crate) enum Node {
 }
 
 // TODO create a macro to reduce the code duplication
+impl Node {
+    pub(crate) fn update(&mut self, other_node: &Self) -> Result<(), Box<dyn Error>> {
+        Ok(())
+    }
+}
 
 impl NodeTrait for Node {
     fn process(&mut self, node_values: &ValuesById) -> f32 {

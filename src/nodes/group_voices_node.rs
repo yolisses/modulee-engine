@@ -24,14 +24,14 @@ pub(crate) struct GroupVoicesNode {
 }
 
 impl GroupVoicesNode {
-    pub fn set_note_on(&mut self, pitch: f32) {
+    pub(crate) fn set_note_on(&mut self, pitch: f32) {
         let group = self.group.clone();
         let mut voice_group = Voice::new(pitch, group);
         voice_group.group.set_note_on(pitch);
         self.voices.push(voice_group);
     }
 
-    pub fn set_note_off(&mut self, pitch: f32) {
+    pub(crate) fn set_note_off(&mut self, pitch: f32) {
         for voice_group in &mut self.voices {
             if voice_group.pitch == pitch {
                 voice_group.group.set_note_off(pitch);
