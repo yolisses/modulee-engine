@@ -1,6 +1,6 @@
 use crate::{group::Group, node_trait::NodeTrait, sort::has_id::HasId, values_by_id::ValuesById};
 use serde::Deserialize;
-use std::collections::HashMap;
+use std::{collections::HashMap, error::Error};
 
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct Extras {
@@ -14,6 +14,24 @@ pub(crate) struct GroupNode {
     extras: Extras,
     #[serde(skip)]
     group: Group,
+}
+
+impl GroupNode {
+    pub(crate) fn update_groups(
+        &mut self,
+        new_groups: &HashMap<usize, Group>,
+    ) -> Result<(), Box<dyn Error>> {
+        if let Some(new_group) = new_groups.get(&self.group.get_id()) {
+            self.group.update(new_group)?;
+        } else {
+            panic!(
+                "Can't find a group with id {} to update group node with id {}",
+                self.group.get_id(),
+                self.get_id()
+            )
+        }
+        Ok(())
+    }
 }
 
 impl NodeTrait for GroupNode {
