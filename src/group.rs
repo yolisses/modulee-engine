@@ -5,7 +5,7 @@ use crate::{
     values_by_id::ValuesById,
 };
 use serde::Deserialize;
-use std::collections::HashMap;
+use std::{collections::HashMap, error::Error};
 
 #[derive(Debug, Deserialize, Default, Clone)]
 pub struct Group {
@@ -29,7 +29,7 @@ impl HasId for Group {
 
 // TODO make polyphonic
 impl Group {
-    pub(crate) fn sort_nodes_topologically(&mut self) -> Result<(), String> {
+    fn sort_nodes_topologically(&mut self) -> Result<(), String> {
         sort_nodes_topologically(&mut self.nodes)
     }
 
@@ -49,7 +49,7 @@ impl Group {
         }
     }
 
-    pub fn get_output_value(&self) -> f32 {
+    pub(crate) fn get_output_value(&self) -> f32 {
         for node in &self.nodes {
             match node {
                 Node::OutputNode(output_node) => return output_node.get_value(),
@@ -59,7 +59,7 @@ impl Group {
         0.
     }
 
-    pub fn process(&mut self) {
+    pub(crate) fn process(&mut self) {
         let mut node_values = ValuesById::new();
         for node in &mut self.nodes {
             let value = node.process(&node_values);
@@ -67,9 +67,32 @@ impl Group {
         }
     }
 
-    pub(crate) fn update(&mut self, other_group: &Self) {}
+    pub(crate) fn update(&mut self, other_group: &Self) -> Result<(), Box<dyn Error>> {
+        let new_nodes = &other_group.nodes;
 
-    pub fn set_note_on(&mut self, pitch: f32) {
+        // Remove nodes not present in new groups
+        self.nodes.retain(|node| {
+            new_nodes
+                .iter()
+                .any(|new_node| new_node.get_id() == node.get_id())
+        });
+
+        for new_node in new_nodes {
+            let id = new_node.get_id();
+            // Update a node if present in nodes. Saves a copy of the new node
+            // otherwise
+            if let Some(node) = self.nodes.get_mut(id) {
+                node.update(&new_node)?;
+            } else {
+                self.nodes.push(new_node.clone());
+            }
+        }
+
+        self.sort_nodes_topologically()?;
+        Ok(())
+    }
+
+    pub(crate) fn set_note_on(&mut self, pitch: f32) {
         for node in &mut self.nodes {
             match node {
                 Node::PitchNode(pitch_node) => {
@@ -87,7 +110,7 @@ impl Group {
         self.last_pitch = pitch;
     }
 
-    pub fn set_note_off(&mut self, pitch: f32) {
+    pub(crate) fn set_note_off(&mut self, pitch: f32) {
         if self.last_pitch != pitch {
             return;
         }

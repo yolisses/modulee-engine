@@ -1,5 +1,5 @@
 use crate::{group::Group, groups_by_id::GroupsById, sort::has_id::HasId};
-use std::collections::HashMap;
+use std::{collections::HashMap, error::Error};
 
 // TODO find a better name for this
 #[derive(Debug, Default)]
@@ -17,24 +17,19 @@ impl Graph {
         }
     }
 
-    pub fn set_groups_from_json(
-        &mut self,
-        groups_json: &str,
-    ) -> Result<(), Box<dyn std::error::Error>> {
+    pub fn set_groups_from_json(&mut self, groups_json: &str) -> Result<(), Box<dyn Error>> {
         let new_groups: Vec<Group> = serde_json::from_str(groups_json)?;
 
-        // Remove not groups present in new groups
+        // Remove groups not present in new groups
         self.groups_by_id
             .retain(|id, _| new_groups.iter().any(|new_group| new_group.get_id() == *id));
 
-        for mut new_group in new_groups {
-            new_group.sort_nodes_topologically()?;
+        for new_group in new_groups {
             let id = new_group.get_id();
-
             // Update a group if present in groups. Saves the new group
             // otherwise
             if let Some(group) = self.groups_by_id.get_mut(&id) {
-                group.update(&new_group);
+                group.update(&new_group)?;
             } else {
                 self.groups_by_id.insert(id, new_group);
             }
