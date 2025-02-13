@@ -25,6 +25,8 @@ impl GroupNode {
         if let Some(new_group) = new_groups.get(&self.extras.target_group_id) {
             if let Some(group) = &mut self.group {
                 group.update(new_group)?;
+            } else {
+                self.group = Some(new_group.clone());
             }
         } else {
             panic!(
