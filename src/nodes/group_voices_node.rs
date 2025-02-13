@@ -3,11 +3,11 @@ use crate::{
     voice::Voice,
 };
 use serde::Deserialize;
-use std::collections::HashMap;
+use std::{collections::HashMap, error::Error};
 
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct Extras {
-    // target_group_id: usize,
+    target_group_id: usize,
     input_target_ids: HashMap<usize, usize>,
 }
 
@@ -25,6 +25,25 @@ pub(crate) struct GroupVoicesNode {
 }
 
 impl GroupVoicesNode {
+    pub(crate) fn update_groups(
+        &mut self,
+        new_groups: &HashMap<usize, Group>,
+    ) -> Result<(), Box<dyn Error>> {
+        if let Some(new_group) = new_groups.get(&self.extras.target_group_id) {
+            // If the group already exists, updates it
+            if let Some(group) = &mut self.group {
+                group.update(new_group)?;
+            } else {
+                // If the group don't exist, saves it
+                self.group = Some(new_group.clone());
+            }
+        } else {
+            // If there's no new group version, deletes the group
+            self.group = None;
+        }
+        Ok(())
+    }
+
     // It basically ignores note on if there's no group. TODO make it have a
     // reference to play the note in case of a proper group is set after the
     // node start

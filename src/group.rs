@@ -98,8 +98,14 @@ impl Group {
         new_groups: &HashMap<usize, Group>,
     ) -> Result<(), Box<dyn Error>> {
         for node in &mut self.nodes {
-            if let Node::GroupNode(group_node) = node {
-                group_node.update_groups(new_groups)?;
+            match node {
+                Node::GroupNode(group_node) => {
+                    group_node.update_groups(new_groups)?;
+                }
+                Node::GroupVoicesNode(group_voices_node) => {
+                    group_voices_node.update_groups(new_groups)?;
+                }
+                _ => (),
             }
         }
         Ok(())

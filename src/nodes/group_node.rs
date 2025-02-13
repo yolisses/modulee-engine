@@ -23,17 +23,16 @@ impl GroupNode {
         new_groups: &HashMap<usize, Group>,
     ) -> Result<(), Box<dyn Error>> {
         if let Some(new_group) = new_groups.get(&self.extras.target_group_id) {
+            // If the group already exists, updates it
             if let Some(group) = &mut self.group {
                 group.update(new_group)?;
             } else {
+                // If the group don't exist, saves it
                 self.group = Some(new_group.clone());
             }
         } else {
-            panic!(
-                "Can't find a group with id {} to update group node with id {}",
-                self.extras.target_group_id,
-                self.get_id()
-            )
+            // If there's no new group version, deletes the group
+            self.group = None;
         }
         Ok(())
     }
