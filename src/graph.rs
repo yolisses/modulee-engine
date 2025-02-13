@@ -21,19 +21,22 @@ impl Graph {
         &mut self,
         groups_json: &str,
     ) -> Result<(), Box<dyn std::error::Error>> {
-        let groups: Vec<Group> = serde_json::from_str(groups_json)?;
+        let new_groups: Vec<Group> = serde_json::from_str(groups_json)?;
 
-        // Remove not present groups
+        // Remove not groups present in new groups
         self.groups_by_id
-            .retain(|id, _| groups.iter().any(|group| group.get_id() == *id));
+            .retain(|id, _| new_groups.iter().any(|new_group| new_group.get_id() == *id));
 
-        for mut group in groups {
-            group.sort_nodes_topologically()?;
-            let id = group.get_id();
-            if let Some(previous_group) = self.groups_by_id.get_mut(&id) {
-                previous_group.update(&group);
+        for mut new_group in new_groups {
+            new_group.sort_nodes_topologically()?;
+            let id = new_group.get_id();
+
+            // Update a group if present in groups. Saves the new group
+            // otherwise
+            if let Some(group) = self.groups_by_id.get_mut(&id) {
+                group.update(&new_group);
             } else {
-                self.groups_by_id.insert(id, group);
+                self.groups_by_id.insert(id, new_group);
             }
         }
 
