@@ -92,6 +92,18 @@ impl Group {
         Ok(())
     }
 
+    pub(crate) fn update_groups_in_nodes(
+        &mut self,
+        new_groups: &HashMap<usize, Group>,
+    ) -> Result<(), Box<dyn Error>> {
+        for node in &mut self.nodes {
+            if let Node::GroupNode(group_node) = node {
+                group_node.update_groups(new_groups)?;
+            }
+        }
+        Ok(())
+    }
+
     pub(crate) fn set_note_on(&mut self, pitch: f32) {
         for node in &mut self.nodes {
             match node {

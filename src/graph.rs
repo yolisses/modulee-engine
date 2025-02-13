@@ -17,9 +17,7 @@ impl Graph {
         }
     }
 
-    pub fn set_groups_from_json(&mut self, groups_json: &str) -> Result<(), Box<dyn Error>> {
-        let new_groups: Vec<Group> = serde_json::from_str(groups_json)?;
-
+    pub fn set_groups(&mut self, new_groups: Vec<Group>) -> Result<(), Box<dyn Error>> {
         // Remove groups not present in new groups
         self.groups_by_id
             .retain(|id, _| new_groups.iter().any(|new_group| new_group.get_id() == *id));
@@ -36,6 +34,11 @@ impl Graph {
         }
 
         Ok(())
+    }
+
+    pub fn set_groups_from_json(&mut self, groups_json: &str) -> Result<(), Box<dyn Error>> {
+        let new_groups: Vec<Group> = serde_json::from_str(groups_json)?;
+        self.set_groups(new_groups)
     }
 
     pub fn get_output_value(&self) -> f32 {
