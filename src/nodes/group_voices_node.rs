@@ -7,6 +7,7 @@ use std::collections::HashMap;
 
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct Extras {
+    // target_group_id: usize,
     input_target_ids: HashMap<usize, usize>,
 }
 
@@ -18,17 +19,22 @@ pub(crate) struct GroupVoicesNode {
     // TODO fix group instantiation. Currently it only creates an empty group.
     // It should clone a group from graph.
     #[serde(skip)]
-    group: Group,
-    #[serde(skip)]
     voices: Vec<Voice>,
+    #[serde(skip)]
+    group: Option<Group>,
 }
 
 impl GroupVoicesNode {
+    // It basically ignores note on if there's no group. TODO make it have a
+    // reference to play the note in case of a proper group is set after the
+    // node start
     pub(crate) fn set_note_on(&mut self, pitch: f32) {
-        let group = self.group.clone();
-        let mut voice_group = Voice::new(pitch, group);
-        voice_group.group.set_note_on(pitch);
-        self.voices.push(voice_group);
+        if let Some(group) = &self.group {
+            let group = group.clone();
+            let mut voice_group = Voice::new(pitch, group);
+            voice_group.group.set_note_on(pitch);
+            self.voices.push(voice_group);
+        }
     }
 
     pub(crate) fn set_note_off(&mut self, pitch: f32) {

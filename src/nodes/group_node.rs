@@ -4,6 +4,7 @@ use std::{collections::HashMap, error::Error};
 
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct Extras {
+    target_group_id: usize,
     input_target_ids: HashMap<usize, usize>,
 }
 
@@ -13,7 +14,7 @@ pub(crate) struct GroupNode {
     id: usize,
     extras: Extras,
     #[serde(skip)]
-    group: Group,
+    group: Option<Group>,
 }
 
 impl GroupNode {
@@ -21,12 +22,14 @@ impl GroupNode {
         &mut self,
         new_groups: &HashMap<usize, Group>,
     ) -> Result<(), Box<dyn Error>> {
-        if let Some(new_group) = new_groups.get(&self.group.get_id()) {
-            self.group.update(new_group)?;
+        if let Some(new_group) = new_groups.get(&self.extras.target_group_id) {
+            if let Some(group) = &mut self.group {
+                group.update(new_group)?;
+            }
         } else {
             panic!(
                 "Can't find a group with id {} to update group node with id {}",
-                self.group.get_id(),
+                self.extras.target_group_id,
                 self.get_id()
             )
         }
@@ -36,11 +39,14 @@ impl GroupNode {
 
 impl NodeTrait for GroupNode {
     fn process(&mut self, node_values: &ValuesById) -> f32 {
-        self.group
-            .update_input_nodes(node_values, &self.extras.input_target_ids);
-        self.group.process();
-        // TODO use all outputs
-        self.group.get_output_value()
+        if let Some(group) = &mut self.group {
+            group.update_input_nodes(node_values, &self.extras.input_target_ids);
+            group.process();
+            // TODO use all outputs
+            group.get_output_value()
+        } else {
+            0.
+        }
     }
 
     fn get_input_ids(&self) -> Vec<usize> {

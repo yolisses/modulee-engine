@@ -7,7 +7,7 @@ use crate::{
 use serde::Deserialize;
 use std::{collections::HashMap, error::Error};
 
-#[derive(Debug, Deserialize, Default, Clone)]
+#[derive(Debug, Deserialize, Clone)]
 pub struct Group {
     id: usize,
     nodes: Vec<Node>,
@@ -67,8 +67,8 @@ impl Group {
         }
     }
 
-    pub(crate) fn update(&mut self, other_group: &Self) -> Result<(), Box<dyn Error>> {
-        let new_nodes = &other_group.nodes;
+    pub(crate) fn update(&mut self, new_group: &Group) -> Result<(), Box<dyn Error>> {
+        let new_nodes = &new_group.nodes;
 
         // Remove nodes not present in new groups
         self.nodes.retain(|node| {
@@ -81,7 +81,8 @@ impl Group {
             let id = new_node.get_id();
             // Update a node if present in nodes. Saves a copy of the new node
             // otherwise
-            if let Some(node) = self.nodes.get_mut(id) {
+            let node_option = self.nodes.iter_mut().find(|node| node.get_id() == id);
+            if let Some(node) = node_option {
                 node.update(&new_node)?;
             } else {
                 self.nodes.push(new_node.clone());
