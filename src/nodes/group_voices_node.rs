@@ -15,6 +15,8 @@ pub(crate) struct Extras {
 pub(crate) struct GroupVoicesNode {
     id: usize,
     extras: Extras,
+    // TODO fix group instantiation. Currently it only creates an empty group.
+    // It should clone a group from graph.
     #[serde(skip)]
     group: Group,
     #[serde(skip)]
