@@ -67,6 +67,8 @@ impl Group {
         }
     }
 
+    pub(crate) fn update(&mut self, other_group: &Self) {}
+
     pub fn set_note_on(&mut self, pitch: f32) {
         for node in &mut self.nodes {
             match node {

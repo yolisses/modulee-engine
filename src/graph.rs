@@ -1,4 +1,4 @@
-use crate::{get_items_by_id::get_items_by_id, group::Group, groups_by_id::GroupsById};
+use crate::{group::Group, groups_by_id::GroupsById, sort::has_id::HasId};
 use std::collections::HashMap;
 
 // TODO find a better name for this
@@ -21,13 +21,21 @@ impl Graph {
         &mut self,
         groups_json: &str,
     ) -> Result<(), Box<dyn std::error::Error>> {
-        let mut groups: Vec<Group> = serde_json::from_str(groups_json)?;
+        let groups: Vec<Group> = serde_json::from_str(groups_json)?;
 
-        for group in &mut groups {
-            group.sort_nodes_topologically()?
+        // Remove not present groups
+        self.groups_by_id
+            .retain(|id, _| groups.iter().any(|group| group.get_id() == *id));
+
+        for mut group in groups {
+            group.sort_nodes_topologically()?;
+            let id = group.get_id();
+            if let Some(previous_group) = self.groups_by_id.get_mut(&id) {
+                previous_group.update(&group);
+            } else {
+                self.groups_by_id.insert(id, group);
+            }
         }
-
-        self.groups_by_id = get_items_by_id(groups);
 
         Ok(())
     }
