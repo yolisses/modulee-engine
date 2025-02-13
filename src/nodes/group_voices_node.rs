@@ -1,13 +1,13 @@
 use crate::{
-    group::Group, node_trait::NodeTrait, sort::has_id::HasId, values_by_id::ValuesById,
-    voice::Voice,
+    get_updated_group::get_updated_group, group::Group, node_trait::NodeTrait, sort::has_id::HasId,
+    values_by_id::ValuesById, voice::Voice,
 };
 use serde::Deserialize;
 use std::{collections::HashMap, error::Error};
 
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct Extras {
-    target_group_id: usize,
+    target_group_id: Option<usize>,
     input_target_ids: HashMap<usize, usize>,
 }
 
@@ -29,18 +29,7 @@ impl GroupVoicesNode {
         &mut self,
         new_groups: &HashMap<usize, Group>,
     ) -> Result<(), Box<dyn Error>> {
-        if let Some(new_group) = new_groups.get(&self.extras.target_group_id) {
-            // If the group already exists, updates it
-            if let Some(group) = &mut self.group {
-                group.update(new_group)?;
-            } else {
-                // If the group don't exist, saves it
-                self.group = Some(new_group.clone());
-            }
-        } else {
-            // If there's no new group version, deletes the group
-            self.group = None;
-        }
+        self.group = get_updated_group(self.group.take(), self.extras.target_group_id, new_groups)?;
         Ok(())
     }
 

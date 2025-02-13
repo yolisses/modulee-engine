@@ -29,10 +29,6 @@ impl HasId for Group {
 
 // TODO make polyphonic
 impl Group {
-    fn sort_nodes_topologically(&mut self) -> Result<(), String> {
-        sort_nodes_topologically(&mut self.nodes)
-    }
-
     // This may be a violation of the responsibility division, but improves
     // performance
     pub(crate) fn update_input_nodes(
@@ -89,7 +85,7 @@ impl Group {
             }
         }
 
-        self.sort_nodes_topologically()?;
+        sort_nodes_topologically(&mut self.nodes)?;
         Ok(())
     }
 
