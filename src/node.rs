@@ -38,7 +38,7 @@ pub(crate) enum Node {
 
 // TODO create a macro to reduce the code duplication
 impl Node {
-    pub(crate) fn update(&mut self, other_node: &Self) -> Result<(), Box<dyn Error>> {
+    pub(crate) fn update(&mut self, _other_node: &Self) -> Result<(), Box<dyn Error>> {
         Ok(())
     }
 }
