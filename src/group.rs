@@ -63,6 +63,11 @@ impl Group {
         }
     }
 
+    pub(crate) fn sort_nodes_topologically(&mut self) -> Result<(), Box<dyn Error>> {
+        sort_nodes_topologically(&mut self.nodes)?;
+        Ok(())
+    }
+
     pub(crate) fn update(&mut self, new_group: &Group) -> Result<(), Box<dyn Error>> {
         let new_nodes = &new_group.nodes;
 
@@ -85,7 +90,7 @@ impl Group {
             }
         }
 
-        sort_nodes_topologically(&mut self.nodes)?;
+        self.sort_nodes_topologically()?;
         Ok(())
     }
 

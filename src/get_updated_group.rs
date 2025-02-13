@@ -14,7 +14,9 @@ pub(crate) fn get_updated_group(
                 group.update(new_group)?;
                 return Ok(Some(group));
             } else {
-                return Ok(Some(new_group.clone()));
+                let mut group = new_group.clone();
+                group.sort_nodes_topologically()?;
+                return Ok(Some(group));
             }
         } else {
             return Ok(None);
