@@ -37,6 +37,18 @@ impl GroupNode {
         }
         Ok(())
     }
+
+    pub(crate) fn set_note_on(&mut self, pitch: f32) {
+        if let Some(group) = &mut self.group {
+            group.set_note_on(pitch);
+        }
+    }
+
+    pub(crate) fn set_note_off(&mut self, pitch: f32) {
+        if let Some(group) = &mut self.group {
+            group.set_note_off(pitch);
+        }
+    }
 }
 
 impl NodeTrait for GroupNode {

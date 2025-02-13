@@ -114,6 +114,9 @@ impl Group {
                 Node::GateNode(gate_node) => {
                     gate_node.set_is_active(true);
                 }
+                Node::GroupNode(group_node) => {
+                    group_node.set_note_on(pitch);
+                }
                 Node::GroupVoicesNode(voice_group_node) => {
                     voice_group_node.set_note_on(pitch);
                 }
@@ -131,6 +134,9 @@ impl Group {
             match node {
                 Node::GateNode(gate_node) => {
                     gate_node.set_is_active(false);
+                }
+                Node::GroupNode(group_node) => {
+                    group_node.set_note_off(pitch);
                 }
                 Node::GroupVoicesNode(voice_group_node) => {
                     voice_group_node.set_note_off(pitch);
