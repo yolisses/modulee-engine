@@ -23,13 +23,28 @@ pub(crate) fn update_shifts(
 mod tests {
     use super::*;
 
+    fn create_inputs_mapping(data: &[(usize, Vec<usize>)]) -> InputsMapping {
+        let mut inputs_mapping = InputsMapping::default();
+        for (key, value) in data {
+            inputs_mapping.insert(*key, value.clone());
+        }
+        inputs_mapping
+    }
+
+    fn create_shifts(data: &[(usize, usize)]) -> Shifts {
+        let mut shifts = Shifts::default();
+        for (key, value) in data {
+            shifts.insert(*key, *value);
+        }
+        shifts
+    }
+
     #[test]
     fn test_update_shifts_without_inputs() {
         let node_id = 1;
         let mut counter = 0;
-        let mut shifts: Shifts = Shifts::new();
-        let inputs_mapping: InputsMapping =
-            InputsMapping::from([(1, vec![]), (2, vec![3]), (3, vec![])]);
+        let mut shifts = create_shifts(&[]);
+        let inputs_mapping = create_inputs_mapping(&[(1, vec![]), (2, vec![3]), (3, vec![])]);
 
         update_shifts(node_id, &mut shifts, &mut counter, &inputs_mapping);
 
@@ -37,15 +52,15 @@ mod tests {
         1 -> 1
         */
 
-        assert_eq!(shifts, Shifts::from([(1, 1)]))
+        assert_eq!(shifts, create_shifts(&[(1, 1)]))
     }
 
     #[test]
     fn test_update_shifts_directly() {
         let node_id = 1;
         let mut counter = 0;
-        let mut shifts: Shifts = Shifts::new();
-        let inputs_mapping: InputsMapping = InputsMapping::from([
+        let mut shifts = create_shifts(&[]);
+        let inputs_mapping = create_inputs_mapping(&[
             (1, vec![2, 3]),
             (2, vec![5]),
             (3, vec![]),
@@ -62,15 +77,15 @@ mod tests {
             3 -> 3
         */
 
-        assert_eq!(shifts, Shifts::from([(1, 4), (2, 2), (5, 1), (3, 3),]))
+        assert_eq!(shifts, create_shifts(&[(1, 4), (2, 2), (5, 1), (3, 3)]))
     }
 
     #[test]
     fn test_update_shifts_with_recalculation() {
         let node_id = 1;
         let mut counter = 0;
-        let mut shifts: Shifts = Shifts::new();
-        let inputs_mapping: InputsMapping = InputsMapping::from([
+        let mut shifts = create_shifts(&[]);
+        let inputs_mapping = create_inputs_mapping(&[
             (1, vec![2, 3]),
             (2, vec![5]),
             (3, vec![5]),
@@ -88,15 +103,15 @@ mod tests {
                 5
         */
 
-        assert_eq!(shifts, Shifts::from([(5, 1), (2, 2), (3, 3), (1, 4),]))
+        assert_eq!(shifts, create_shifts(&[(5, 1), (2, 2), (3, 3), (1, 4)]))
     }
 
     #[test]
     fn test_update_shifts_with_long_sequence() {
         let node_id = 3;
         let mut counter = 0;
-        let mut shifts: Shifts = Shifts::new();
-        let inputs_mapping: InputsMapping = InputsMapping::from([
+        let mut shifts = create_shifts(&[]);
+        let inputs_mapping = create_inputs_mapping(&[
             (2, vec![]),
             (3, vec![4, 7]),
             (7, vec![1, 6]),
@@ -122,7 +137,7 @@ mod tests {
 
         assert_eq!(
             shifts,
-            Shifts::from([(2, 1), (5, 2), (4, 3), (1, 4), (6, 5), (7, 6), (3, 7),])
+            create_shifts(&[(2, 1), (5, 2), (4, 3), (1, 4), (6, 5), (7, 6), (3, 7)])
         )
     }
 }
