@@ -47,10 +47,7 @@ impl Group {
 
     pub(crate) fn get_output_value(&self) -> f32 {
         for node in &self.nodes {
-            match node {
-                Node::OutputNode(output_node) => return output_node.get_value(),
-                _ => (),
-            }
+            if let Node::OutputNode(output_node) = node { return output_node.get_value() }
         }
         0.
     }
@@ -84,7 +81,7 @@ impl Group {
             // otherwise
             let node_option = self.nodes.iter_mut().find(|node| node.get_id() == id);
             if let Some(node) = node_option {
-                node.update(&new_node)?;
+                node.update(new_node)?;
             } else {
                 self.nodes.push(new_node.clone());
             }

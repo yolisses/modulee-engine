@@ -9,7 +9,7 @@ pub(crate) fn get_topologically_sorted_node_indexes(inputs_mapping: &InputsMappi
     let mut node_ids: Vec<_> = inputs_mapping.keys().cloned().collect();
     node_ids.sort();
     for node_id in node_ids {
-        update_shifts(node_id, &mut shifts, &mut counter, &inputs_mapping);
+        update_shifts(node_id, &mut shifts, &mut counter, inputs_mapping);
     }
 
     shifts
