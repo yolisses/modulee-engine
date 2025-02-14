@@ -12,16 +12,16 @@ pub(crate) fn get_updated_group(
         if let Some(new_group) = new_groups.get(&group_id) {
             if let Some(mut group) = group {
                 group.update(new_group)?;
-                return Ok(Some(group));
+                Ok(Some(group))
             } else {
                 let mut group = new_group.clone();
                 group.sort_nodes_topologically()?;
-                return Ok(Some(group));
+                Ok(Some(group))
             }
         } else {
-            return Ok(None);
+            Ok(None)
         }
     } else {
-        return Ok(None);
+        Ok(None)
     }
 }

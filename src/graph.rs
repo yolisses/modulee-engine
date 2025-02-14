@@ -29,11 +29,11 @@ impl Graph {
                 .any(|(new_group_id, _)| new_group_id == group_id)
         });
 
-        for (_, new_group) in &new_groups {
+        for new_group in new_groups.values() {
             // Update a group if present in groups. Saves the new group
             // otherwise
             if let Some(group) = self.groups_by_id.get_mut(&new_group.get_id()) {
-                group.update(&new_group)?;
+                group.update(new_group)?;
             } else {
                 self.groups_by_id
                     .insert(new_group.get_id(), new_group.clone());
@@ -41,7 +41,7 @@ impl Graph {
         }
 
         let current_groups = self.groups_by_id.clone();
-        for (_, group) in &mut self.groups_by_id {
+        for group in self.groups_by_id.values_mut() {
             group.update_groups_in_nodes(&current_groups)?;
         }
 
@@ -58,7 +58,7 @@ impl Graph {
             let main_group = self.groups_by_id.get(&main_group_id).unwrap();
             main_group.get_output_value()
         } else {
-            return 0.;
+            0.
         }
     }
 
@@ -79,13 +79,13 @@ impl Graph {
     }
 
     pub fn set_note_on(&mut self, pitch: f32) {
-        for (_, group) in &mut self.groups_by_id {
+        for group in self.groups_by_id.values_mut() {
             group.set_note_on(pitch);
         }
     }
 
     pub fn set_note_off(&mut self, pitch: f32) {
-        for (_, group) in &mut self.groups_by_id {
+        for group in self.groups_by_id.values_mut() {
             group.set_note_off(pitch);
         }
     }
