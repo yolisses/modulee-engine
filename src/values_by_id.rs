@@ -1,3 +1,3 @@
-use std::collections::HashMap;
+use nohash_hasher::IntMap;
 
-pub(crate) type ValuesById = HashMap<usize, f32>;
+pub(crate) type ValuesById = IntMap<usize, f32>;

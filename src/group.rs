@@ -4,8 +4,9 @@ use crate::{
     sort::{has_id::HasId, sort_nodes_topologically::sort_nodes_topologically},
     values_by_id::ValuesById,
 };
+use nohash_hasher::IntMap;
 use serde::Deserialize;
-use std::{collections::HashMap, error::Error};
+use std::error::Error;
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct Group {
@@ -34,7 +35,7 @@ impl Group {
     pub(crate) fn update_input_nodes(
         &mut self,
         node_values: &ValuesById,
-        input_target_ids: &HashMap<usize, usize>,
+        input_target_ids: &IntMap<usize, usize>,
     ) {
         for node in &mut self.nodes {
             if let Node::InputNode(input_node) = node {
@@ -47,13 +48,15 @@ impl Group {
 
     pub(crate) fn get_output_value(&self) -> f32 {
         for node in &self.nodes {
-            if let Node::OutputNode(output_node) = node { return output_node.get_value() }
+            if let Node::OutputNode(output_node) = node {
+                return output_node.get_value();
+            }
         }
         0.
     }
 
     pub(crate) fn process(&mut self) {
-        let mut node_values = ValuesById::new();
+        let mut node_values = ValuesById::default();
         for node in &mut self.nodes {
             let value = node.process(&node_values);
             node_values.insert(node.get_id(), value);
@@ -93,7 +96,7 @@ impl Group {
 
     pub(crate) fn update_groups_in_nodes(
         &mut self,
-        new_groups: &HashMap<usize, Group>,
+        new_groups: &IntMap<usize, Group>,
     ) -> Result<(), Box<dyn Error>> {
         for node in &mut self.nodes {
             match node {
