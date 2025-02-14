@@ -1,8 +1,8 @@
 use crate::sort::has_id::HasId;
-use std::collections::HashMap;
+use nohash_hasher::IntMap;
 
-pub(crate) fn get_items_by_id<T: HasId>(items: Vec<T>) -> HashMap<usize, T> {
-    let mut map = HashMap::new();
+pub(crate) fn get_items_by_id<T: HasId>(items: Vec<T>) -> IntMap<usize, T> {
+    let mut map = IntMap::default();
     for item in items {
         map.insert(item.get_id(), item);
     }

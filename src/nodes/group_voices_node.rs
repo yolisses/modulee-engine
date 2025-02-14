@@ -2,13 +2,14 @@ use crate::{
     get_updated_group::get_updated_group, group::Group, node_trait::NodeTrait, sort::has_id::HasId,
     values_by_id::ValuesById, voice::Voice,
 };
+use nohash_hasher::IntMap;
 use serde::Deserialize;
-use std::{collections::HashMap, error::Error};
+use std::error::Error;
 
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct Extras {
     target_group_id: Option<usize>,
-    input_target_ids: HashMap<usize, usize>,
+    input_target_ids: IntMap<usize, usize>,
 }
 
 /// Returns the phase value between 0 and 1 given a time and a frequency
@@ -27,7 +28,7 @@ pub(crate) struct GroupVoicesNode {
 impl GroupVoicesNode {
     pub(crate) fn update_groups(
         &mut self,
-        new_groups: &HashMap<usize, Group>,
+        new_groups: &IntMap<usize, Group>,
     ) -> Result<(), Box<dyn Error>> {
         self.group = get_updated_group(self.group.take(), self.extras.target_group_id, new_groups)?;
         Ok(())

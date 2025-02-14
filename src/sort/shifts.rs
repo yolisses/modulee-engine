@@ -1,3 +1,3 @@
-use std::collections::HashMap;
+use nohash_hasher::IntMap;
 
-pub(crate) type Shifts = HashMap<usize, usize>;
+pub(crate) type Shifts = IntMap<usize, usize>;

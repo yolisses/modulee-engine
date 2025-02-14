@@ -2,10 +2,10 @@ use super::{inputs_mapping::InputsMapping, shifts::Shifts, update_shifts::update
 
 pub(crate) fn get_topologically_sorted_node_indexes(inputs_mapping: &InputsMapping) -> Shifts {
     let mut counter = 0;
-    let mut shifts: Shifts = Shifts::new();
+    let mut shifts = Shifts::default();
 
-    // Sort nodes_ids to avoid unpredictable behaviors due to HashMap random
-    // keys order
+    // Sort nodes_ids to avoid unpredictable behaviors due to IntMap random keys
+    // order
     let mut node_ids: Vec<_> = inputs_mapping.keys().cloned().collect();
     node_ids.sort();
     for node_id in node_ids {

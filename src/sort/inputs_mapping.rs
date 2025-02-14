@@ -1,3 +1,3 @@
-use std::collections::HashMap;
+use nohash_hasher::IntMap;
 
-pub(crate) type InputsMapping = HashMap<usize, Vec<usize>>;
+pub(crate) type InputsMapping = IntMap<usize, Vec<usize>>;

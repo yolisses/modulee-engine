@@ -1,4 +1,4 @@
 use crate::group::Group;
-use std::collections::HashMap;
+use nohash_hasher::IntMap;
 
-pub(crate) type GroupsById = HashMap<usize, Group>;
+pub(crate) type GroupsById = IntMap<usize, Group>;

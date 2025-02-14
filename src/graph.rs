@@ -1,7 +1,8 @@
 use crate::{
     get_items_by_id::get_items_by_id, group::Group, groups_by_id::GroupsById, sort::has_id::HasId,
 };
-use std::{collections::HashMap, error::Error};
+use nohash_hasher::IntMap;
+use std::error::Error;
 
 // TODO find a better name for this
 #[derive(Debug, Default)]
@@ -15,7 +16,7 @@ impl Graph {
     pub fn new() -> Self {
         Graph {
             main_group_id: None,
-            groups_by_id: HashMap::new(),
+            groups_by_id: IntMap::default(),
         }
     }
 
