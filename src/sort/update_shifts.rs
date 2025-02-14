@@ -21,23 +21,11 @@ pub(crate) fn update_shifts(
 
 #[cfg(test)]
 mod tests {
+    use crate::sort::tests::{
+        create_inputs_mapping::create_inputs_mapping, create_shifts::create_shifts,
+    };
+
     use super::*;
-
-    fn create_inputs_mapping(data: &[(usize, Vec<usize>)]) -> InputsMapping {
-        let mut inputs_mapping = InputsMapping::default();
-        for (key, value) in data {
-            inputs_mapping.insert(*key, value.clone());
-        }
-        inputs_mapping
-    }
-
-    fn create_shifts(data: &[(usize, usize)]) -> Shifts {
-        let mut shifts = Shifts::default();
-        for (key, value) in data {
-            shifts.insert(*key, *value);
-        }
-        shifts
-    }
 
     #[test]
     fn test_update_shifts_without_inputs() {
