@@ -8,6 +8,7 @@ mod node;
 mod node_trait;
 mod nodes;
 mod sample_rate;
+mod set_note_trait;
 mod sort;
 mod values_by_id;
 mod voice;

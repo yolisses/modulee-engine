@@ -1,5 +1,6 @@
 use crate::{
-    get_items_by_id::get_items_by_id, group::Group, groups_by_id::GroupsById, sort::has_id::HasId,
+    get_items_by_id::get_items_by_id, group::Group, groups_by_id::GroupsById,
+    set_note_trait::SetNoteTrait, sort::has_id::HasId,
 };
 use nohash_hasher::IntMap;
 use std::error::Error;

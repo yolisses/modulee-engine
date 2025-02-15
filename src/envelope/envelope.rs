@@ -1,5 +1,6 @@
 use super::curve::Curve;
 
+#[derive(Debug, Clone)]
 enum EnvelopeState {
     Idle,
     Attack,
@@ -8,7 +9,8 @@ enum EnvelopeState {
     Release,
 }
 
-struct Envelope {
+#[derive(Debug, Clone)]
+pub(crate) struct Envelope {
     decay: f32,
     attack: f32,
     curve: Curve,

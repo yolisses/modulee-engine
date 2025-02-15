@@ -1,6 +1,7 @@
 use crate::{
     node::Node,
     node_trait::NodeTrait,
+    set_note_trait::SetNoteTrait,
     sort::{has_id::HasId, sort_nodes_topologically::sort_nodes_topologically},
     values_by_id::ValuesById,
 };
@@ -118,45 +119,22 @@ impl Group {
         }
         Ok(())
     }
+}
 
-    pub(crate) fn set_note_on(&mut self, pitch: f32) {
+impl SetNoteTrait for Group {
+    fn set_note_on(&mut self, pitch: f32) {
         for node in &mut self.nodes {
-            match node {
-                Node::PitchNode(pitch_node) => {
-                    pitch_node.set_pitch(pitch);
-                }
-                Node::GateNode(gate_node) => {
-                    gate_node.set_is_active(true);
-                }
-                Node::GroupNode(group_node) => {
-                    group_node.set_note_on(pitch);
-                }
-                Node::GroupVoicesNode(voice_group_node) => {
-                    voice_group_node.set_note_on(pitch);
-                }
-                _ => (),
-            }
+            node.set_note_on(pitch);
         }
         self.last_pitch = pitch;
     }
 
-    pub(crate) fn set_note_off(&mut self, pitch: f32) {
+    fn set_note_off(&mut self, pitch: f32) {
         if self.last_pitch != pitch {
             return;
         }
         for node in &mut self.nodes {
-            match node {
-                Node::GateNode(gate_node) => {
-                    gate_node.set_is_active(false);
-                }
-                Node::GroupNode(group_node) => {
-                    group_node.set_note_off(pitch);
-                }
-                Node::GroupVoicesNode(voice_group_node) => {
-                    voice_group_node.set_note_off(pitch);
-                }
-                _ => (),
-            }
+            node.set_note_off(pitch);
         }
     }
 }

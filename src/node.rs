@@ -10,6 +10,7 @@ use crate::{
         sine_wave_node::SineWaveNode, subtract_node::SubtractNode, time_node::TimeNode,
         triangle_wave_node::TriangleWaveNode,
     },
+    set_note_trait::SetNoteTrait,
     sort::has_id::HasId,
     values_by_id::ValuesById,
 };
@@ -106,6 +107,28 @@ impl HasId for Node {
             Node::FrequencyNode(node) => node.get_id(),
             Node::GroupVoicesNode(node) => node.get_id(),
             Node::TriangleWaveNode(node) => node.get_id(),
+        }
+    }
+}
+
+impl SetNoteTrait for Node {
+    fn set_note_on(&mut self, pitch: f32) {
+        match self {
+            Node::GateNode(node) => node.set_note_on(pitch),
+            Node::PitchNode(node) => node.set_note_on(pitch),
+            Node::GroupNode(node) => node.set_note_on(pitch),
+            Node::GroupVoicesNode(node) => node.set_note_on(pitch),
+            _ => (),
+        }
+    }
+
+    fn set_note_off(&mut self, pitch: f32) {
+        match self {
+            Node::GateNode(node) => node.set_note_off(pitch),
+            Node::PitchNode(node) => node.set_note_off(pitch),
+            Node::GroupNode(node) => node.set_note_off(pitch),
+            Node::GroupVoicesNode(node) => node.set_note_off(pitch),
+            _ => (),
         }
     }
 }
