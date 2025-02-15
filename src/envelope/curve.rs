@@ -1,5 +1,6 @@
 use super::get_limited_value::get_limited_value;
 
+#[derive(Debug, Clone)]
 pub(crate) struct Curve {
     to: f32,
     from: f32,

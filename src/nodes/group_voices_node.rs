@@ -1,6 +1,6 @@
 use crate::{
-    get_updated_group::get_updated_group, group::Group, node_trait::NodeTrait, sort::has_id::HasId,
-    values_by_id::ValuesById, voice::Voice,
+    get_updated_group::get_updated_group, group::Group, node_trait::NodeTrait,
+    set_note_trait::SetNoteTrait, sort::has_id::HasId, values_by_id::ValuesById, voice::Voice,
 };
 use nohash_hasher::IntMap;
 use serde::Deserialize;
@@ -33,26 +33,6 @@ impl GroupVoicesNode {
         self.group = get_updated_group(self.group.take(), self.extras.target_group_id, new_groups)?;
         Ok(())
     }
-
-    // It basically ignores note on if there's no group. TODO make it have a
-    // reference to play the note in case of a proper group is set after the
-    // node start
-    pub(crate) fn set_note_on(&mut self, pitch: f32) {
-        if let Some(group) = &self.group {
-            let group = group.clone();
-            let mut voice_group = Voice::new(pitch, group);
-            voice_group.group.set_note_on(pitch);
-            self.voices.push(voice_group);
-        }
-    }
-
-    pub(crate) fn set_note_off(&mut self, pitch: f32) {
-        for voice_group in &mut self.voices {
-            if voice_group.pitch == pitch {
-                voice_group.group.set_note_off(pitch);
-            }
-        }
-    }
 }
 
 impl NodeTrait for GroupVoicesNode {
@@ -76,5 +56,27 @@ impl NodeTrait for GroupVoicesNode {
 impl HasId for GroupVoicesNode {
     fn get_id(&self) -> usize {
         self.id
+    }
+}
+
+impl SetNoteTrait for GroupVoicesNode {
+    // It basically ignores note on if there's no group. TODO make it have a
+    // reference to play the note in case of a proper group is set after the
+    // node start
+    fn set_note_on(&mut self, pitch: f32) {
+        if let Some(group) = &self.group {
+            let group = group.clone();
+            let mut voice_group = Voice::new(pitch, group);
+            voice_group.group.set_note_on(pitch);
+            self.voices.push(voice_group);
+        }
+    }
+
+    fn set_note_off(&mut self, pitch: f32) {
+        for voice_group in &mut self.voices {
+            if voice_group.pitch == pitch {
+                voice_group.group.set_note_off(pitch);
+            }
+        }
     }
 }

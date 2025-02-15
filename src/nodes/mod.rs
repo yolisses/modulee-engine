@@ -1,6 +1,7 @@
 pub(crate) mod add_node;
 pub(crate) mod constant_node;
 pub(crate) mod divide_node;
+pub(crate) mod envelope_node;
 pub(crate) mod frequency_node;
 pub(crate) mod gate_node;
 pub(crate) mod group_node;

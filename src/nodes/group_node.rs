@@ -1,6 +1,6 @@
 use crate::{
-    get_updated_group::get_updated_group, group::Group, node_trait::NodeTrait, sort::has_id::HasId,
-    values_by_id::ValuesById,
+    get_updated_group::get_updated_group, group::Group, node_trait::NodeTrait,
+    set_note_trait::SetNoteTrait, sort::has_id::HasId, values_by_id::ValuesById,
 };
 use nohash_hasher::IntMap;
 use serde::Deserialize;
