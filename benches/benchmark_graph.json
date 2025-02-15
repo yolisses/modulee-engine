@@ -1,0 +1,83 @@
+[
+  {
+    "id": 1837259400,
+    "nodes": [
+      {
+        "extras": {
+          "value": 0
+        },
+        "id": 0,
+        "input_ids": {},
+        "type": "ConstantNode"
+      },
+      {
+        "extras": {
+          "input_target_ids": {},
+          "target_group_id": 2291305821
+        },
+        "id": 1035151459,
+        "input_ids": {},
+        "type": "GroupVoicesNode"
+      },
+      {
+        "extras": {},
+        "id": 1625315538,
+        "input_ids": {
+          "input": 1035151459
+        },
+        "type": "OutputNode"
+      }
+    ]
+  },
+  {
+    "id": 2291305821,
+    "nodes": [
+      {
+        "extras": {
+          "value": 0
+        },
+        "id": 0,
+        "input_ids": {},
+        "type": "ConstantNode"
+      },
+      {
+        "extras": {},
+        "id": 798197396,
+        "input_ids": {},
+        "type": "PitchNode"
+      },
+      {
+        "extras": {},
+        "id": 3546163547,
+        "input_ids": {
+          "pitch": 798197396
+        },
+        "type": "FrequencyNode"
+      },
+      {
+        "extras": {},
+        "id": 3430984017,
+        "input_ids": {
+          "frequency": 3546163547
+        },
+        "type": "PhaseNode"
+      },
+      {
+        "extras": {},
+        "id": 358963552,
+        "input_ids": {
+          "phase": 3430984017
+        },
+        "type": "SineWaveNode"
+      },
+      {
+        "extras": {},
+        "id": 3787250034,
+        "input_ids": {
+          "input": 358963552
+        },
+        "type": "OutputNode"
+      }
+    ]
+  }
+]
