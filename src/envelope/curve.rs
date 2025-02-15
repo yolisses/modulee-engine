@@ -1,6 +1,6 @@
 use super::get_limited_value::get_limited_value;
 
-struct Curve {
+pub(crate) struct Curve {
     to: f32,
     from: f32,
     step: f32,
@@ -30,6 +30,10 @@ impl Curve {
     pub(crate) fn process(&mut self) {
         self.current_value += self.step;
         self.current_value = get_limited_value(self.current_value, self.from, self.to);
+    }
+
+    pub(crate) fn get_is_finished(&self) -> bool {
+        self.current_value == self.to
     }
 }
 
