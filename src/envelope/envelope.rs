@@ -89,3 +89,52 @@ impl Envelope {
         self.curve = Curve::new(current_value, 0., self.release, self.sample_rate);
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::Envelope;
+    use assert_approx_eq::assert_approx_eq;
+
+    fn get_test_values(envelope: &mut Envelope, iterations: usize) -> Vec<f32> {
+        let mut values = vec![];
+        for _ in 0..iterations {
+            envelope.process();
+            values.push(envelope.get_value());
+        }
+        values
+    }
+
+    fn relative_eq_array(actual: Vec<f32>, expected: Vec<f32>) {
+        assert_eq!(actual.len(), expected.len());
+        for (actual_value, expected_value) in actual.iter().zip(expected.iter()) {
+            assert_approx_eq!(actual_value, expected_value);
+        }
+    }
+
+    #[test]
+    fn test_envelope() {
+        let mut envelope = Envelope::new(4., 3., 0.4, 4., 1.);
+
+        // Idle
+        relative_eq_array(get_test_values(&mut envelope, 3), vec![0., 0., 0.]);
+
+        envelope.set_note_on();
+
+        // Attack
+        relative_eq_array(get_test_values(&mut envelope, 4), vec![0.25, 0.5, 0.75, 1.]);
+
+        // Decay
+        relative_eq_array(get_test_values(&mut envelope, 3), vec![0.8, 0.6, 0.4]);
+
+        // Sustain
+        relative_eq_array(get_test_values(&mut envelope, 7), vec![0.4; 7]);
+
+        envelope.set_note_off();
+
+        // Release
+        relative_eq_array(get_test_values(&mut envelope, 4), vec![0.3, 0.2, 0.1, 0.]);
+
+        // Idle
+        relative_eq_array(get_test_values(&mut envelope, 7), vec![0.; 7]);
+    }
+}
