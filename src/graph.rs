@@ -20,7 +20,7 @@ impl Graph {
         }
     }
 
-    pub fn set_groups(&mut self, new_groups: Vec<Group>) -> Result<(), Box<dyn Error>> {
+    fn set_groups(&mut self, new_groups: Vec<Group>) -> Result<(), Box<dyn Error>> {
         let new_groups = get_items_by_id(new_groups);
 
         // Remove groups not present in new groups
