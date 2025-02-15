@@ -4,7 +4,7 @@ use super::get_clamped_value::get_clamped_value;
 ///
 /// It's basically a `get_clamped_value` where the order of the limits doesn't
 /// matter.
-fn get_limited_value(value: f32, limit_1: f32, limit_2: f32) -> f32 {
+pub(crate) fn get_limited_value(value: f32, limit_1: f32, limit_2: f32) -> f32 {
     if limit_1 < limit_2 {
         return get_clamped_value(value, limit_1, limit_2);
     }
@@ -33,5 +33,11 @@ mod tests {
         assert_eq!(get_limited_value(1., 4., 2.), 2.);
         assert_eq!(get_limited_value(3., 4., 2.), 3.);
         assert_eq!(get_limited_value(5., 4., 2.), 4.);
+    }
+
+    #[test]
+    fn test_get_limited_value_with_limit_1_equals_to_limit_2() {
+        assert_eq!(get_limited_value(1., 2., 2.), 2.);
+        assert_eq!(get_limited_value(3., 2., 2.), 2.);
     }
 }

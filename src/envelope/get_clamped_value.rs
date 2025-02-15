@@ -1,3 +1,4 @@
+// TODO consider throwing an error if min is greater than max
 pub(crate) fn get_clamped_value(value: f32, min: f32, max: f32) -> f32 {
     if value < min {
         return min;
