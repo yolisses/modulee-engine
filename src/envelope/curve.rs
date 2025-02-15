@@ -50,20 +50,32 @@ mod tests {
     fn test_ascending_curve() {
         let curve = Curve::new(2., 5., 3., 1.);
         let values = get_test_values(curve, 5);
-        assert_eq!(values, vec![3., 4., 5., 5., 5.])
+        assert_eq!(values, vec![3., 4., 5., 5., 5.]);
+
+        let curve = Curve::new(2., 5., 3., 2.);
+        let values = get_test_values(curve, 8);
+        assert_eq!(values, vec![2.5, 3., 3.5, 4., 4.5, 5., 5., 5.]);
     }
 
     #[test]
     fn test_descending_curve() {
         let curve = Curve::new(5., 2., 3., 1.);
         let values = get_test_values(curve, 5);
-        assert_eq!(values, vec![4., 3., 2., 2., 2.])
+        assert_eq!(values, vec![4., 3., 2., 2., 2.]);
+
+        let curve = Curve::new(5., 2., 3., 2.);
+        let values = get_test_values(curve, 8);
+        assert_eq!(values, vec![4.5, 4., 3.5, 3., 2.5, 2., 2., 2.]);
     }
 
     #[test]
     fn test_constant_curve() {
         let curve = Curve::new(4., 4., 3., 1.);
         let values = get_test_values(curve, 5);
-        assert_eq!(values, vec![4., 4., 4., 4., 4.])
+        assert_eq!(values, vec![4., 4., 4., 4., 4.]);
+
+        let curve = Curve::new(4., 4., 3., 2.);
+        let values = get_test_values(curve, 8);
+        assert_eq!(values, vec![4., 4., 4., 4., 4., 4., 4., 4.]);
     }
 }
