@@ -37,16 +37,33 @@ impl Curve {
 mod tests {
     use super::Curve;
 
-    #[test]
-    fn test_ascending_curve() {
-        let mut curve = Curve::new(2., 5., 3., 1.);
-
+    fn get_test_values(mut curve: Curve, iterations: usize) -> Vec<f32> {
         let mut values = vec![];
-        for _ in 0..5 {
+        for _ in 0..iterations {
             curve.process();
             values.push(curve.get_value());
         }
+        values
+    }
 
+    #[test]
+    fn test_ascending_curve() {
+        let curve = Curve::new(2., 5., 3., 1.);
+        let values = get_test_values(curve, 5);
         assert_eq!(values, vec![3., 4., 5., 5., 5.])
+    }
+
+    #[test]
+    fn test_descending_curve() {
+        let curve = Curve::new(5., 2., 3., 1.);
+        let values = get_test_values(curve, 5);
+        assert_eq!(values, vec![4., 3., 2., 2., 2.])
+    }
+
+    #[test]
+    fn test_constant_curve() {
+        let curve = Curve::new(4., 4., 3., 1.);
+        let values = get_test_values(curve, 5);
+        assert_eq!(values, vec![4., 4., 4., 4., 4.])
     }
 }
