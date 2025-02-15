@@ -9,7 +9,13 @@ pub fn criterion_benchmark(c: &mut Criterion) {
             graph
                 .set_groups_from_json(groups_json)
                 .expect("Error setting groups from JSON");
-            for _ in 0..100 {
+            graph.set_main_group_id(1837259400);
+
+            for pitch in 50..60 {
+                graph.set_note_on(pitch as f32);
+            }
+
+            for _ in 0..44100 {
                 graph.process();
             }
         })
