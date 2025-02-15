@@ -14,6 +14,10 @@ pub struct Group {
     nodes: Vec<Node>,
     #[serde(skip)]
     last_pitch: f32,
+    // node_values is a variable used in process method. It's here to prevent
+    // costly allocations in each iteration
+    #[serde(skip)]
+    node_values: ValuesById,
 }
 
 impl PartialEq for Group {
@@ -56,10 +60,9 @@ impl Group {
     }
 
     pub(crate) fn process(&mut self) {
-        let mut node_values = ValuesById::default();
         for node in &mut self.nodes {
-            let value = node.process(&node_values);
-            node_values.insert(node.get_id(), value);
+            let value = node.process(&self.node_values);
+            self.node_values.insert(node.get_id(), value);
         }
     }
 
@@ -91,6 +94,10 @@ impl Group {
         }
 
         self.sort_nodes_topologically()?;
+
+        // Clears the node_values to prevent hard to find bugs involving deleted
+        // nodes values
+        self.node_values.clear();
         Ok(())
     }
 
