@@ -1,25 +1,40 @@
 use crate::{
-    envelope::envelope::Envelope, node_trait::NodeTrait, set_note_trait::SetNoteTrait,
-    sort::has_id::HasId, values_by_id::ValuesById,
+    envelope::envelope::Envelope, node_trait::NodeTrait, sample_rate::SAMPLE_RATE,
+    set_note_trait::SetNoteTrait, sort::has_id::HasId, values_by_id::ValuesById,
 };
 use serde::Deserialize;
+
+#[derive(Debug, Deserialize, Clone)]
+pub(crate) struct InputIds {
+    attack: usize,
+    decay: usize,
+    sustain: usize,
+    release: usize,
+}
 
 // TODO add envelope inputs
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct EnvelopeNode {
     id: usize,
+    input_ids: InputIds,
     #[serde(skip)]
     #[serde(default = "get_default_envelope")]
     envelope: Envelope,
 }
 
 fn get_default_envelope() -> Envelope {
-    Envelope::new(0., 0., 0., 0., 0.)
+    Envelope::new(1., 1., 1., 1., SAMPLE_RATE)
 }
 
 impl NodeTrait for EnvelopeNode {
-    fn process(&mut self, _node_values: &ValuesById) -> f32 {
-        // TODO update envelope params
+    fn process(&mut self, node_values: &ValuesById) -> f32 {
+        let attack = node_values[&self.input_ids.attack];
+        let decay = node_values[&self.input_ids.decay];
+        let sustain = node_values[&self.input_ids.sustain];
+        let release = node_values[&self.input_ids.release];
+        self.envelope
+            .update_parameters(attack, decay, sustain, release);
+
         self.envelope.process();
         self.envelope.get_value()
     }
