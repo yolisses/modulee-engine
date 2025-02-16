@@ -12,7 +12,8 @@ pub(crate) struct InputIds {
     release: usize,
 }
 
-// TODO add envelope inputs
+// TODO consider adding gate, to allow envelope starts different than note
+// starts.
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct EnvelopeNode {
     id: usize,
@@ -40,7 +41,12 @@ impl NodeTrait for EnvelopeNode {
     }
 
     fn get_input_ids(&self) -> Vec<usize> {
-        vec![]
+        vec![
+            self.input_ids.attack,
+            self.input_ids.decay,
+            self.input_ids.sustain,
+            self.input_ids.release,
+        ]
     }
 }
 
