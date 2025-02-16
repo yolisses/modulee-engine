@@ -41,6 +41,26 @@ impl Envelope {
         }
     }
 
+    pub(crate) fn update_parameters(
+        &mut self,
+        attack: f32,
+        decay: f32,
+        sustain: f32,
+        release: f32,
+    ) {
+        self.attack = attack;
+        self.decay = decay;
+        self.sustain = sustain;
+        self.release = release;
+
+        match self.state {
+            EnvelopeState::Attack => self.curve.update_duration(attack),
+            EnvelopeState::Decay => self.curve.update_duration(decay),
+            EnvelopeState::Release => self.curve.update_duration(release),
+            _ => (),
+        }
+    }
+
     fn process_attack_state(&mut self) {
         self.curve.process();
         if self.curve.get_is_finished() {

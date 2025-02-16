@@ -38,6 +38,9 @@ impl Curve {
     }
 
     pub(crate) fn update_duration(&mut self, duration: f32) {
+        if duration == self.duration {
+            return;
+        }
         let current_value_ratio = (self.current_value - self.from) / (self.to - self.from);
         let remaining_duration = duration * (1. - current_value_ratio);
         let difference = self.to - self.current_value;
