@@ -4,6 +4,7 @@ use crate::{
 };
 use serde::Deserialize;
 
+// TODO add envelope inputs
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct EnvelopeNode {
     id: usize,
