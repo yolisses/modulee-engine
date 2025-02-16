@@ -5,8 +5,8 @@ pub(crate) struct Curve {
     to: f32,
     from: f32,
     step: f32,
-    duration: f32,
     sample_rate: f32,
+    last_duration: f32,
     current_value: f32,
 }
 
@@ -18,9 +18,9 @@ impl Curve {
             to,
             from,
             step,
-            duration,
             sample_rate,
             current_value: from,
+            last_duration: duration,
         }
     }
 
@@ -38,9 +38,12 @@ impl Curve {
     }
 
     pub(crate) fn update_duration(&mut self, duration: f32) {
-        if duration == self.duration {
+        // Prevents unnecessary updates
+        if duration == self.last_duration {
             return;
         }
+        self.last_duration = duration;
+
         let current_value_ratio = (self.current_value - self.from) / (self.to - self.from);
         let remaining_duration = duration * (1. - current_value_ratio);
         let difference = self.to - self.current_value;
