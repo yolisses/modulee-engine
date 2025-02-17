@@ -19,7 +19,7 @@ pub(crate) fn get_limited_value(value: f32, limit_1: f32, limit_2: f32) -> f32 {
 
 #[cfg(test)]
 mod tests {
-    use crate::envelope::get_limited_value::get_limited_value;
+    use crate::math::get_limited_value::get_limited_value;
 
     #[test]
     fn test_get_limited_value_with_limit_1_less_than_limit_2() {

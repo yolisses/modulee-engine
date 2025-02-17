@@ -1,5 +1,5 @@
 // TODO consider throwing an error if min is greater than max
-pub(crate) fn get_clamped_value(value: f32, min: f32, max: f32) -> f32 {
+pub(crate) fn get_clamped_value<T: PartialOrd>(value: T, min: T, max: T) -> T {
     if value < min {
         return min;
     }
@@ -12,7 +12,7 @@ pub(crate) fn get_clamped_value(value: f32, min: f32, max: f32) -> f32 {
 }
 #[cfg(test)]
 mod tests {
-    use crate::envelope::get_clamped_value::get_clamped_value;
+    use crate::math::get_clamped_value::get_clamped_value;
 
     #[test]
     fn test_get_clamped_value_with_value_in_between() {
