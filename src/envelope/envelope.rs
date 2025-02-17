@@ -115,7 +115,7 @@ impl Envelope {
 #[cfg(test)]
 mod tests {
     use super::Envelope;
-    use assert_approx_eq::assert_approx_eq;
+    use crate::tests::relative_eq_array::relative_eq_array;
 
     fn get_test_values(envelope: &mut Envelope, iterations: usize) -> Vec<f32> {
         let mut values = vec![];
@@ -124,13 +124,6 @@ mod tests {
             values.push(envelope.get_value());
         }
         values
-    }
-
-    fn relative_eq_array(actual: Vec<f32>, expected: Vec<f32>) {
-        assert_eq!(actual.len(), expected.len());
-        for (actual_value, expected_value) in actual.iter().zip(expected.iter()) {
-            assert_approx_eq!(actual_value, expected_value);
-        }
     }
 
     #[test]

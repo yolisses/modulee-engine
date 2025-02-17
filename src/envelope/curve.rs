@@ -1,4 +1,4 @@
-use super::get_limited_value::get_limited_value;
+use crate::math::get_limited_value::get_limited_value;
 
 #[derive(Debug, Clone)]
 pub(crate) struct Curve {
