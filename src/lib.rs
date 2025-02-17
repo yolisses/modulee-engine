@@ -2,14 +2,17 @@ mod envelope;
 mod get_items_by_id;
 mod get_updated_group;
 pub mod graph;
+mod graph_data;
 mod group;
 mod groups_by_id;
+mod math;
 mod node;
 mod node_trait;
 mod nodes;
 mod sample_rate;
 mod set_note_trait;
 mod sort;
+mod tests;
 mod values_by_id;
 mod voice;
 

@@ -1,5 +1,5 @@
 use crate::{
-    get_items_by_id::get_items_by_id, group::Group, groups_by_id::GroupsById,
+    get_items_by_id::get_items_by_id, graph_data::GraphData, groups_by_id::GroupsById,
     set_note_trait::SetNoteTrait, sort::has_id::HasId,
 };
 use nohash_hasher::IntMap;
@@ -21,8 +21,10 @@ impl Graph {
         }
     }
 
-    fn set_groups(&mut self, new_groups: Vec<Group>) -> Result<(), Box<dyn Error>> {
-        let new_groups = get_items_by_id(new_groups);
+    fn update(&mut self, new_graph: GraphData) -> Result<(), Box<dyn Error>> {
+        self.main_group_id = new_graph.main_group_id;
+
+        let new_groups = get_items_by_id(new_graph.groups);
 
         // Remove groups not present in new groups
         self.groups_by_id.retain(|group_id, _| {
@@ -50,9 +52,9 @@ impl Graph {
         Ok(())
     }
 
-    pub fn set_groups_from_json(&mut self, groups_json: &str) -> Result<(), Box<dyn Error>> {
-        let new_groups: Vec<Group> = serde_json::from_str(groups_json)?;
-        self.set_groups(new_groups)
+    pub fn update_from_json(&mut self, groups_json: &str) -> Result<(), Box<dyn Error>> {
+        let new_graph: GraphData = serde_json::from_str(groups_json)?;
+        self.update(new_graph)
     }
 
     pub fn get_output_value(&self) -> f32 {
@@ -90,9 +92,5 @@ impl Graph {
         for group in self.groups_by_id.values_mut() {
             group.set_note_off(pitch);
         }
-    }
-
-    pub fn set_main_group_id(&mut self, main_group_id: usize) {
-        self.main_group_id = Some(main_group_id)
     }
 }
