@@ -16,7 +16,6 @@ pub fn criterion_benchmark(c: &mut Criterion) {
 
             for _ in 0..44100 {
                 graph.process();
-                println!("{}", graph.get_output_value());
             }
         })
     });
