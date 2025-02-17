@@ -31,10 +31,14 @@ impl NodeTrait for PhaseNode {
     fn process(&mut self, node_values: &ValuesById) -> f32 {
         let frequency = node_values[&self.input_ids.frequency];
 
-        self.step = frequency / self.sample_rate;
+        if frequency != self.last_frequency {
+            self.last_frequency = frequency;
+            self.step = frequency / self.sample_rate;
+        }
 
         self.phase += self.step;
-        self.phase %= 1.;
+        // Equals to `%= 1` but more precise
+        self.phase -= self.phase.floor();
         self.phase
     }
 
