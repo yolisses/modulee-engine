@@ -43,11 +43,9 @@ impl NodeTrait for GroupVoicesNode {
     fn process(&mut self, node_values: &ValuesById) -> f32 {
         let mut sum = 0.;
         for voice in &mut self.voices {
-            voice
-                .group
-                .update_input_nodes(node_values, &self.extras.input_target_ids);
-            voice.group.process();
-            sum += voice.group.get_output_value()
+            voice.update_input_nodes(node_values, &self.extras.input_target_ids);
+            voice.process();
+            sum += voice.get_output_value()
         }
         sum
     }
