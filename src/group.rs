@@ -35,8 +35,8 @@ impl HasId for Group {
 
 // TODO make polyphonic
 impl Group {
-    // This may be a violation of the responsibility division, but improves
-    // performance
+    // Passing node_values and input_target_ids may be a violation of the
+    // responsibility division, but improves performance
     pub(crate) fn update_input_nodes(
         &mut self,
         node_values: &ValuesById,
@@ -76,7 +76,7 @@ impl Group {
     pub(crate) fn update(&mut self, new_group: &Group) -> Result<(), Box<dyn Error>> {
         let new_nodes = &new_group.nodes;
 
-        // Remove nodes not present in new groups
+        // Remove nodes not present in new nodes
         self.nodes.retain(|node| {
             new_nodes
                 .iter()
