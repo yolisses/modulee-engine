@@ -119,6 +119,15 @@ impl Group {
         }
         Ok(())
     }
+
+    fn get_is_pending(&self) -> bool {
+        for node in &self.nodes {
+            if node.get_is_pending() {
+                return true;
+            }
+        }
+        false
+    }
 }
 
 impl SetNoteTrait for Group {
