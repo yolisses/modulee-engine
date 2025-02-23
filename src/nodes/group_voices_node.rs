@@ -70,17 +70,15 @@ impl SetNoteTrait for GroupVoicesNode {
     fn set_note_on(&mut self, pitch: f32) {
         if let Some(group) = &self.group {
             let group = group.clone();
-            let mut voice_group = Voice::new(pitch, group);
-            voice_group.group.set_note_on(pitch);
-            self.voices.push(voice_group);
+            let mut voice = Voice::new(pitch, group);
+            voice.set_note_on(pitch);
+            self.voices.push(voice);
         }
     }
 
     fn set_note_off(&mut self, pitch: f32) {
-        for voice_group in &mut self.voices {
-            if voice_group.pitch == pitch {
-                voice_group.group.set_note_off(pitch);
-            }
+        for voice in &mut self.voices {
+            voice.set_note_off(pitch);
         }
     }
 }
