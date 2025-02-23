@@ -48,6 +48,11 @@ impl NodeTrait for EnvelopeNode {
             self.input_ids.release,
         ]
     }
+
+    // TODO check if makes sense to clone the envelope too
+    fn update(&mut self, new_node: &Self) {
+        self.input_ids = new_node.input_ids.clone();
+    }
 }
 
 impl HasId for EnvelopeNode {

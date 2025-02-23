@@ -13,7 +13,6 @@ use crate::{
     values_by_id::ValuesById,
 };
 use serde::Deserialize;
-use std::error::Error;
 
 #[derive(Debug, Deserialize, Clone)]
 #[serde(tag = "type")]
@@ -36,13 +35,6 @@ pub(crate) enum Node {
     FrequencyNode(FrequencyNode),
     GroupVoicesNode(GroupVoicesNode),
     TriangleWaveNode(TriangleWaveNode),
-}
-
-// TODO create a macro to reduce the code duplication
-impl Node {
-    pub(crate) fn update(&mut self, _other_node: &Self) -> Result<(), Box<dyn Error>> {
-        Ok(())
-    }
 }
 
 impl NodeTrait for Node {
@@ -90,6 +82,34 @@ impl NodeTrait for Node {
             Node::GroupVoicesNode(node) => node.get_input_ids(),
             Node::TriangleWaveNode(node) => node.get_input_ids(),
         }
+    }
+
+    fn update(&mut self, new_node: &Self) {
+        match (self, new_node) {
+            (Node::AddNode(node), Node::AddNode(new_node)) => node.update(new_node),
+            (Node::GateNode(node), Node::GateNode(new_node)) => node.update(new_node),
+            (Node::TimeNode(node), Node::TimeNode(new_node)) => node.update(new_node),
+            (Node::GroupNode(node), Node::GroupNode(new_node)) => node.update(new_node),
+            (Node::InputNode(node), Node::InputNode(new_node)) => node.update(new_node),
+            (Node::NoiseNode(node), Node::NoiseNode(new_node)) => node.update(new_node),
+            (Node::PhaseNode(node), Node::PhaseNode(new_node)) => node.update(new_node),
+            (Node::PitchNode(node), Node::PitchNode(new_node)) => node.update(new_node),
+            (Node::DivideNode(node), Node::DivideNode(new_node)) => node.update(new_node),
+            (Node::OutputNode(node), Node::OutputNode(new_node)) => node.update(new_node),
+            (Node::EnvelopeNode(node), Node::EnvelopeNode(new_node)) => node.update(new_node),
+            (Node::SubtractNode(node), Node::SubtractNode(new_node)) => node.update(new_node),
+            (Node::ConstantNode(node), Node::ConstantNode(new_node)) => node.update(new_node),
+            (Node::MultiplyNode(node), Node::MultiplyNode(new_node)) => node.update(new_node),
+            (Node::SineWaveNode(node), Node::SineWaveNode(new_node)) => node.update(new_node),
+            (Node::FrequencyNode(node), Node::FrequencyNode(new_node)) => node.update(new_node),
+            (Node::GroupVoicesNode(node), Node::GroupVoicesNode(new_node)) => node.update(new_node),
+            (Node::TriangleWaveNode(node), Node::TriangleWaveNode(new_node)) => {
+                node.update(new_node)
+            }
+            _ => {
+                panic!("Invalid node: {:#?}", new_node);
+            }
+        };
     }
 }
 

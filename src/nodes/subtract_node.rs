@@ -23,6 +23,10 @@ impl NodeTrait for SubtractNode {
     fn get_input_ids(&self) -> Vec<usize> {
         vec![self.input_ids.input1, self.input_ids.input2]
     }
+
+    fn update(&mut self, new_node: &Self) {
+        self.input_ids = new_node.input_ids.clone();
+    }
 }
 
 impl HasId for SubtractNode {

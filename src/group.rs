@@ -88,7 +88,7 @@ impl Group {
             let id = new_node.get_id();
             let node_option = self.nodes.iter_mut().find(|node| node.get_id() == id);
             if let Some(node) = node_option {
-                node.update(new_node)?;
+                node.update(new_node);
             } else {
                 self.nodes.push(new_node.clone());
             }
