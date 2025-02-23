@@ -16,7 +16,6 @@ pub struct Graph {
 // TODO consider using a more general approach
 const VOICES_REMOTION_CYCLE_SIZE: u32 = 1000;
 
-// TODO make polyphonic
 impl Graph {
     pub fn new() -> Self {
         Graph {
