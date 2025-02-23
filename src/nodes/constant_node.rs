@@ -20,6 +20,10 @@ impl NodeTrait for ConstantNode {
     fn get_input_ids(&self) -> Vec<usize> {
         vec![]
     }
+
+    fn update(&mut self, new_node: &Self) {
+        self.extras = new_node.extras.clone();
+    }
 }
 
 impl HasId for ConstantNode {

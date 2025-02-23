@@ -45,6 +45,10 @@ impl NodeTrait for PhaseNode {
     fn get_input_ids(&self) -> Vec<usize> {
         vec![self.input_ids.frequency]
     }
+
+    fn update(&mut self, new_node: &Self) {
+        self.input_ids = new_node.input_ids.clone();
+    }
 }
 
 impl HasId for PhaseNode {

@@ -21,6 +21,10 @@ impl NodeTrait for SineWaveNode {
     fn get_input_ids(&self) -> Vec<usize> {
         vec![self.input_ids.phase]
     }
+
+    fn update(&mut self, new_node: &Self) {
+        self.input_ids = new_node.input_ids.clone();
+    }
 }
 
 impl HasId for SineWaveNode {

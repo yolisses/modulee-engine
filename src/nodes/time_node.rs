@@ -20,6 +20,8 @@ impl NodeTrait for TimeNode {
     fn get_input_ids(&self) -> Vec<usize> {
         vec![]
     }
+
+    fn update(&mut self, _new_node: &Self) {}
 }
 
 impl HasId for TimeNode {
