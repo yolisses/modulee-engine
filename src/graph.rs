@@ -14,8 +14,7 @@ pub struct Graph {
 }
 
 // TODO consider using a more general approach
-// DEBUG
-const VOICES_REMOTION_CYCLE_SIZE: u32 = 441000;
+const VOICES_REMOTION_CYCLE_SIZE: u32 = 1000;
 
 impl Graph {
     pub fn new() -> Self {
