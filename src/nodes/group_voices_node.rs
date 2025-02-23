@@ -52,8 +52,8 @@ impl NodeTrait for GroupVoicesNode {
         vec![]
     }
 
-    fn update(&mut self, _new_node: &Self) {
-        todo!();
+    fn update(&mut self, new_node: &Self) {
+        self.extras = new_node.extras.clone();
     }
 }
 
