@@ -8,14 +8,19 @@ use std::error::Error;
 // TODO find a better name for this
 #[derive(Debug, Default)]
 pub struct Graph {
+    counter: u32,
     groups_by_id: GroupsById,
     main_group_id: Option<usize>,
 }
+
+// TODO consider using a more general approach
+const VOICES_REMOTION_CYCLE_SIZE: u32 = 1000;
 
 // TODO make polyphonic
 impl Graph {
     pub fn new() -> Self {
         Graph {
+            counter: 0,
             main_group_id: None,
             groups_by_id: IntMap::default(),
         }
@@ -74,6 +79,18 @@ impl Graph {
             let main_group = self.groups_by_id.get_mut(&main_group_id).unwrap();
             main_group.process();
         }
+
+        self.counter += 1;
+        if self.counter > VOICES_REMOTION_CYCLE_SIZE {
+            self.counter = 0;
+            self.remove_non_pending_voices();
+        }
+    }
+
+    fn remove_non_pending_voices(&mut self) {
+        for (_, group) in &mut self.groups_by_id {
+            group.remove_non_pending_voices();
+        }
     }
 
     pub fn process_block(&mut self, buffer: &mut [f32], length: usize) {
@@ -92,12 +109,6 @@ impl Graph {
     pub fn set_note_off(&mut self, pitch: f32) {
         for group in self.groups_by_id.values_mut() {
             group.set_note_off(pitch);
-        }
-    }
-
-    pub fn remove_non_pending_voices(&mut self) {
-        for (_, group) in &mut self.groups_by_id {
-            group.remove_non_pending_voices();
         }
     }
 }
