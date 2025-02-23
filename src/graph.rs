@@ -94,4 +94,10 @@ impl Graph {
             group.set_note_off(pitch);
         }
     }
+
+    pub fn remove_non_pending_voices(&mut self) {
+        for (_, group) in &mut self.groups_by_id {
+            group.remove_non_pending_voices();
+        }
+    }
 }

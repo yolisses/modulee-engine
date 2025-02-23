@@ -33,6 +33,10 @@ impl GroupVoicesNode {
         self.group = get_updated_group(self.group.take(), self.extras.target_group_id, new_groups)?;
         Ok(())
     }
+
+    pub(crate) fn remove_non_pending_voices(&mut self) {
+        self.voices.retain(|voice| voice.group.get_is_pending());
+    }
 }
 
 impl NodeTrait for GroupVoicesNode {
