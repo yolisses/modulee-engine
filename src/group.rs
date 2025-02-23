@@ -33,7 +33,6 @@ impl HasId for Group {
     }
 }
 
-// TODO make polyphonic
 impl Group {
     // Passing node_values and input_target_ids may be a violation of the
     // responsibility division, but improves performance
