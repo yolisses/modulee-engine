@@ -27,8 +27,6 @@ mod tests {
         let inputs_mapping = create_inputs_mapping(&vec![(1, vec![]), (2, vec![3]), (3, vec![])]);
         let topologically_sorted_ids = get_topologically_sorted_node_indexes(&inputs_mapping);
 
-        println!("{:?}", inputs_mapping);
-
         /*
         1 -> 1
         2 -> 3
