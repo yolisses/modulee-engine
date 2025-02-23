@@ -120,13 +120,24 @@ impl Group {
         Ok(())
     }
 
-    fn get_is_pending(&self) -> bool {
+    pub(crate) fn get_is_pending(&self) -> bool {
         for node in &self.nodes {
             if node.get_is_pending() {
                 return true;
             }
         }
         false
+    }
+
+    pub(crate) fn remove_non_pending_voices(&mut self) {
+        for node in &mut self.nodes {
+            match node {
+                Node::GroupVoicesNode(group_voices_node) => {
+                    group_voices_node.remove_non_pending_voices();
+                }
+                _ => (),
+            }
+        }
     }
 }
 
