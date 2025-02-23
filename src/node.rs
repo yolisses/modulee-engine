@@ -1,20 +1,19 @@
-use std::error::Error;
-
 use crate::{
     node_trait::NodeTrait,
     nodes::{
         add_node::AddNode, constant_node::ConstantNode, divide_node::DivideNode,
         envelope_node::EnvelopeNode, frequency_node::FrequencyNode, gate_node::GateNode,
         group_node::GroupNode, group_voices_node::GroupVoicesNode, input_node::InputNode,
-        multiply_node::MultiplyNode, output_node::OutputNode, phase_node::PhaseNode,
-        pitch_node::PitchNode, sine_wave_node::SineWaveNode, subtract_node::SubtractNode,
-        time_node::TimeNode, triangle_wave_node::TriangleWaveNode,
+        multiply_node::MultiplyNode, noise_node::NoiseNode, output_node::OutputNode,
+        phase_node::PhaseNode, pitch_node::PitchNode, sine_wave_node::SineWaveNode,
+        subtract_node::SubtractNode, time_node::TimeNode, triangle_wave_node::TriangleWaveNode,
     },
     set_note_trait::SetNoteTrait,
     sort::has_id::HasId,
     values_by_id::ValuesById,
 };
 use serde::Deserialize;
+use std::error::Error;
 
 #[derive(Debug, Deserialize, Clone)]
 #[serde(tag = "type")]
@@ -24,6 +23,7 @@ pub(crate) enum Node {
     TimeNode(TimeNode),
     GroupNode(GroupNode),
     InputNode(InputNode),
+    NoiseNode(NoiseNode),
     PhaseNode(PhaseNode),
     PitchNode(PitchNode),
     DivideNode(DivideNode),
@@ -54,6 +54,7 @@ impl NodeTrait for Node {
             Node::PhaseNode(node) => node.process(node_values),
             Node::GroupNode(node) => node.process(node_values),
             Node::InputNode(node) => node.process(node_values),
+            Node::NoiseNode(node) => node.process(node_values),
             Node::PitchNode(node) => node.process(node_values),
             Node::OutputNode(node) => node.process(node_values),
             Node::DivideNode(node) => node.process(node_values),
@@ -75,6 +76,7 @@ impl NodeTrait for Node {
             Node::TimeNode(node) => node.get_input_ids(),
             Node::GroupNode(node) => node.get_input_ids(),
             Node::InputNode(node) => node.get_input_ids(),
+            Node::NoiseNode(node) => node.get_input_ids(),
             Node::PhaseNode(node) => node.get_input_ids(),
             Node::PitchNode(node) => node.get_input_ids(),
             Node::DivideNode(node) => node.get_input_ids(),
@@ -99,6 +101,7 @@ impl HasId for Node {
             Node::TimeNode(node) => node.get_id(),
             Node::GroupNode(node) => node.get_id(),
             Node::InputNode(node) => node.get_id(),
+            Node::NoiseNode(node) => node.get_id(),
             Node::PhaseNode(node) => node.get_id(),
             Node::PitchNode(node) => node.get_id(),
             Node::OutputNode(node) => node.get_id(),
