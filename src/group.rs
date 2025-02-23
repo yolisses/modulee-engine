@@ -69,6 +69,7 @@ impl Group {
 
     pub(crate) fn sort_nodes_topologically(&mut self) -> Result<(), Box<dyn Error>> {
         sort_nodes_topologically(&mut self.nodes)?;
+        println!("{:#?}", self.nodes);
         Ok(())
     }
 
