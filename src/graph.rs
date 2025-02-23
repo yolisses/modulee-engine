@@ -39,8 +39,9 @@ impl Graph {
             if let Some(group) = self.groups_by_id.get_mut(&new_group.get_id()) {
                 group.update(new_group)?;
             } else {
-                self.groups_by_id
-                    .insert(new_group.get_id(), new_group.clone());
+                let mut group = new_group.clone();
+                group.update(new_group)?;
+                self.groups_by_id.insert(group.get_id(), group.clone());
             }
         }
 

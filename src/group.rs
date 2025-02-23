@@ -69,7 +69,6 @@ impl Group {
 
     pub(crate) fn sort_nodes_topologically(&mut self) -> Result<(), Box<dyn Error>> {
         sort_nodes_topologically(&mut self.nodes)?;
-        println!("{:#?}", self.nodes);
         Ok(())
     }
 
@@ -84,9 +83,9 @@ impl Group {
         });
 
         for new_node in new_nodes {
-            let id = new_node.get_id();
             // Update a node if present in nodes. Saves a copy of the new node
             // otherwise
+            let id = new_node.get_id();
             let node_option = self.nodes.iter_mut().find(|node| node.get_id() == id);
             if let Some(node) = node_option {
                 node.update(new_node)?;
