@@ -35,7 +35,7 @@ impl GroupVoicesNode {
     }
 
     pub(crate) fn remove_non_pending_voices(&mut self) {
-        self.voices.retain(|voice| voice.group.get_is_pending());
+        self.voices.retain(|voice| voice.get_is_pending());
     }
 }
 

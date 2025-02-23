@@ -16,6 +16,13 @@ impl Voice {
             is_waiting_note_off: false,
         }
     }
+
+    pub(crate) fn get_is_pending(&self) -> bool {
+        if self.is_waiting_note_off {
+            return true;
+        };
+        self.group.get_is_pending()
+    }
 }
 
 impl SetNoteTrait for Voice {
