@@ -3,8 +3,8 @@ use crate::{group::Group, set_note_trait::SetNoteTrait};
 // TODO check if all these derives make sense to be used here
 #[derive(Debug, Clone)]
 pub(crate) struct Voice {
-    group: Group,
-    pitch: f32,
+    pub(crate) pitch: f32,
+    pub(crate) group: Group,
     pub(crate) is_waiting_note_off: bool,
 }
 
@@ -15,10 +15,6 @@ impl Voice {
             group,
             is_waiting_note_off: false,
         }
-    }
-
-    pub(crate) fn get_pitch(&self) -> f32 {
-        self.pitch
     }
 }
 
