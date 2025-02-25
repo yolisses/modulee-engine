@@ -14,9 +14,15 @@ pub(crate) struct InputIds {
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct HighPassNode {
     id: usize,
+    #[serde(default = "get_default_sample_rate")]
+    sample_rate: f32,
     input_ids: InputIds,
     #[serde(skip)]
     filter: Option<DirectForm1<f32>>,
+}
+
+fn get_default_sample_rate() -> f32 {
+    SAMPLE_RATE
 }
 
 impl NodeTrait for HighPassNode {
@@ -30,15 +36,12 @@ impl NodeTrait for HighPassNode {
         }
 
         if resonance <= 0. {
-            resonance = f32::EPSILON;
+            resonance = Q_BUTTERWORTH_F32;
         }
-
-        frequency = 1000.;
-        resonance = Q_BUTTERWORTH_F32;
 
         let coefficients = Coefficients::<f32>::from_params(
             Type::HighPass,
-            SAMPLE_RATE.hz(),
+            self.sample_rate.hz(),
             frequency.hz(),
             resonance,
         )
@@ -71,5 +74,62 @@ impl NodeTrait for HighPassNode {
 impl HasId for HighPassNode {
     fn get_id(&self) -> usize {
         self.id
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::{
+        node_trait::NodeTrait, tests::relative_eq_array::relative_eq_array,
+        values_by_id::ValuesById,
+    };
+
+    use super::{HighPassNode, InputIds};
+
+    #[test]
+    fn test_update_inputs() {
+        let mut node = HighPassNode {
+            id: 4,
+            filter: None,
+            sample_rate: 8.,
+            input_ids: InputIds {
+                input: 1,
+                frequency: 2,
+                resonance: 3,
+            },
+        };
+
+        let mut node_values = ValuesById::default();
+        node_values.insert(2, 2.);
+        node_values.insert(3, 0.5);
+
+        let mut outputs = vec![];
+        for i in 0..10 {
+            let input = i as f32 % 2.;
+            node_values.insert(1, input);
+            let output = node.process(&node_values);
+            outputs.push(output);
+        }
+        relative_eq_array(
+            outputs,
+            vec![
+                0.0, 0.69570494, 0.0, 0.69570494, 0.0, 0.69570494, 0.0, 0.69570494, 0.0, 0.69570494,
+            ],
+        );
+
+        node_values.insert(2, 3.);
+        let mut outputs = vec![];
+        for i in 0..10 {
+            let input = i as f32 % 2.;
+            node_values.insert(1, input);
+            let output = node.process(&node_values);
+            outputs.push(output);
+        }
+        relative_eq_array(
+            outputs,
+            vec![
+                0.0, 0.58868104, 0.0, 0.58868104, 0.0, 0.58868104, 0.0, 0.58868104, 0.0, 0.58868104,
+            ],
+        );
     }
 }
