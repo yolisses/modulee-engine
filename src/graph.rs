@@ -54,9 +54,6 @@ impl Graph {
             group.update_groups_in_nodes(&current_groups)?;
         }
 
-        println!("Counter {:#?}", self.counter);
-        println!("{:#?}", self);
-
         Ok(())
     }
 

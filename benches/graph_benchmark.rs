@@ -14,7 +14,7 @@ pub fn criterion_benchmark(c: &mut Criterion) {
                 graph.set_note_on(pitch as f32);
             }
 
-            for _ in 0..44100 {
+            for _ in 0..48000 {
                 graph.process();
             }
         })
