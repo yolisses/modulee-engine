@@ -1,7 +1,7 @@
 use crate::{
     node_trait::NodeTrait, sample_rate::SAMPLE_RATE, sort::has_id::HasId, values_by_id::ValuesById,
 };
-use biquad::{Biquad, Coefficients, DirectForm1, ToHertz, Type, Q_BUTTERWORTH_F32};
+use biquad::{Biquad, Coefficients, DirectForm1, ToHertz, Type};
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone)]
@@ -36,7 +36,7 @@ impl NodeTrait for HighPassNode {
         }
 
         if resonance <= 0. {
-            resonance = Q_BUTTERWORTH_F32;
+            resonance = f32::EPSILON;
         }
 
         let coefficients = Coefficients::<f32>::from_params(
@@ -47,14 +47,16 @@ impl NodeTrait for HighPassNode {
         )
         .unwrap();
 
-        if let Some(mut filter) = self.filter {
+        // This code uses a reference because make sense and prevents the filter
+        // from being copied
+        if let Some(filter) = &mut self.filter {
             filter.update_coefficients(coefficients);
             filter.run(input)
         } else {
             let mut filter = DirectForm1::new(coefficients);
-            let result = filter.run(input);
+            let output = filter.run(input);
             self.filter = Some(filter);
-            result
+            return output;
         }
     }
 
