@@ -1,13 +1,24 @@
 use crate::{
     node_trait::NodeTrait,
     nodes::{
-        add_node::AddNode, constant_node::ConstantNode, divide_node::DivideNode,
-        envelope_node::EnvelopeNode, frequency_node::FrequencyNode, gate_node::GateNode,
-        group_node::GroupNode, group_voices_node::GroupVoicesNode, high_pass_node::HighPassNode,
-        input_node::InputNode, low_pass_node::LowPassNode, multiply_node::MultiplyNode,
-        noise_node::NoiseNode, output_node::OutputNode, phase_node::PhaseNode,
-        pitch_node::PitchNode, sine_wave_node::SineWaveNode, subtract_node::SubtractNode,
-        time_node::TimeNode, triangle_wave_node::TriangleWaveNode,
+        basic::{
+            constant_node::ConstantNode, envelope_node::EnvelopeNode,
+            frequency_node::FrequencyNode, gate_node::GateNode, phase_node::PhaseNode,
+            pitch_node::PitchNode, time_node::TimeNode,
+        },
+        filter::{high_pass_node::HighPassNode, low_pass_node::LowPassNode},
+        group::{
+            group_node::GroupNode, group_voices_node::GroupVoicesNode, input_node::InputNode,
+            output_node::OutputNode,
+        },
+        math::{
+            add_node::AddNode, divide_node::DivideNode, multiply_node::MultiplyNode,
+            subtract_node::SubtractNode,
+        },
+        wave::{
+            noise_node::NoiseNode, sine_wave_node::SineWaveNode,
+            triangle_wave_node::TriangleWaveNode,
+        },
     },
     set_note_trait::SetNoteTrait,
     sort::has_id::HasId,
