@@ -11,7 +11,7 @@ pub(crate) struct NoiseNode {
 
 impl NodeTrait for NoiseNode {
     fn process(&mut self, _node_values: &ValuesById) -> f32 {
-        self.generator.random()
+        self.generator.random_range(-1. ..1.)
     }
 
     fn get_input_ids(&self) -> Vec<usize> {
