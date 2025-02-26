@@ -44,15 +44,12 @@ impl HighPass {
         // from being copied
         if let Some(filter) = &mut self.filter {
             filter.update_coefficients(coefficients);
-        } else {
-            let filter = DirectForm1::new(coefficients);
-            self.filter = Some(filter);
-        }
-
-        if let Some(filter) = &mut self.filter {
             filter.run(input)
         } else {
-            panic!("Implementation error");
+            let mut filter = DirectForm1::new(coefficients);
+            let output = filter.run(input);
+            self.filter = Some(filter);
+            output
         }
     }
 }
