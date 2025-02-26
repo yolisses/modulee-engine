@@ -8,6 +8,7 @@ pub(crate) mod group_node;
 pub(crate) mod group_voices_node;
 pub(crate) mod high_pass_node;
 pub(crate) mod input_node;
+pub(crate) mod low_pass_node;
 pub(crate) mod multiply_node;
 pub(crate) mod noise_node;
 pub(crate) mod output_node;
