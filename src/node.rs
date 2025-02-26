@@ -17,8 +17,8 @@ use crate::{
         },
         random::random_node::RandomNode,
         wave::{
-            noise_node::NoiseNode, sine_wave_node::SineWaveNode,
-            triangle_wave_node::TriangleWaveNode,
+            noise_node::NoiseNode, sawtooth_wave_node::SawtoothWaveNode,
+            sine_wave_node::SineWaveNode, triangle_wave_node::TriangleWaveNode,
         },
     },
     set_note_trait::SetNoteTrait,
@@ -50,6 +50,7 @@ pub(crate) enum Node {
     SineWaveNode(SineWaveNode),
     FrequencyNode(FrequencyNode),
     GroupVoicesNode(GroupVoicesNode),
+    SawtoothWaveNode(SawtoothWaveNode),
     TriangleWaveNode(TriangleWaveNode),
 }
 
@@ -76,6 +77,7 @@ impl NodeTrait for Node {
             Node::SineWaveNode(node) => node.process(node_values),
             Node::FrequencyNode(node) => node.process(node_values),
             Node::GroupVoicesNode(node) => node.process(node_values),
+            Node::SawtoothWaveNode(node) => node.process(node_values),
             Node::TriangleWaveNode(node) => node.process(node_values),
         }
     }
@@ -102,6 +104,7 @@ impl NodeTrait for Node {
             Node::SineWaveNode(node) => node.get_input_ids(),
             Node::FrequencyNode(node) => node.get_input_ids(),
             Node::GroupVoicesNode(node) => node.get_input_ids(),
+            Node::SawtoothWaveNode(node) => node.get_input_ids(),
             Node::TriangleWaveNode(node) => node.get_input_ids(),
         }
     }
@@ -129,6 +132,9 @@ impl NodeTrait for Node {
             (Node::FrequencyNode(node), Node::FrequencyNode(new_node)) => node.update(new_node),
             (Node::GroupVoicesNode(node), Node::GroupVoicesNode(new_node)) => node.update(new_node),
             (Node::TriangleWaveNode(node), Node::TriangleWaveNode(new_node)) => {
+                node.update(new_node)
+            }
+            (Node::SawtoothWaveNode(node), Node::SawtoothWaveNode(new_node)) => {
                 node.update(new_node)
             }
             _ => {
@@ -162,6 +168,7 @@ impl HasId for Node {
             Node::FrequencyNode(node) => node.get_id(),
             Node::GroupVoicesNode(node) => node.get_id(),
             Node::TriangleWaveNode(node) => node.get_id(),
+            Node::SawtoothWaveNode(node) => node.get_id(),
         }
     }
 }
