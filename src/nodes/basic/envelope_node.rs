@@ -53,6 +53,10 @@ impl NodeTrait for EnvelopeNode {
     fn update(&mut self, new_node: &Self) {
         self.input_ids = new_node.input_ids.clone();
     }
+
+    fn get_is_pending(&self) -> bool {
+        self.envelope.get_is_pending()
+    }
 }
 
 impl HasId for EnvelopeNode {
