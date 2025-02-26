@@ -4,6 +4,8 @@ use biquad::{Biquad, Coefficients, DirectForm1, ToHertz, Type};
 #[derive(Debug, Clone)]
 pub(crate) struct HighPass {
     sample_rate: f32,
+    last_frequency: f32,
+    last_resonance: f32,
     nyquist_frequency: f32,
     filter: Option<DirectForm1<f32>>,
 }
@@ -11,6 +13,8 @@ pub(crate) struct HighPass {
 impl Default for HighPass {
     fn default() -> Self {
         Self {
+            last_frequency: -1.,
+            last_resonance: -1.,
             sample_rate: SAMPLE_RATE,
             filter: Default::default(),
             nyquist_frequency: SAMPLE_RATE / 2.,
@@ -32,24 +36,29 @@ impl HighPass {
             resonance = f32::EPSILON;
         }
 
-        let coefficients = Coefficients::<f32>::from_params(
-            Type::HighPass,
-            self.sample_rate.hz(),
-            frequency.hz(),
-            resonance,
-        )
-        .unwrap();
+        if frequency != self.last_frequency || resonance != self.last_resonance {
+            let coefficients = Coefficients::<f32>::from_params(
+                Type::HighPass,
+                self.sample_rate.hz(),
+                frequency.hz(),
+                resonance,
+            )
+            .unwrap();
 
-        // This code uses a reference because make sense and prevents the filter
-        // from being copied
+            // This code uses a reference because make sense and prevents the
+            // filter from being copied
+            if let Some(filter) = &mut self.filter {
+                filter.update_coefficients(coefficients);
+            } else {
+                let filter = DirectForm1::new(coefficients);
+                self.filter = Some(filter);
+            }
+        }
+
         if let Some(filter) = &mut self.filter {
-            filter.update_coefficients(coefficients);
             filter.run(input)
         } else {
-            let mut filter = DirectForm1::new(coefficients);
-            let output = filter.run(input);
-            self.filter = Some(filter);
-            return output;
+            panic!("Implementation error");
         }
     }
 }
