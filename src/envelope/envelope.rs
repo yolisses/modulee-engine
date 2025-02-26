@@ -110,6 +110,13 @@ impl Envelope {
         let current_value = self.curve.get_value();
         self.curve = Curve::new(current_value, 0., self.release, self.sample_rate);
     }
+
+    pub(crate) fn get_is_pending(&self) -> bool {
+        match self.state {
+            EnvelopeState::Idle => true,
+            _ => false,
+        }
+    }
 }
 
 #[cfg(test)]
