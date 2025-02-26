@@ -57,6 +57,15 @@ impl NodeTrait for GroupVoicesNode {
     fn update(&mut self, new_node: &Self) {
         self.extras = new_node.extras.clone();
     }
+
+    fn get_is_pending(&self) -> bool {
+        for voice in &self.voices {
+            if voice.get_is_pending() {
+                return true;
+            }
+        }
+        false
+    }
 }
 
 impl HasId for GroupVoicesNode {
