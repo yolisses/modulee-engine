@@ -142,6 +142,33 @@ impl NodeTrait for Node {
             }
         };
     }
+
+    fn get_is_pending(&self) -> bool {
+        match self {
+            Node::AddNode(node) => node.get_is_pending(),
+            Node::GateNode(node) => node.get_is_pending(),
+            Node::TimeNode(node) => node.get_is_pending(),
+            Node::GroupNode(node) => node.get_is_pending(),
+            Node::InputNode(node) => node.get_is_pending(),
+            Node::NoiseNode(node) => node.get_is_pending(),
+            Node::PhaseNode(node) => node.get_is_pending(),
+            Node::PitchNode(node) => node.get_is_pending(),
+            Node::DivideNode(node) => node.get_is_pending(),
+            Node::OutputNode(node) => node.get_is_pending(),
+            Node::RandomNode(node) => node.get_is_pending(),
+            Node::LowPassNode(node) => node.get_is_pending(),
+            Node::EnvelopeNode(node) => node.get_is_pending(),
+            Node::HighPassNode(node) => node.get_is_pending(),
+            Node::SubtractNode(node) => node.get_is_pending(),
+            Node::ConstantNode(node) => node.get_is_pending(),
+            Node::MultiplyNode(node) => node.get_is_pending(),
+            Node::SineWaveNode(node) => node.get_is_pending(),
+            Node::FrequencyNode(node) => node.get_is_pending(),
+            Node::GroupVoicesNode(node) => node.get_is_pending(),
+            Node::SawtoothWaveNode(node) => node.get_is_pending(),
+            Node::TriangleWaveNode(node) => node.get_is_pending(),
+        }
+    }
 }
 
 impl HasId for Node {
