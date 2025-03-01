@@ -1,3 +1,4 @@
+mod deserialize_int_map;
 pub(crate) mod group_node;
 pub(crate) mod group_voices_node;
 pub(crate) mod input_node;

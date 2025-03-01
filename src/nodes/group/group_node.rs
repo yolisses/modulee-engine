@@ -1,3 +1,4 @@
+use super::deserialize_int_map::deserialize_int_map;
 use crate::{
     get_updated_group::get_updated_group, group::Group, node_trait::NodeTrait,
     set_note_trait::SetNoteTrait, sort::has_id::HasId, values_by_id::ValuesById,
@@ -9,6 +10,7 @@ use std::error::Error;
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct Extras {
     target_group_id: Option<usize>,
+    #[serde(deserialize_with = "deserialize_int_map")]
     input_target_ids: IntMap<usize, usize>,
 }
 
