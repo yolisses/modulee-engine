@@ -58,7 +58,7 @@ impl NodeTrait for GroupNode {
     }
 
     fn get_input_ids(&self) -> Vec<usize> {
-        vec![]
+        self.extras.input_target_ids.values().cloned().collect()
     }
 
     fn update(&mut self, new_node: &Self) {
