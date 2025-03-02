@@ -91,7 +91,9 @@ impl SetNoteTrait for GroupVoicesNode {
 
     fn set_note_off(&mut self, pitch: f32) {
         for voice in &mut self.voices {
-            voice.set_note_off(pitch);
+            if voice.pitch == pitch {
+                voice.set_note_off(pitch);
+            }
         }
     }
 }

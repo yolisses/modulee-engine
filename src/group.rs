@@ -13,8 +13,6 @@ use std::error::Error;
 pub struct Group {
     id: usize,
     nodes: Vec<Node>,
-    #[serde(skip)]
-    last_pitch: f32,
     // node_values is a variable used in process method. It's here to prevent
     // costly allocations in each iteration
     #[serde(skip)]
@@ -145,13 +143,9 @@ impl SetNoteTrait for Group {
         for node in &mut self.nodes {
             node.set_note_on(pitch);
         }
-        self.last_pitch = pitch;
     }
 
     fn set_note_off(&mut self, pitch: f32) {
-        if self.last_pitch != pitch {
-            return;
-        }
         for node in &mut self.nodes {
             node.set_note_off(pitch);
         }
