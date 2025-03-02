@@ -1,6 +1,5 @@
-use nohash_hasher::IntMap;
-
 use crate::{group::Group, set_note_trait::SetNoteTrait, values_by_id::ValuesById};
+use nohash_hasher::IntMap;
 
 // TODO check if all these derives make sense to be used here
 #[derive(Debug, Clone)]
@@ -53,9 +52,7 @@ impl SetNoteTrait for Voice {
     }
 
     fn set_note_off(&mut self, pitch: f32) {
-        if self.pitch == pitch {
-            self.is_waiting_note_off = false;
-            self.group.set_note_off(pitch);
-        }
+        self.is_waiting_note_off = false;
+        self.group.set_note_off(pitch);
     }
 }
