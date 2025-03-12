@@ -10,7 +10,7 @@ use serde::Deserialize;
 use std::error::Error;
 
 #[derive(Debug, Deserialize, Clone)]
-pub struct Group {
+pub struct Module {
     id: usize,
     nodes: Vec<Node>,
     // node_values is a variable used in process method. It's here to prevent
@@ -19,19 +19,19 @@ pub struct Group {
     node_values: ValuesById,
 }
 
-impl PartialEq for Group {
+impl PartialEq for Module {
     fn eq(&self, other: &Self) -> bool {
         self.id == other.id
     }
 }
 
-impl HasId for Group {
+impl HasId for Module {
     fn get_id(&self) -> usize {
         self.id
     }
 }
 
-impl Group {
+impl Module {
     // Passing node_values and input_target_ids may be a violation of the
     // responsibility division, but improves performance
     pub(crate) fn update_input_nodes(
@@ -69,8 +69,8 @@ impl Group {
         Ok(())
     }
 
-    pub(crate) fn update(&mut self, new_group: &Group) -> Result<(), Box<dyn Error>> {
-        let new_nodes = &new_group.nodes;
+    pub(crate) fn update(&mut self, new_module: &Module) -> Result<(), Box<dyn Error>> {
+        let new_nodes = &new_module.nodes;
 
         // Remove nodes not present in new nodes
         self.nodes.retain(|node| {
@@ -99,17 +99,17 @@ impl Group {
         Ok(())
     }
 
-    pub(crate) fn update_groups_in_nodes(
+    pub(crate) fn update_modules_in_nodes(
         &mut self,
-        new_groups: &IntMap<usize, Group>,
+        new_modules: &IntMap<usize, Module>,
     ) -> Result<(), Box<dyn Error>> {
         for node in &mut self.nodes {
             match node {
-                Node::GroupNode(group_node) => {
-                    group_node.update_groups(new_groups)?;
+                Node::ModuleNode(module_node) => {
+                    module_node.update_modules(new_modules)?;
                 }
-                Node::GroupVoicesNode(group_voices_node) => {
-                    group_voices_node.update_groups(new_groups)?;
+                Node::ModuleVoicesNode(module_voices_node) => {
+                    module_voices_node.update_modules(new_modules)?;
                 }
                 _ => (),
             }
@@ -129,8 +129,8 @@ impl Group {
     pub(crate) fn remove_non_pending_voices(&mut self) {
         for node in &mut self.nodes {
             match node {
-                Node::GroupVoicesNode(group_voices_node) => {
-                    group_voices_node.remove_non_pending_voices();
+                Node::ModuleVoicesNode(module_voices_node) => {
+                    module_voices_node.remove_non_pending_voices();
                 }
                 _ => (),
             }
@@ -138,7 +138,7 @@ impl Group {
     }
 }
 
-impl SetNoteTrait for Group {
+impl SetNoteTrait for Module {
     fn set_note_on(&mut self, pitch: f32) {
         for node in &mut self.nodes {
             node.set_note_on(pitch);

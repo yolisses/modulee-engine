@@ -3,11 +3,11 @@ pub mod graph;
 
 mod envelope;
 mod get_items_by_id;
-mod get_updated_group;
+mod get_updated_module;
 mod graph_data;
-mod group;
-mod groups_by_id;
 mod math;
+mod module;
+mod modules_by_id;
 mod node;
 mod node_trait;
 mod nodes;

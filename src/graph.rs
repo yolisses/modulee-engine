@@ -1,5 +1,5 @@
 use crate::{
-    get_items_by_id::get_items_by_id, graph_data::GraphData, groups_by_id::GroupsById,
+    get_items_by_id::get_items_by_id, graph_data::GraphData, modules_by_id::ModulesById,
     set_note_trait::SetNoteTrait, sort::has_id::HasId,
 };
 use nohash_hasher::IntMap;
@@ -9,8 +9,8 @@ use std::error::Error;
 #[derive(Debug, Default)]
 pub struct Graph {
     counter: u32,
-    groups_by_id: GroupsById,
-    main_group_id: Option<usize>,
+    modules_by_id: ModulesById,
+    main_module_id: Option<usize>,
 }
 
 // TODO consider using a more general approach
@@ -20,52 +20,52 @@ impl Graph {
     pub fn new() -> Self {
         Graph {
             counter: 0,
-            main_group_id: None,
-            groups_by_id: IntMap::default(),
+            main_module_id: None,
+            modules_by_id: IntMap::default(),
         }
     }
 
     fn update(&mut self, new_graph: GraphData) -> Result<(), Box<dyn Error>> {
-        self.main_group_id = new_graph.main_group_id;
+        self.main_module_id = new_graph.main_module_id;
 
-        let new_groups = get_items_by_id(new_graph.groups);
+        let new_modules = get_items_by_id(new_graph.modules);
 
-        // Remove groups not present in new groups
-        self.groups_by_id.retain(|group_id, _| {
-            new_groups
+        // Remove modules not present in new modules
+        self.modules_by_id.retain(|module_id, _| {
+            new_modules
                 .iter()
-                .any(|(new_group_id, _)| new_group_id == group_id)
+                .any(|(new_module_id, _)| new_module_id == module_id)
         });
 
-        for new_group in new_groups.values() {
-            // Update a group if present in groups. Saves the new group
+        for new_module in new_modules.values() {
+            // Update a module if present in modules. Saves the new module
             // otherwise
-            if let Some(group) = self.groups_by_id.get_mut(&new_group.get_id()) {
-                group.update(new_group)?;
+            if let Some(module) = self.modules_by_id.get_mut(&new_module.get_id()) {
+                module.update(new_module)?;
             } else {
-                let mut group = new_group.clone();
-                group.update(new_group)?;
-                self.groups_by_id.insert(group.get_id(), group.clone());
+                let mut module = new_module.clone();
+                module.update(new_module)?;
+                self.modules_by_id.insert(module.get_id(), module.clone());
             }
         }
 
-        let current_groups = self.groups_by_id.clone();
-        for group in self.groups_by_id.values_mut() {
-            group.update_groups_in_nodes(&current_groups)?;
+        let current_modules = self.modules_by_id.clone();
+        for module in self.modules_by_id.values_mut() {
+            module.update_modules_in_nodes(&current_modules)?;
         }
 
         Ok(())
     }
 
-    pub fn update_from_json(&mut self, groups_json: &str) -> Result<(), Box<dyn Error>> {
-        let new_graph: GraphData = serde_json::from_str(groups_json)?;
+    pub fn update_from_json(&mut self, modules_json: &str) -> Result<(), Box<dyn Error>> {
+        let new_graph: GraphData = serde_json::from_str(modules_json)?;
         self.update(new_graph)
     }
 
     pub fn get_output_value(&self) -> f32 {
-        if let Some(main_group_id) = self.main_group_id {
-            let main_group = self.groups_by_id.get(&main_group_id).unwrap();
-            main_group.get_output_value()
+        if let Some(main_module_id) = self.main_module_id {
+            let main_module = self.modules_by_id.get(&main_module_id).unwrap();
+            main_module.get_output_value()
         } else {
             0.
         }
@@ -73,10 +73,10 @@ impl Graph {
 
     pub fn process(&mut self) {
         // TODO try to find a most elegant solution than just returning if
-        // main_group_id is not present
-        if let Some(main_group_id) = self.main_group_id {
-            let main_group = self.groups_by_id.get_mut(&main_group_id).unwrap();
-            main_group.process();
+        // main_module_id is not present
+        if let Some(main_module_id) = self.main_module_id {
+            let main_module = self.modules_by_id.get_mut(&main_module_id).unwrap();
+            main_module.process();
         }
 
         self.counter += 1;
@@ -87,8 +87,8 @@ impl Graph {
     }
 
     fn remove_non_pending_voices(&mut self) {
-        for (_, group) in &mut self.groups_by_id {
-            group.remove_non_pending_voices();
+        for (_, module) in &mut self.modules_by_id {
+            module.remove_non_pending_voices();
         }
     }
 
@@ -100,14 +100,14 @@ impl Graph {
     }
 
     pub fn set_note_on(&mut self, pitch: f32) {
-        for group in self.groups_by_id.values_mut() {
-            group.set_note_on(pitch);
+        for module in self.modules_by_id.values_mut() {
+            module.set_note_on(pitch);
         }
     }
 
     pub fn set_note_off(&mut self, pitch: f32) {
-        for group in self.groups_by_id.values_mut() {
-            group.set_note_off(pitch);
+        for module in self.modules_by_id.values_mut() {
+            module.set_note_off(pitch);
         }
     }
 }

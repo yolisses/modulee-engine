@@ -1,4 +1,4 @@
-use criterion::{criterion_group, criterion_main, Criterion};
+use criterion::{criterion_module, criterion_main, Criterion};
 use modulee_engine::filter::high_pass::HighPass;
 
 pub fn criterion_benchmark(c: &mut Criterion) {
@@ -15,5 +15,5 @@ pub fn criterion_benchmark(c: &mut Criterion) {
     });
 }
 
-criterion_group!(benches, criterion_benchmark);
+criterion_module!(benches, criterion_benchmark);
 criterion_main!(benches);
