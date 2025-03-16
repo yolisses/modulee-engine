@@ -1,14 +1,14 @@
-use crate::{node_trait::NodeTrait, sort::has_id::HasId, values_by_id::ValuesById};
+use crate::{id::Id, node_trait::NodeTrait, sort::has_id::HasId, values_by_id::ValuesById};
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct InputIds {
-    phase: usize,
+    phase: Id,
 }
 
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct TriangleWaveNode {
-    id: usize,
+    id: Id,
     input_ids: InputIds,
 }
 

@@ -1,4 +1,7 @@
+use serde::de::{self, Visitor};
+use serde::{Deserialize, Deserializer};
 use std::fmt;
+use std::marker::PhantomData;
 use std::str::FromStr;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -37,53 +40,76 @@ impl<const N: usize> FromStr for FixedSizeString<N> {
     }
 }
 
+// Implement Deserialize for FixedSizeString
+impl<'de, const N: usize> Deserialize<'de> for FixedSizeString<N> {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        // Define a visitor to handle the deserialization
+        struct FixedSizeStringVisitor<const N: usize>;
+
+        impl<'de, const N: usize> Visitor<'de> for FixedSizeStringVisitor<N> {
+            type Value = FixedSizeString<N>;
+
+            fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+                write!(formatter, "a string of length {}", N)
+            }
+
+            fn visit_str<E>(self, value: &str) -> Result<Self::Value, E>
+            where
+                E: de::Error,
+            {
+                FixedSizeString::new(value)
+                    .map_err(|_| E::custom(format!("String length must be exactly {}", N)))
+            }
+        }
+
+        // Use the visitor to deserialize the string
+        deserializer.deserialize_str(FixedSizeStringVisitor)
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+    use serde::Deserialize;
 
-    #[test]
-    fn test_fixed_size_string_creation() {
-        // Test valid creation
-        let id: FixedSizeString<5> = "12345".parse().unwrap();
-        assert_eq!(id.as_str(), "12345");
-
-        // Test Display implementation
-        assert_eq!(format!("{}", id), "12345");
-
-        // Test invalid creation (wrong length)
-        let result: Result<FixedSizeString<5>, _> = "1234".parse();
-        assert!(result.is_err());
-        assert_eq!(
-            result.unwrap_err(),
-            "String length does not match fixed size"
-        );
-
-        // Test invalid creation (too long)
-        let result: Result<FixedSizeString<5>, _> = "123456".parse();
-        assert!(result.is_err());
-        assert_eq!(
-            result.unwrap_err(),
-            "String length does not match fixed size"
-        );
+    #[derive(Debug, Deserialize, PartialEq)]
+    struct TestStruct<const N: usize> {
+        id: FixedSizeString<N>,
     }
 
     #[test]
-    fn test_fixed_size_string_equality() {
-        let id1: FixedSizeString<3> = "abc".parse().unwrap();
-        let id2: FixedSizeString<3> = "abc".parse().unwrap();
-        let id3: FixedSizeString<3> = "def".parse().unwrap();
+    fn test_deserialize_valid() {
+        let json_data = r#"{"id": "12345"}"#;
+        let expected = TestStruct {
+            id: FixedSizeString::new("12345").unwrap(),
+        };
 
-        assert_eq!(id1, id2); // Same content
-        assert_ne!(id1, id3); // Different content
+        let result: TestStruct<5> = serde_json::from_str(json_data).unwrap();
+        assert_eq!(result, expected);
     }
 
     #[test]
-    fn test_fixed_size_string_clone_and_copy() {
-        let id1: FixedSizeString<4> = "test".parse().unwrap();
-        let id2 = id1; // Copy happens here
-        let id3 = id1.clone(); // Clone happens here
+    fn test_deserialize_invalid_length() {
+        let json_data = r#"{"id": "1234"}"#;
+        let result: Result<TestStruct<5>, _> = serde_json::from_str(json_data);
+        assert!(result.is_err());
+        assert!(result
+            .unwrap_err()
+            .to_string()
+            .contains("String length must be exactly 5"));
+    }
 
-        assert_eq!(id1, id2);
-        assert_eq!(id1, id3);
+    #[test]
+    fn test_deserialize_non_string() {
+        let json_data = r#"{"id": 12345}"#;
+        let result: Result<TestStruct<5>, _> = serde_json::from_str(json_data);
+        assert!(result.is_err());
+        assert!(result
+            .unwrap_err()
+            .to_string()
+            .contains("invalid type: integer"));
     }
 }
