@@ -2,9 +2,11 @@ pub mod filter;
 pub mod graph;
 
 mod envelope;
+mod fixed_size_string;
 mod get_items_by_id;
 mod get_updated_module;
 mod graph_data;
+mod id;
 mod math;
 mod module;
 mod modules_by_id;
