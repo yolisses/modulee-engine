@@ -28,7 +28,7 @@ impl NodeTrait for RandomFromValueNode {
     }
 
     fn get_input_ids(&self) -> Vec<usize> {
-        vec![]
+        vec![self.input_ids.value]
     }
 
     fn update(&mut self, _new_node: &Self) {}
