@@ -1,4 +1,4 @@
-use criterion::{criterion_group, criterion_main, Criterion};
+use criterion::{criterion_module, criterion_main, Criterion};
 use modulee_engine::graph::Graph;
 
 pub fn criterion_benchmark(c: &mut Criterion) {
@@ -8,7 +8,7 @@ pub fn criterion_benchmark(c: &mut Criterion) {
             let mut graph = Graph::new();
             graph
                 .update_from_json(graph_json)
-                .expect("Error setting groups from JSON");
+                .expect("Error setting modules from JSON");
 
             for pitch in 50..60 {
                 graph.set_note_on(pitch as f32);
@@ -21,5 +21,5 @@ pub fn criterion_benchmark(c: &mut Criterion) {
     });
 }
 
-criterion_group!(benches, criterion_benchmark);
+criterion_module!(benches, criterion_benchmark);
 criterion_main!(benches);
