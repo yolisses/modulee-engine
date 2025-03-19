@@ -1,8 +1,8 @@
-use crate::group::Group;
+use crate::module::Module;
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
 pub(crate) struct GraphData {
-    pub(crate) groups: Vec<Group>,
-    pub(crate) main_group_id: Option<usize>,
+    pub(crate) modules: Vec<Module>,
+    pub(crate) main_module_id: Option<usize>,
 }

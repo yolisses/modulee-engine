@@ -1,6 +1,6 @@
 use super::deserialize_int_map::deserialize_int_map;
 use crate::{
-    get_updated_group::get_updated_group, group::Group, node_trait::NodeTrait,
+    get_updated_module::get_updated_module, module::Module, node_trait::NodeTrait,
     set_note_trait::SetNoteTrait, sort::has_id::HasId, values_by_id::ValuesById, voice::Voice,
 };
 use nohash_hasher::IntMap;
@@ -9,30 +9,30 @@ use std::error::Error;
 
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct Extras {
-    target_group_id: Option<usize>,
+    target_module_id: Option<usize>,
     #[serde(deserialize_with = "deserialize_int_map")]
     input_target_ids: IntMap<usize, usize>,
 }
 
 /// Returns the phase value between 0 and 1 given a time and a frequency
 #[derive(Debug, Deserialize, Clone)]
-pub(crate) struct GroupVoicesNode {
+pub(crate) struct ModuleVoicesNode {
     id: usize,
     extras: Extras,
-    // TODO fix group instantiation. Currently it only creates an empty group.
-    // It should clone a group from graph.
+    // TODO fix module instantiation. Currently it only creates an empty module.
+    // It should clone a module from graph.
     #[serde(skip)]
     voices: Vec<Voice>,
     #[serde(skip)]
-    group: Option<Group>,
+    module: Option<Module>,
 }
 
-impl GroupVoicesNode {
-    pub(crate) fn update_groups(
+impl ModuleVoicesNode {
+    pub(crate) fn update_modules(
         &mut self,
-        new_groups: &IntMap<usize, Group>,
+        new_modules: &IntMap<usize, Module>,
     ) -> Result<(), Box<dyn Error>> {
-        self.group = get_updated_group(self.group.take(), self.extras.target_group_id, new_groups)?;
+        self.module = get_updated_module(self.module.take(), self.extras.target_module_id, new_modules)?;
         Ok(())
     }
 
@@ -41,7 +41,7 @@ impl GroupVoicesNode {
     }
 }
 
-impl NodeTrait for GroupVoicesNode {
+impl NodeTrait for ModuleVoicesNode {
     fn process(&mut self, node_values: &ValuesById) -> f32 {
         let mut sum = 0.;
         for voice in &mut self.voices {
@@ -70,20 +70,20 @@ impl NodeTrait for GroupVoicesNode {
     }
 }
 
-impl HasId for GroupVoicesNode {
+impl HasId for ModuleVoicesNode {
     fn get_id(&self) -> usize {
         self.id
     }
 }
 
-impl SetNoteTrait for GroupVoicesNode {
-    // It basically ignores note on if there's no group. TODO make it have a
-    // reference to play the note in case of a proper group is set after the
+impl SetNoteTrait for ModuleVoicesNode {
+    // It basically ignores note on if there's no module. TODO make it have a
+    // reference to play the note in case of a proper module is set after the
     // node start
     fn set_note_on(&mut self, pitch: f32) {
-        if let Some(group) = &self.group {
-            let group = group.clone();
-            let mut voice = Voice::new(pitch, group);
+        if let Some(module) = &self.module {
+            let module = module.clone();
+            let mut voice = Voice::new(pitch, module);
             voice.set_note_on(pitch);
             self.voices.push(voice);
         }

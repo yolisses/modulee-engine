@@ -1,6 +1,6 @@
 use super::deserialize_int_map::deserialize_int_map;
 use crate::{
-    get_updated_group::get_updated_group, group::Group, node_trait::NodeTrait,
+    get_updated_module::get_updated_module, module::Module, node_trait::NodeTrait,
     set_note_trait::SetNoteTrait, sort::has_id::HasId, values_by_id::ValuesById,
 };
 use nohash_hasher::IntMap;
@@ -9,49 +9,49 @@ use std::error::Error;
 
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct Extras {
-    target_group_id: Option<usize>,
+    target_module_id: Option<usize>,
     #[serde(deserialize_with = "deserialize_int_map")]
     input_target_ids: IntMap<usize, usize>,
 }
 
 /// Returns the phase value between 0 and 1 given a time and a frequency
 #[derive(Debug, Deserialize, Clone)]
-pub(crate) struct GroupNode {
+pub(crate) struct ModuleNode {
     id: usize,
     extras: Extras,
     #[serde(skip)]
-    group: Option<Group>,
+    module: Option<Module>,
 }
 
-impl GroupNode {
-    pub(crate) fn update_groups(
+impl ModuleNode {
+    pub(crate) fn update_modules(
         &mut self,
-        new_groups: &IntMap<usize, Group>,
+        new_modules: &IntMap<usize, Module>,
     ) -> Result<(), Box<dyn Error>> {
-        self.group = get_updated_group(self.group.take(), self.extras.target_group_id, new_groups)?;
+        self.module = get_updated_module(self.module.take(), self.extras.target_module_id, new_modules)?;
         Ok(())
     }
 
     pub(crate) fn set_note_on(&mut self, pitch: f32) {
-        if let Some(group) = &mut self.group {
-            group.set_note_on(pitch);
+        if let Some(module) = &mut self.module {
+            module.set_note_on(pitch);
         }
     }
 
     pub(crate) fn set_note_off(&mut self, pitch: f32) {
-        if let Some(group) = &mut self.group {
-            group.set_note_off(pitch);
+        if let Some(module) = &mut self.module {
+            module.set_note_off(pitch);
         }
     }
 }
 
-impl NodeTrait for GroupNode {
+impl NodeTrait for ModuleNode {
     fn process(&mut self, node_values: &ValuesById) -> f32 {
-        if let Some(group) = &mut self.group {
-            group.update_input_nodes(node_values, &self.extras.input_target_ids);
-            group.process();
+        if let Some(module) = &mut self.module {
+            module.update_input_nodes(node_values, &self.extras.input_target_ids);
+            module.process();
             // TODO use all outputs
-            group.get_output_value()
+            module.get_output_value()
         } else {
             0.
         }
@@ -66,7 +66,7 @@ impl NodeTrait for GroupNode {
     }
 }
 
-impl HasId for GroupNode {
+impl HasId for ModuleNode {
     fn get_id(&self) -> usize {
         self.id
     }

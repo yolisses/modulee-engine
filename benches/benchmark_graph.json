@@ -1,6 +1,6 @@
 {
-  "main_group_id": 1837259400,
-  "groups": [
+  "main_module_id": 1837259400,
+  "modules": [
     {
       "id": 1837259400,
       "nodes": [
@@ -15,11 +15,11 @@
         {
           "extras": {
             "input_target_ids": {},
-            "target_group_id": 2291305821
+            "target_module_id": 2291305821
           },
           "id": 1035151459,
           "input_ids": {},
-          "type": "GroupVoicesNode"
+          "type": "ModuleVoicesNode"
         },
         {
           "extras": {},
