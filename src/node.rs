@@ -15,7 +15,7 @@ use crate::{
             add_node::AddNode, divide_node::DivideNode, multiply_node::MultiplyNode,
             subtract_node::SubtractNode,
         },
-        random::random_node::RandomNode,
+        random::{random_from_value_node::RandomFromValueNode, random_node::RandomNode},
         wave::{
             noise_node::NoiseNode, sawtooth_wave_node::SawtoothWaveNode,
             sine_wave_node::SineWaveNode, triangle_wave_node::TriangleWaveNode,
@@ -52,6 +52,7 @@ pub(crate) enum Node {
     GroupVoicesNode(GroupVoicesNode),
     SawtoothWaveNode(SawtoothWaveNode),
     TriangleWaveNode(TriangleWaveNode),
+    RandomFromValueNode(RandomFromValueNode),
 }
 
 impl NodeTrait for Node {
@@ -79,6 +80,7 @@ impl NodeTrait for Node {
             Node::GroupVoicesNode(node) => node.process(node_values),
             Node::SawtoothWaveNode(node) => node.process(node_values),
             Node::TriangleWaveNode(node) => node.process(node_values),
+            Node::RandomFromValueNode(node) => node.process(node_values),
         }
     }
 
@@ -106,6 +108,7 @@ impl NodeTrait for Node {
             Node::GroupVoicesNode(node) => node.get_input_ids(),
             Node::SawtoothWaveNode(node) => node.get_input_ids(),
             Node::TriangleWaveNode(node) => node.get_input_ids(),
+            Node::RandomFromValueNode(node) => node.get_input_ids(),
         }
     }
 
@@ -135,6 +138,9 @@ impl NodeTrait for Node {
                 node.update(new_node)
             }
             (Node::SawtoothWaveNode(node), Node::SawtoothWaveNode(new_node)) => {
+                node.update(new_node)
+            }
+            (Node::RandomFromValueNode(node), Node::RandomFromValueNode(new_node)) => {
                 node.update(new_node)
             }
             _ => {
@@ -167,6 +173,7 @@ impl NodeTrait for Node {
             Node::GroupVoicesNode(node) => node.get_is_pending(),
             Node::SawtoothWaveNode(node) => node.get_is_pending(),
             Node::TriangleWaveNode(node) => node.get_is_pending(),
+            Node::RandomFromValueNode(node) => node.get_is_pending(),
         }
     }
 }
@@ -196,6 +203,7 @@ impl HasId for Node {
             Node::GroupVoicesNode(node) => node.get_id(),
             Node::TriangleWaveNode(node) => node.get_id(),
             Node::SawtoothWaveNode(node) => node.get_id(),
+            Node::RandomFromValueNode(node) => node.get_id(),
         }
     }
 }
