@@ -1,4 +1,4 @@
-use criterion::{criterion_module, criterion_main, Criterion};
+use criterion::{criterion_group, criterion_main, Criterion};
 use modulee_engine::graph::Graph;
 
 pub fn criterion_benchmark(c: &mut Criterion) {
@@ -21,5 +21,5 @@ pub fn criterion_benchmark(c: &mut Criterion) {
     });
 }
 
-criterion_module!(benches, criterion_benchmark);
+criterion_group!(benches, criterion_benchmark);
 criterion_main!(benches);
