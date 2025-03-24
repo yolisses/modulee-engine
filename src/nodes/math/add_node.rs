@@ -1,5 +1,5 @@
-use crate::declare_input_ids;
 use crate::sort::has_id::HasId;
+use crate::{declare_get_input_ids, declare_input_ids};
 use crate::{node_trait::NodeTrait, values_by_id::ValuesById};
 use serde::Deserialize;
 
@@ -18,9 +18,7 @@ impl NodeTrait for AddNode {
         input1 + input2
     }
 
-    fn get_input_ids(&self) -> Vec<usize> {
-        vec![self.input_ids.input1, self.input_ids.input2]
-    }
+    declare_get_input_ids! {input1, input2}
 
     fn update(&mut self, new_node: &Self) {
         self.input_ids = new_node.input_ids.clone();
