@@ -2,6 +2,7 @@ pub(crate) mod basic;
 pub(crate) mod declare_get_id;
 pub(crate) mod declare_get_input_ids;
 pub(crate) mod declare_input_ids;
+pub(crate) mod declare_update;
 pub(crate) mod filter;
 pub(crate) mod math;
 pub(crate) mod module;
