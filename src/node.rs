@@ -7,13 +7,13 @@ use crate::{
             pitch_node::PitchNode, time_node::TimeNode,
         },
         filter::{high_pass_node::HighPassNode, low_pass_node::LowPassNode},
-        module::{
-            module_node::ModuleNode, module_voices_node::ModuleVoicesNode, input_node::InputNode,
-            output_node::OutputNode,
-        },
         math::{
             add_node::AddNode, divide_node::DivideNode, multiply_node::MultiplyNode,
             subtract_node::SubtractNode,
+        },
+        module::{
+            input_node::InputNode, module_node::ModuleNode, module_voices_node::ModuleVoicesNode,
+            output_node::OutputNode,
         },
         random::{random_from_value_node::RandomFromValueNode, random_node::RandomNode},
         wave::{
@@ -62,10 +62,10 @@ impl NodeTrait for Node {
             Node::GateNode(node) => node.process(node_values),
             Node::TimeNode(node) => node.process(node_values),
             Node::PhaseNode(node) => node.process(node_values),
-            Node::ModuleNode(node) => node.process(node_values),
             Node::InputNode(node) => node.process(node_values),
             Node::NoiseNode(node) => node.process(node_values),
             Node::PitchNode(node) => node.process(node_values),
+            Node::ModuleNode(node) => node.process(node_values),
             Node::DivideNode(node) => node.process(node_values),
             Node::OutputNode(node) => node.process(node_values),
             Node::RandomNode(node) => node.process(node_values),
@@ -89,7 +89,6 @@ impl NodeTrait for Node {
             Node::AddNode(node) => node.get_input_ids(),
             Node::GateNode(node) => node.get_input_ids(),
             Node::TimeNode(node) => node.get_input_ids(),
-            Node::ModuleNode(node) => node.get_input_ids(),
             Node::InputNode(node) => node.get_input_ids(),
             Node::NoiseNode(node) => node.get_input_ids(),
             Node::PhaseNode(node) => node.get_input_ids(),
@@ -97,6 +96,7 @@ impl NodeTrait for Node {
             Node::DivideNode(node) => node.get_input_ids(),
             Node::OutputNode(node) => node.get_input_ids(),
             Node::RandomNode(node) => node.get_input_ids(),
+            Node::ModuleNode(node) => node.get_input_ids(),
             Node::LowPassNode(node) => node.get_input_ids(),
             Node::EnvelopeNode(node) => node.get_input_ids(),
             Node::HighPassNode(node) => node.get_input_ids(),
@@ -117,11 +117,11 @@ impl NodeTrait for Node {
             (Node::AddNode(node), Node::AddNode(new_node)) => node.update(new_node),
             (Node::GateNode(node), Node::GateNode(new_node)) => node.update(new_node),
             (Node::TimeNode(node), Node::TimeNode(new_node)) => node.update(new_node),
-            (Node::ModuleNode(node), Node::ModuleNode(new_node)) => node.update(new_node),
             (Node::InputNode(node), Node::InputNode(new_node)) => node.update(new_node),
             (Node::NoiseNode(node), Node::NoiseNode(new_node)) => node.update(new_node),
             (Node::PhaseNode(node), Node::PhaseNode(new_node)) => node.update(new_node),
             (Node::PitchNode(node), Node::PitchNode(new_node)) => node.update(new_node),
+            (Node::ModuleNode(node), Node::ModuleNode(new_node)) => node.update(new_node),
             (Node::DivideNode(node), Node::DivideNode(new_node)) => node.update(new_node),
             (Node::OutputNode(node), Node::OutputNode(new_node)) => node.update(new_node),
             (Node::RandomNode(node), Node::RandomNode(new_node)) => node.update(new_node),
@@ -133,7 +133,9 @@ impl NodeTrait for Node {
             (Node::MultiplyNode(node), Node::MultiplyNode(new_node)) => node.update(new_node),
             (Node::SineWaveNode(node), Node::SineWaveNode(new_node)) => node.update(new_node),
             (Node::FrequencyNode(node), Node::FrequencyNode(new_node)) => node.update(new_node),
-            (Node::ModuleVoicesNode(node), Node::ModuleVoicesNode(new_node)) => node.update(new_node),
+            (Node::ModuleVoicesNode(node), Node::ModuleVoicesNode(new_node)) => {
+                node.update(new_node)
+            }
             (Node::TriangleWaveNode(node), Node::TriangleWaveNode(new_node)) => {
                 node.update(new_node)
             }
@@ -154,11 +156,11 @@ impl NodeTrait for Node {
             Node::AddNode(node) => node.get_is_pending(),
             Node::GateNode(node) => node.get_is_pending(),
             Node::TimeNode(node) => node.get_is_pending(),
-            Node::ModuleNode(node) => node.get_is_pending(),
             Node::InputNode(node) => node.get_is_pending(),
             Node::NoiseNode(node) => node.get_is_pending(),
             Node::PhaseNode(node) => node.get_is_pending(),
             Node::PitchNode(node) => node.get_is_pending(),
+            Node::ModuleNode(node) => node.get_is_pending(),
             Node::DivideNode(node) => node.get_is_pending(),
             Node::OutputNode(node) => node.get_is_pending(),
             Node::RandomNode(node) => node.get_is_pending(),
@@ -184,7 +186,6 @@ impl HasId for Node {
             Node::AddNode(node) => node.get_id(),
             Node::GateNode(node) => node.get_id(),
             Node::TimeNode(node) => node.get_id(),
-            Node::ModuleNode(node) => node.get_id(),
             Node::InputNode(node) => node.get_id(),
             Node::NoiseNode(node) => node.get_id(),
             Node::PhaseNode(node) => node.get_id(),
@@ -192,6 +193,7 @@ impl HasId for Node {
             Node::DivideNode(node) => node.get_id(),
             Node::OutputNode(node) => node.get_id(),
             Node::RandomNode(node) => node.get_id(),
+            Node::ModuleNode(node) => node.get_id(),
             Node::LowPassNode(node) => node.get_id(),
             Node::EnvelopeNode(node) => node.get_id(),
             Node::HighPassNode(node) => node.get_id(),
