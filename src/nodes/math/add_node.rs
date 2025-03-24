@@ -1,12 +1,9 @@
+use crate::declare_input_ids;
 use crate::sort::has_id::HasId;
 use crate::{node_trait::NodeTrait, values_by_id::ValuesById};
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize, Clone)]
-pub(crate) struct InputIds {
-    input1: usize,
-    input2: usize,
-}
+declare_input_ids!(input1, input2);
 
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct AddNode {
