@@ -1,4 +1,3 @@
-// macros.rs
 #[macro_export]
 macro_rules! declare_input_ids {
     ($($field:ident),+) => {
