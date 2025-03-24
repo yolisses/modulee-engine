@@ -1,11 +1,9 @@
-use crate::{node_trait::NodeTrait, sort::has_id::HasId, values_by_id::ValuesById};
+use crate::sort::has_id::HasId;
+use crate::{declare_get_id, declare_get_input_ids, declare_input_ids, declare_update};
+use crate::{node_trait::NodeTrait, values_by_id::ValuesById};
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize, Clone)]
-pub(crate) struct InputIds {
-    input1: usize,
-    input2: usize,
-}
+declare_input_ids!(input1, input2);
 
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct MultiplyNode {
@@ -13,24 +11,15 @@ pub(crate) struct MultiplyNode {
     input_ids: InputIds,
 }
 
+declare_get_id! {MultiplyNode}
+
 impl NodeTrait for MultiplyNode {
+    declare_update! {}
+    declare_get_input_ids! {input1, input2}
+
     fn process(&mut self, node_values: &ValuesById) -> f32 {
         let input1 = node_values[&self.input_ids.input1];
         let input2 = node_values[&self.input_ids.input2];
         input1 * input2
-    }
-
-    fn get_input_ids(&self) -> Vec<usize> {
-        vec![self.input_ids.input1, self.input_ids.input2]
-    }
-
-    fn update(&mut self, new_node: &Self) {
-        self.input_ids = new_node.input_ids.clone();
-    }
-}
-
-impl HasId for MultiplyNode {
-    fn get_id(&self) -> usize {
-        self.id
     }
 }
