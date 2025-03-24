@@ -1,5 +1,5 @@
 use crate::sort::has_id::HasId;
-use crate::{declare_get_input_ids, declare_input_ids};
+use crate::{declare_get_id, declare_get_input_ids, declare_input_ids};
 use crate::{node_trait::NodeTrait, values_by_id::ValuesById};
 use serde::Deserialize;
 
@@ -25,8 +25,4 @@ impl NodeTrait for AddNode {
     }
 }
 
-impl HasId for AddNode {
-    fn get_id(&self) -> usize {
-        self.id
-    }
-}
+declare_get_id! {}
