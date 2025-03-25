@@ -1,8 +1,9 @@
-use crate::{
-    node_trait::NodeTrait, set_note_trait::SetNoteTrait, sort::has_id::HasId,
-    values_by_id::ValuesById,
-};
 use serde::Deserialize;
+
+use crate::{
+    declare_get_id, declare_get_input_ids, has_update::HasUpdate, node_trait::NodeTrait,
+    set_note_trait::SetNoteTrait, values_by_id::ValuesById,
+};
 
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct PitchNode {
@@ -11,21 +12,16 @@ pub(crate) struct PitchNode {
     pitch: f32,
 }
 
-impl NodeTrait for PitchNode {
-    fn process(&mut self, _node_values: &ValuesById) -> f32 {
-        self.pitch
-    }
+declare_get_id! {PitchNode}
+declare_get_input_ids! {PitchNode,}
 
-    fn get_input_ids(&self) -> Vec<usize> {
-        vec![]
-    }
-
+impl HasUpdate for PitchNode {
     fn update(&mut self, _new_node: &Self) {}
 }
 
-impl HasId for PitchNode {
-    fn get_id(&self) -> usize {
-        self.id
+impl NodeTrait for PitchNode {
+    fn process(&mut self, _node_values: &ValuesById) -> f32 {
+        self.pitch
     }
 }
 
