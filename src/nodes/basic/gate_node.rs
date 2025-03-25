@@ -1,7 +1,4 @@
-use crate::{
-    node_trait::NodeTrait, set_note_trait::SetNoteTrait, sort::has_id::HasId,
-    values_by_id::ValuesById,
-};
+use crate::{node_trait::NodeTrait, set_note_trait::SetNoteTrait, values_by_id::ValuesById};
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone)]
@@ -25,12 +22,6 @@ impl NodeTrait for GateNode {
     }
 
     fn update(&mut self, _new_node: &Self) {}
-}
-
-impl HasId for GateNode {
-    fn get_id(&self) -> usize {
-        self.id
-    }
 }
 
 impl SetNoteTrait for GateNode {

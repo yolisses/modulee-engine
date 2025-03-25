@@ -1,6 +1,4 @@
-use crate::{
-    filter::all_pass::AllPass, node_trait::NodeTrait, sort::has_id::HasId, values_by_id::ValuesById,
-};
+use crate::{filter::all_pass::AllPass, node_trait::NodeTrait, values_by_id::ValuesById};
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone)]
@@ -36,11 +34,5 @@ impl NodeTrait for AllPassNode {
 
     fn update(&mut self, new_node: &Self) {
         self.input_ids = new_node.input_ids.clone();
-    }
-}
-
-impl HasId for AllPassNode {
-    fn get_id(&self) -> usize {
-        self.id
     }
 }

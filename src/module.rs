@@ -25,12 +25,6 @@ impl PartialEq for Module {
     }
 }
 
-impl HasId for Module {
-    fn get_id(&self) -> usize {
-        self.id
-    }
-}
-
 impl Module {
     // Passing node_values and input_target_ids may be a violation of the
     // responsibility division, but improves performance
