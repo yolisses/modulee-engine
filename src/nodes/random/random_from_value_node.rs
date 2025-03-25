@@ -1,21 +1,22 @@
 use crate::{
-    get_u64_seed_from_f32::get_u64_seed_from_f32, node_trait::NodeTrait, sort::has_id::HasId,
-    values_by_id::ValuesById,
+    declare_get_id, declare_get_input_ids, declare_input_ids, declare_update,
+    get_u64_seed_from_f32::get_u64_seed_from_f32, node_trait::NodeTrait, values_by_id::ValuesById,
 };
 use rand::{Rng, SeedableRng};
 use rand_xoshiro::Xoshiro256PlusPlus;
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize, Clone)]
-pub(crate) struct InputIds {
-    value: usize,
-}
+declare_input_ids! {value}
 
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct RandomFromValueNode {
     id: usize,
     input_ids: InputIds,
 }
+
+declare_get_id! {RandomFromValueNode}
+declare_update! {RandomFromValueNode}
+declare_get_input_ids! {RandomFromValueNode, value}
 
 impl NodeTrait for RandomFromValueNode {
     fn process(&mut self, node_values: &ValuesById) -> f32 {
@@ -25,18 +26,6 @@ impl NodeTrait for RandomFromValueNode {
 
         let mut generator = Xoshiro256PlusPlus::seed_from_u64(seed);
         generator.random()
-    }
-
-    fn get_input_ids(&self) -> Vec<usize> {
-        vec![self.input_ids.value]
-    }
-
-    fn update(&mut self, _new_node: &Self) {}
-}
-
-impl HasId for RandomFromValueNode {
-    fn get_id(&self) -> usize {
-        self.id
     }
 }
 
