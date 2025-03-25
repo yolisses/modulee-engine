@@ -1,16 +1,11 @@
 use crate::{
-    declare_get_id, envelope::envelope::Envelope, node_trait::NodeTrait, sample_rate::SAMPLE_RATE,
+    declare_get_id, declare_get_input_ids, declare_input_ids, envelope::envelope::Envelope,
+    has_update::HasUpdate, node_trait::NodeTrait, sample_rate::SAMPLE_RATE,
     set_note_trait::SetNoteTrait, values_by_id::ValuesById,
 };
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize, Clone)]
-pub(crate) struct InputIds {
-    attack: usize,
-    decay: usize,
-    sustain: usize,
-    release: usize,
-}
+declare_input_ids! {attack, decay, sustain, release}
 
 // TODO consider adding gate, to allow envelope starts different than note
 // starts.
@@ -28,6 +23,14 @@ fn get_default_envelope() -> Envelope {
 }
 
 declare_get_id! {EnvelopeNode}
+declare_get_input_ids! {EnvelopeNode, attack, decay, sustain, release}
+
+impl HasUpdate for EnvelopeNode {
+    // TODO check if makes sense to clone the envelope too
+    fn update(&mut self, new_node: &Self) {
+        self.input_ids = new_node.input_ids.clone();
+    }
+}
 
 impl NodeTrait for EnvelopeNode {
     fn process(&mut self, node_values: &ValuesById) -> f32 {
@@ -40,20 +43,6 @@ impl NodeTrait for EnvelopeNode {
 
         self.envelope.process();
         self.envelope.get_value()
-    }
-
-    fn get_input_ids(&self) -> Vec<usize> {
-        vec![
-            self.input_ids.attack,
-            self.input_ids.decay,
-            self.input_ids.sustain,
-            self.input_ids.release,
-        ]
-    }
-
-    // TODO check if makes sense to clone the envelope too
-    fn update(&mut self, new_node: &Self) {
-        self.input_ids = new_node.input_ids.clone();
     }
 
     fn get_is_pending(&self) -> bool {

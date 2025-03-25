@@ -1,5 +1,6 @@
 use crate::{
-    declare_get_id, node_trait::NodeTrait, set_note_trait::SetNoteTrait, values_by_id::ValuesById,
+    declare_empty_get_input_ids, declare_empty_update, declare_get_id, node_trait::NodeTrait,
+    set_note_trait::SetNoteTrait, values_by_id::ValuesById,
 };
 use serde::Deserialize;
 
@@ -11,6 +12,8 @@ pub(crate) struct GateNode {
 }
 
 declare_get_id! {GateNode}
+declare_empty_update! {GateNode}
+declare_empty_get_input_ids! {GateNode}
 
 impl NodeTrait for GateNode {
     fn process(&mut self, _node_values: &ValuesById) -> f32 {
@@ -20,12 +23,6 @@ impl NodeTrait for GateNode {
             0.
         }
     }
-
-    fn get_input_ids(&self) -> Vec<usize> {
-        vec![]
-    }
-
-    fn update(&mut self, _new_node: &Self) {}
 }
 
 impl SetNoteTrait for GateNode {

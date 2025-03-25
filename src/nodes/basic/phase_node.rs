@@ -1,12 +1,8 @@
 use crate::{
-    declare_get_id, node_trait::NodeTrait, sample_rate::SAMPLE_RATE, values_by_id::ValuesById,
+    declare_get_id, declare_get_input_ids_and_its_getter, declare_update, node_trait::NodeTrait,
+    sample_rate::SAMPLE_RATE, values_by_id::ValuesById,
 };
 use serde::Deserialize;
-
-#[derive(Debug, Deserialize, Clone)]
-pub(crate) struct InputIds {
-    frequency: usize,
-}
 
 /// Returns the phase value between 0 and 1 given a time and a frequency
 #[derive(Debug, Deserialize, Clone)]
@@ -24,6 +20,8 @@ pub(crate) struct PhaseNode {
 }
 
 declare_get_id! {PhaseNode}
+declare_update! {PhaseNode}
+declare_get_input_ids_and_its_getter! {PhaseNode, frequency}
 
 fn get_default_sample_rate() -> f32 {
     SAMPLE_RATE
@@ -42,14 +40,6 @@ impl NodeTrait for PhaseNode {
         // Equals to `%= 1` but more precise
         self.phase -= self.phase.floor();
         self.phase
-    }
-
-    fn get_input_ids(&self) -> Vec<usize> {
-        vec![self.input_ids.frequency]
-    }
-
-    fn update(&mut self, new_node: &Self) {
-        self.input_ids = new_node.input_ids.clone();
     }
 }
 

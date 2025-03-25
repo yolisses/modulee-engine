@@ -1,10 +1,8 @@
-use crate::{declare_get_id, node_trait::NodeTrait, values_by_id::ValuesById};
+use crate::{
+    declare_get_id, declare_get_input_ids_and_its_getter, declare_update, node_trait::NodeTrait,
+    values_by_id::ValuesById,
+};
 use serde::Deserialize;
-
-#[derive(Debug, Deserialize, Clone)]
-pub(crate) struct InputIds {
-    input: usize,
-}
 
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct OutputNode {
@@ -15,6 +13,8 @@ pub(crate) struct OutputNode {
 }
 
 declare_get_id! {OutputNode}
+declare_update! {OutputNode}
+declare_get_input_ids_and_its_getter! {OutputNode, input}
 
 impl OutputNode {
     pub(crate) fn get_value(&self) -> f32 {
@@ -27,13 +27,5 @@ impl NodeTrait for OutputNode {
         let input = node_values[&self.input_ids.input];
         self.value = input;
         self.value
-    }
-
-    fn get_input_ids(&self) -> Vec<usize> {
-        vec![self.input_ids.input]
-    }
-
-    fn update(&mut self, new_node: &Self) {
-        self.input_ids = new_node.input_ids.clone();
     }
 }
