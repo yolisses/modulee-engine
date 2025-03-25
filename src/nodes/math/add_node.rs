@@ -11,11 +11,10 @@ pub(crate) struct AddNode {
 }
 
 declare_get_id! {AddNode}
+declare_update! {AddNode}
 declare_get_input_ids! {AddNode,input1, input2}
 
 impl NodeTrait for AddNode {
-    declare_update! {}
-
     fn process(&mut self, node_values: &ValuesById) -> f32 {
         let input1 = node_values[&self.input_ids.input1];
         let input2 = node_values[&self.input_ids.input2];

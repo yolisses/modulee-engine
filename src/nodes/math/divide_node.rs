@@ -11,11 +11,10 @@ pub(crate) struct DivideNode {
 }
 
 declare_get_id! {DivideNode}
+declare_update! {DivideNode}
 declare_get_input_ids! {DivideNode,input1, input2}
 
 impl NodeTrait for DivideNode {
-    declare_update! {}
-
     fn process(&mut self, node_values: &ValuesById) -> f32 {
         let input1 = node_values[&self.input_ids.input1];
         let input2 = node_values[&self.input_ids.input2];

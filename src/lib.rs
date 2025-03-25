@@ -7,6 +7,7 @@ mod get_u64_seed_from_f32;
 mod get_updated_module;
 mod graph_data;
 mod has_inputs;
+mod has_update;
 mod math;
 mod module;
 mod modules_by_id;
