@@ -1,4 +1,6 @@
-use crate::{filter::low_pass::LowPass, node_trait::NodeTrait, values_by_id::ValuesById};
+use crate::{
+    declare_get_id, filter::low_pass::LowPass, node_trait::NodeTrait, values_by_id::ValuesById,
+};
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone)]
@@ -15,6 +17,8 @@ pub(crate) struct LowPassNode {
     #[serde(skip)]
     low_pass: LowPass,
 }
+
+declare_get_id! {LowPassNode}
 
 impl NodeTrait for LowPassNode {
     fn process(&mut self, node_values: &ValuesById) -> f32 {

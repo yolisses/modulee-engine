@@ -1,4 +1,6 @@
-use crate::{node_trait::NodeTrait, set_note_trait::SetNoteTrait, values_by_id::ValuesById};
+use crate::{
+    declare_get_id, node_trait::NodeTrait, set_note_trait::SetNoteTrait, values_by_id::ValuesById,
+};
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone)]
@@ -7,6 +9,8 @@ pub(crate) struct GateNode {
     #[serde(skip)]
     is_active: bool,
 }
+
+declare_get_id! {GateNode}
 
 impl NodeTrait for GateNode {
     fn process(&mut self, _node_values: &ValuesById) -> f32 {

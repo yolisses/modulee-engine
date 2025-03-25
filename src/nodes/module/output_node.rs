@@ -1,4 +1,4 @@
-use crate::{node_trait::NodeTrait, values_by_id::ValuesById};
+use crate::{declare_get_id, node_trait::NodeTrait, values_by_id::ValuesById};
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone)]
@@ -13,6 +13,8 @@ pub(crate) struct OutputNode {
     #[serde(skip)]
     value: f32,
 }
+
+declare_get_id! {OutputNode}
 
 impl OutputNode {
     pub(crate) fn get_value(&self) -> f32 {
