@@ -1,35 +1,22 @@
-use crate::{node_trait::NodeTrait, sort::has_id::HasId, values_by_id::ValuesById};
+use crate::{declare_get_id, declare_get_input_ids, declare_input_ids, declare_update};
+use crate::{node_trait::NodeTrait, values_by_id::ValuesById};
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize, Clone)]
-pub(crate) struct InputIds {
-    pitch: usize,
-}
+declare_input_ids!(pitch);
 
-/// Receives a pitch in the MIDI format and returns the frequency of the pitch
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct FrequencyNode {
     id: usize,
     input_ids: InputIds,
 }
 
+declare_get_id! {FrequencyNode}
+declare_update! {FrequencyNode}
+declare_get_input_ids! {FrequencyNode, pitch}
+
 impl NodeTrait for FrequencyNode {
     fn process(&mut self, node_values: &ValuesById) -> f32 {
         let pitch = node_values[&self.input_ids.pitch];
         440.0 * 2.0_f32.powf((pitch - 69.0) / 12.0)
-    }
-
-    fn get_input_ids(&self) -> Vec<usize> {
-        vec![self.input_ids.pitch]
-    }
-
-    fn update(&mut self, new_node: &Self) {
-        self.input_ids = new_node.input_ids.clone();
-    }
-}
-
-impl HasId for FrequencyNode {
-    fn get_id(&self) -> usize {
-        self.id
     }
 }
