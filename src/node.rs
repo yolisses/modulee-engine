@@ -1,4 +1,6 @@
 use crate::{
+    has_inputs::HasInputs,
+    has_update::HasUpdate,
     node_trait::NodeTrait,
     nodes::{
         basic::{
@@ -37,6 +39,23 @@ macro_rules! define_node_enum {
             $($variant($type)),+
         }
 
+        impl HasInputs for Node {
+            fn get_input_ids(&self) -> Vec<usize> {
+                match self {
+                    $(Node::$variant(node) => node.get_input_ids()),+
+                }
+            }
+        }
+
+        impl HasUpdate for Node {
+            fn update(&mut self, new_node: &Self) {
+                match (self, new_node) {
+                    $((Node::$variant(node), Node::$variant(new_node)) => node.update(new_node)),+,
+                    _ => panic!("Invalid node: {:#?}", new_node),
+                }
+            }
+        }
+
         impl NodeTrait for Node {
             fn process(&mut self, node_values: &ValuesById) -> f32 {
                 match self {
@@ -44,18 +63,6 @@ macro_rules! define_node_enum {
                 }
             }
 
-            fn get_input_ids(&self) -> Vec<usize> {
-                match self {
-                    $(Node::$variant(node) => node.get_input_ids()),+
-                }
-            }
-
-            fn update(&mut self, new_node: &Self) {
-                match (self, new_node) {
-                    $((Node::$variant(node), Node::$variant(new_node)) => node.update(new_node)),+,
-                    _ => panic!("Invalid node: {:#?}", new_node),
-                }
-            }
 
             fn get_is_pending(&self) -> bool {
                 match self {
