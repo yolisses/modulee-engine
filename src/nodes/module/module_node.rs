@@ -1,7 +1,8 @@
 use super::deserialize_int_map::deserialize_int_map;
 use crate::{
-    get_updated_module::get_updated_module, module::Module, node_trait::NodeTrait,
-    set_note_trait::SetNoteTrait, values_by_id::ValuesById,
+    declare_get_id, get_updated_module::get_updated_module, has_inputs::HasInputs,
+    has_update::HasUpdate, module::Module, node_trait::NodeTrait, set_note_trait::SetNoteTrait,
+    values_by_id::ValuesById,
 };
 use nohash_hasher::IntMap;
 use serde::Deserialize;
@@ -35,17 +36,19 @@ impl ModuleNode {
         )?;
         Ok(())
     }
+}
 
-    pub(crate) fn set_note_on(&mut self, pitch: f32) {
-        if let Some(module) = &mut self.module {
-            module.set_note_on(pitch);
-        }
+declare_get_id! {ModuleNode}
+
+impl HasUpdate for ModuleNode {
+    fn update(&mut self, new_node: &Self) {
+        self.extras = new_node.extras.clone();
     }
+}
 
-    pub(crate) fn set_note_off(&mut self, pitch: f32) {
-        if let Some(module) = &mut self.module {
-            module.set_note_off(pitch);
-        }
+impl HasInputs for ModuleNode {
+    fn get_input_ids(&self) -> Vec<usize> {
+        self.extras.input_target_ids.values().cloned().collect()
     }
 }
 
@@ -60,12 +63,18 @@ impl NodeTrait for ModuleNode {
             0.
         }
     }
+}
 
-    fn get_input_ids(&self) -> Vec<usize> {
-        self.extras.input_target_ids.values().cloned().collect()
+impl SetNoteTrait for ModuleNode {
+    fn set_note_on(&mut self, pitch: f32) {
+        if let Some(module) = &mut self.module {
+            module.set_note_on(pitch);
+        }
     }
 
-    fn update(&mut self, new_node: &Self) {
-        self.extras = new_node.extras.clone();
+    fn set_note_off(&mut self, pitch: f32) {
+        if let Some(module) = &mut self.module {
+            module.set_note_off(pitch);
+        }
     }
 }

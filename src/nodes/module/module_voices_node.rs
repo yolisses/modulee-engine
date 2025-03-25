@@ -1,7 +1,8 @@
 use super::deserialize_int_map::deserialize_int_map;
 use crate::{
-    get_updated_module::get_updated_module, module::Module, node_trait::NodeTrait,
-    set_note_trait::SetNoteTrait, values_by_id::ValuesById, voice::Voice,
+    declare_get_id, get_updated_module::get_updated_module, has_inputs::HasInputs,
+    has_update::HasUpdate, module::Module, node_trait::NodeTrait, set_note_trait::SetNoteTrait,
+    values_by_id::ValuesById, voice::Voice,
 };
 use nohash_hasher::IntMap;
 use serde::Deserialize;
@@ -45,6 +46,20 @@ impl ModuleVoicesNode {
     }
 }
 
+declare_get_id! {ModuleVoicesNode}
+
+impl HasUpdate for ModuleVoicesNode {
+    fn update(&mut self, new_node: &Self) {
+        self.extras = new_node.extras.clone();
+    }
+}
+
+impl HasInputs for ModuleVoicesNode {
+    fn get_input_ids(&self) -> Vec<usize> {
+        self.extras.input_target_ids.values().cloned().collect()
+    }
+}
+
 impl NodeTrait for ModuleVoicesNode {
     fn process(&mut self, node_values: &ValuesById) -> f32 {
         let mut sum = 0.;
@@ -54,14 +69,6 @@ impl NodeTrait for ModuleVoicesNode {
             sum += voice.get_output_value()
         }
         sum
-    }
-
-    fn get_input_ids(&self) -> Vec<usize> {
-        self.extras.input_target_ids.values().cloned().collect()
-    }
-
-    fn update(&mut self, new_node: &Self) {
-        self.extras = new_node.extras.clone();
     }
 
     fn get_is_pending(&self) -> bool {
