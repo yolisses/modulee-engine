@@ -87,7 +87,7 @@ impl Graph {
     }
 
     fn remove_non_pending_voices(&mut self) {
-        for (_, module) in &mut self.modules_by_id {
+        for module in self.modules_by_id.values_mut() {
             module.remove_non_pending_voices();
         }
     }

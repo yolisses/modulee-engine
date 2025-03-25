@@ -14,7 +14,7 @@ pub(crate) fn get_limited_value(value: f32, limit_1: f32, limit_2: f32) -> f32 {
     }
 
     // The limits are equal
-    return limit_1;
+    limit_1
 }
 
 #[cfg(test)]
