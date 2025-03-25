@@ -1,5 +1,5 @@
 use crate::{
-    declare_empty_update, declare_get_id, declare_get_input_ids, node_trait::NodeTrait,
+    declare_empty_get_input_ids, declare_empty_update, declare_get_id, node_trait::NodeTrait,
     values_by_id::ValuesById,
 };
 use rand::{rngs::ThreadRng, Rng};
@@ -14,7 +14,7 @@ pub(crate) struct NoiseNode {
 
 declare_get_id! {NoiseNode}
 declare_empty_update! {NoiseNode}
-declare_get_input_ids! {NoiseNode,}
+declare_empty_get_input_ids! {NoiseNode}
 
 impl NodeTrait for NoiseNode {
     fn process(&mut self, _node_values: &ValuesById) -> f32 {

@@ -1,9 +1,8 @@
-use serde::Deserialize;
-
 use crate::{
-    declare_get_id, declare_get_input_ids, has_update::HasUpdate, node_trait::NodeTrait,
+    declare_empty_get_input_ids, declare_get_id, has_update::HasUpdate, node_trait::NodeTrait,
     set_note_trait::SetNoteTrait, values_by_id::ValuesById,
 };
+use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct PitchNode {
@@ -13,7 +12,7 @@ pub(crate) struct PitchNode {
 }
 
 declare_get_id! {PitchNode}
-declare_get_input_ids! {PitchNode,}
+declare_empty_get_input_ids! {PitchNode}
 
 impl HasUpdate for PitchNode {
     fn update(&mut self, _new_node: &Self) {}
