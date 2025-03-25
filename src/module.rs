@@ -122,11 +122,8 @@ impl Module {
 
     pub(crate) fn remove_non_pending_voices(&mut self) {
         for node in &mut self.nodes {
-            match node {
-                Node::ModuleVoicesNode(module_voices_node) => {
-                    module_voices_node.remove_non_pending_voices();
-                }
-                _ => (),
+            if let Node::ModuleVoicesNode(module_voices_node) = node {
+                module_voices_node.remove_non_pending_voices();
             }
         }
     }
