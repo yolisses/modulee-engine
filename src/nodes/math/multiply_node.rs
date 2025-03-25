@@ -11,11 +11,10 @@ pub(crate) struct MultiplyNode {
 }
 
 declare_get_id! {MultiplyNode}
+declare_update! {MultiplyNode}
 declare_get_input_ids! {MultiplyNode,input1, input2}
 
 impl NodeTrait for MultiplyNode {
-    declare_update! {}
-
     fn process(&mut self, node_values: &ValuesById) -> f32 {
         let input1 = node_values[&self.input_ids.input1];
         let input2 = node_values[&self.input_ids.input2];
