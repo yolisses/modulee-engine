@@ -12,7 +12,7 @@ pub(crate) struct MultiplyNode {
 
 declare_get_id! {MultiplyNode}
 declare_update! {MultiplyNode}
-declare_get_input_ids! {MultiplyNode,input1, input2}
+declare_get_input_ids! {MultiplyNode, input1, input2}
 
 impl NodeTrait for MultiplyNode {
     fn process(&mut self, node_values: &ValuesById) -> f32 {

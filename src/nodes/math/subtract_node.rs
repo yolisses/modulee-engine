@@ -12,7 +12,7 @@ pub(crate) struct SubtractNode {
 
 declare_get_id! {SubtractNode}
 declare_update! {SubtractNode}
-declare_get_input_ids! {SubtractNode,input1, input2}
+declare_get_input_ids! {SubtractNode, input1, input2}
 
 impl NodeTrait for SubtractNode {
     fn process(&mut self, node_values: &ValuesById) -> f32 {
