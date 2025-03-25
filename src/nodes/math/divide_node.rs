@@ -1,8 +1,6 @@
-use crate::{declare_get_id, declare_get_input_ids, declare_input_ids, declare_update};
+use crate::{declare_get_id, declare_get_input_ids_and_its_getter, declare_update};
 use crate::{node_trait::NodeTrait, values_by_id::ValuesById};
 use serde::Deserialize;
-
-declare_input_ids!(input1, input2);
 
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct DivideNode {
@@ -12,7 +10,7 @@ pub(crate) struct DivideNode {
 
 declare_get_id! {DivideNode}
 declare_update! {DivideNode}
-declare_get_input_ids! {DivideNode, input1, input2}
+declare_get_input_ids_and_its_getter! {DivideNode, input1, input2}
 
 impl NodeTrait for DivideNode {
     fn process(&mut self, node_values: &ValuesById) -> f32 {

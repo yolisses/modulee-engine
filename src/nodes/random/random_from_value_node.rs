@@ -1,12 +1,10 @@
 use crate::{
-    declare_get_id, declare_get_input_ids, declare_input_ids, declare_update,
+    declare_get_id, declare_get_input_ids_and_its_getter, declare_update,
     get_u64_seed_from_f32::get_u64_seed_from_f32, node_trait::NodeTrait, values_by_id::ValuesById,
 };
 use rand::{Rng, SeedableRng};
 use rand_xoshiro::Xoshiro256PlusPlus;
 use serde::Deserialize;
-
-declare_input_ids! {value}
 
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct RandomFromValueNode {
@@ -16,7 +14,7 @@ pub(crate) struct RandomFromValueNode {
 
 declare_get_id! {RandomFromValueNode}
 declare_update! {RandomFromValueNode}
-declare_get_input_ids! {RandomFromValueNode, value}
+declare_get_input_ids_and_its_getter! {RandomFromValueNode, value}
 
 impl NodeTrait for RandomFromValueNode {
     fn process(&mut self, node_values: &ValuesById) -> f32 {

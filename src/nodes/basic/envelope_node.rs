@@ -1,11 +1,9 @@
 use crate::{
-    declare_get_id, declare_get_input_ids, declare_input_ids, envelope::envelope::Envelope,
+    declare_get_id, declare_get_input_ids_and_its_getter, envelope::envelope::Envelope,
     has_update::HasUpdate, node_trait::NodeTrait, sample_rate::SAMPLE_RATE,
     set_note_trait::SetNoteTrait, values_by_id::ValuesById,
 };
 use serde::Deserialize;
-
-declare_input_ids! {attack, decay, sustain, release}
 
 // TODO consider adding gate, to allow envelope starts different than note
 // starts.
@@ -23,7 +21,7 @@ fn get_default_envelope() -> Envelope {
 }
 
 declare_get_id! {EnvelopeNode}
-declare_get_input_ids! {EnvelopeNode, attack, decay, sustain, release}
+declare_get_input_ids_and_its_getter! {EnvelopeNode, attack, decay, sustain, release}
 
 impl HasUpdate for EnvelopeNode {
     // TODO check if makes sense to clone the envelope too
