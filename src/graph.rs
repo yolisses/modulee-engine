@@ -1,6 +1,6 @@
 use crate::{
     get_items_by_id::get_items_by_id, graph_data::GraphData, modules_by_id::ModulesById,
-    set_note_trait::SetNoteTrait,
+    set_note_trait::SetNoteTrait, sort::has_id::HasId,
 };
 use nohash_hasher::IntMap;
 use std::error::Error;

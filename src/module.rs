@@ -1,8 +1,6 @@
 use crate::{
-    node::Node,
-    node_trait::NodeTrait,
-    set_note_trait::SetNoteTrait,
-    sort::{has_id::HasId, sort_nodes_topologically::sort_nodes_topologically},
+    declare_get_id, has_update::HasUpdate, node::Node, node_trait::NodeTrait,
+    set_note_trait::SetNoteTrait, sort::sort_nodes_topologically::sort_nodes_topologically,
     values_by_id::ValuesById,
 };
 use nohash_hasher::IntMap;
@@ -18,6 +16,8 @@ pub struct Module {
     #[serde(skip)]
     node_values: ValuesById,
 }
+
+declare_get_id! {Module}
 
 impl PartialEq for Module {
     fn eq(&self, other: &Self) -> bool {
