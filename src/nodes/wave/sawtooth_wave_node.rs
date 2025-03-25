@@ -1,10 +1,8 @@
-use crate::{node_trait::NodeTrait, sort::has_id::HasId, values_by_id::ValuesById};
+use crate::{declare_get_id, declare_get_input_ids, declare_input_ids, declare_update};
+use crate::{node_trait::NodeTrait, values_by_id::ValuesById};
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize, Clone)]
-pub(crate) struct InputIds {
-    phase: usize,
-}
+declare_input_ids!(phase);
 
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct SawtoothWaveNode {
@@ -12,23 +10,13 @@ pub(crate) struct SawtoothWaveNode {
     input_ids: InputIds,
 }
 
+declare_get_id! {SawtoothWaveNode}
+declare_update! {SawtoothWaveNode}
+declare_get_input_ids! {SawtoothWaveNode, phase}
+
 impl NodeTrait for SawtoothWaveNode {
     fn process(&mut self, node_values: &ValuesById) -> f32 {
         let phase = node_values[&self.input_ids.phase];
         2. * phase - 1.
-    }
-
-    fn get_input_ids(&self) -> Vec<usize> {
-        vec![self.input_ids.phase]
-    }
-
-    fn update(&mut self, new_node: &Self) {
-        self.input_ids = new_node.input_ids.clone();
-    }
-}
-
-impl HasId for SawtoothWaveNode {
-    fn get_id(&self) -> usize {
-        self.id
     }
 }
