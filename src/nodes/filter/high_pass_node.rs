@@ -1,4 +1,6 @@
-use crate::{filter::high_pass::HighPass, node_trait::NodeTrait, values_by_id::ValuesById};
+use crate::{
+    declare_get_id, filter::high_pass::HighPass, node_trait::NodeTrait, values_by_id::ValuesById,
+};
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone)]
@@ -15,6 +17,8 @@ pub(crate) struct HighPassNode {
     #[serde(skip)]
     high_pass: HighPass,
 }
+
+declare_get_id! {HighPassNode}
 
 impl NodeTrait for HighPassNode {
     fn process(&mut self, node_values: &ValuesById) -> f32 {

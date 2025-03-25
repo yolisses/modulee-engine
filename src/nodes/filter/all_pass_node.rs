@@ -1,4 +1,6 @@
-use crate::{filter::all_pass::AllPass, node_trait::NodeTrait, values_by_id::ValuesById};
+use crate::{
+    declare_get_id, filter::all_pass::AllPass, node_trait::NodeTrait, values_by_id::ValuesById,
+};
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone)]
@@ -15,6 +17,8 @@ pub(crate) struct AllPassNode {
     #[serde(skip)]
     all_pass: AllPass,
 }
+
+declare_get_id! {AllPassNode}
 
 impl NodeTrait for AllPassNode {
     fn process(&mut self, node_values: &ValuesById) -> f32 {

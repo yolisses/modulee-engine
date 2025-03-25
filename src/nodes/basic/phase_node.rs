@@ -1,4 +1,6 @@
-use crate::{node_trait::NodeTrait, sample_rate::SAMPLE_RATE, values_by_id::ValuesById};
+use crate::{
+    declare_get_id, node_trait::NodeTrait, sample_rate::SAMPLE_RATE, values_by_id::ValuesById,
+};
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone)]
@@ -20,6 +22,8 @@ pub(crate) struct PhaseNode {
     #[serde(default = "get_default_sample_rate")]
     sample_rate: f32,
 }
+
+declare_get_id! {PhaseNode}
 
 fn get_default_sample_rate() -> f32 {
     SAMPLE_RATE
