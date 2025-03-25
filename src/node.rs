@@ -10,6 +10,7 @@ use crate::{
         },
         filter::{
             all_pass_node::AllPassNode, high_pass_node::HighPassNode, low_pass_node::LowPassNode,
+            peak_node::PeakNode,
         },
         math::{
             add_node::AddNode, divide_node::DivideNode, multiply_node::MultiplyNode,
@@ -84,6 +85,7 @@ macro_rules! define_node_enum {
 define_node_enum! {
     AddNode(AddNode),
     GateNode(GateNode),
+    PeakNode(PeakNode),
     TimeNode(TimeNode),
     InputNode(InputNode),
     NoiseNode(NoiseNode),
