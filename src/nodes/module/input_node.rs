@@ -1,5 +1,5 @@
 use crate::{
-    declare_empty_update, declare_get_id, declare_get_input_ids, node_trait::NodeTrait,
+    declare_empty_get_input_ids, declare_empty_update, declare_get_id, node_trait::NodeTrait,
     values_by_id::ValuesById,
 };
 use serde::Deserialize;
@@ -13,7 +13,7 @@ pub(crate) struct InputNode {
 
 declare_get_id! {InputNode}
 declare_empty_update! {InputNode}
-declare_get_input_ids! {InputNode,}
+declare_empty_get_input_ids! {InputNode}
 
 impl InputNode {
     pub(crate) fn set_value(&mut self, value: f32) {
