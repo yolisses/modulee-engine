@@ -1,6 +1,6 @@
 use crate::{
     declare_get_id, declare_get_input_ids_and_its_getter, declare_update,
-    filter::high_pass::HighPass, node_trait::NodeTrait, values_by_id::ValuesById,
+    filter::filter_wrapper::FilterWrapper, node_trait::NodeTrait, values_by_id::ValuesById,
 };
 use serde::Deserialize;
 
@@ -9,7 +9,12 @@ pub(crate) struct HighPassNode {
     id: usize,
     input_ids: InputIds,
     #[serde(skip)]
-    high_pass: HighPass,
+    #[serde(default = "get_default_filter_wrapper")]
+    filter_wrapper: FilterWrapper,
+}
+
+fn get_default_filter_wrapper() -> FilterWrapper {
+    FilterWrapper::new(biquad::Type::HighPass)
 }
 
 declare_get_id! {HighPassNode}
@@ -21,6 +26,6 @@ impl NodeTrait for HighPassNode {
         let input = node_values[&self.input_ids.input];
         let frequency = node_values[&self.input_ids.frequency];
         let resonance = node_values[&self.input_ids.resonance];
-        self.high_pass.process(input, frequency, resonance)
+        self.filter_wrapper.process(input, frequency, resonance)
     }
 }
