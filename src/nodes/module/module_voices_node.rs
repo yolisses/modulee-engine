@@ -1,7 +1,7 @@
 use super::deserialize_int_map::deserialize_int_map;
 use crate::{
     get_updated_module::get_updated_module, module::Module, node_trait::NodeTrait,
-    set_note_trait::SetNoteTrait, sort::has_id::HasId, values_by_id::ValuesById, voice::Voice,
+    set_note_trait::SetNoteTrait, values_by_id::ValuesById, voice::Voice,
 };
 use nohash_hasher::IntMap;
 use serde::Deserialize;
@@ -32,7 +32,11 @@ impl ModuleVoicesNode {
         &mut self,
         new_modules: &IntMap<usize, Module>,
     ) -> Result<(), Box<dyn Error>> {
-        self.module = get_updated_module(self.module.take(), self.extras.target_module_id, new_modules)?;
+        self.module = get_updated_module(
+            self.module.take(),
+            self.extras.target_module_id,
+            new_modules,
+        )?;
         Ok(())
     }
 
@@ -67,12 +71,6 @@ impl NodeTrait for ModuleVoicesNode {
             }
         }
         false
-    }
-}
-
-impl HasId for ModuleVoicesNode {
-    fn get_id(&self) -> usize {
-        self.id
     }
 }
 

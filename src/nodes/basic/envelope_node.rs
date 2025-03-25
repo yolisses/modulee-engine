@@ -1,6 +1,6 @@
 use crate::{
-    envelope::envelope::Envelope, node_trait::NodeTrait, sample_rate::SAMPLE_RATE,
-    set_note_trait::SetNoteTrait, sort::has_id::HasId, values_by_id::ValuesById,
+    declare_get_id, envelope::envelope::Envelope, node_trait::NodeTrait, sample_rate::SAMPLE_RATE,
+    set_note_trait::SetNoteTrait, values_by_id::ValuesById,
 };
 use serde::Deserialize;
 
@@ -26,6 +26,8 @@ pub(crate) struct EnvelopeNode {
 fn get_default_envelope() -> Envelope {
     Envelope::new(1., 1., 1., 1., SAMPLE_RATE)
 }
+
+declare_get_id! {EnvelopeNode}
 
 impl NodeTrait for EnvelopeNode {
     fn process(&mut self, node_values: &ValuesById) -> f32 {
@@ -56,12 +58,6 @@ impl NodeTrait for EnvelopeNode {
 
     fn get_is_pending(&self) -> bool {
         self.envelope.get_is_pending()
-    }
-}
-
-impl HasId for EnvelopeNode {
-    fn get_id(&self) -> usize {
-        self.id
     }
 }
 

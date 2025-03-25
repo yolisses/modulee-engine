@@ -1,4 +1,5 @@
 pub(crate) mod basic;
+pub(crate) mod declare_empty_update;
 pub(crate) mod declare_get_id;
 pub(crate) mod declare_get_input_ids;
 pub(crate) mod declare_input_ids;

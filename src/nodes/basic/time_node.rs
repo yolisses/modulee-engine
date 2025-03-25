@@ -1,6 +1,4 @@
-use crate::{
-    node_trait::NodeTrait, sample_rate::SAMPLE_RATE, sort::has_id::HasId, values_by_id::ValuesById,
-};
+use crate::{node_trait::NodeTrait, sample_rate::SAMPLE_RATE, values_by_id::ValuesById};
 use serde::Deserialize;
 
 /// Returns the current time in seconds
@@ -22,10 +20,4 @@ impl NodeTrait for TimeNode {
     }
 
     fn update(&mut self, _new_node: &Self) {}
-}
-
-impl HasId for TimeNode {
-    fn get_id(&self) -> usize {
-        self.id
-    }
 }

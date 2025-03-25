@@ -1,6 +1,4 @@
-use crate::{
-    node_trait::NodeTrait, sample_rate::SAMPLE_RATE, sort::has_id::HasId, values_by_id::ValuesById,
-};
+use crate::{node_trait::NodeTrait, sample_rate::SAMPLE_RATE, values_by_id::ValuesById};
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone)]
@@ -48,12 +46,6 @@ impl NodeTrait for PhaseNode {
 
     fn update(&mut self, new_node: &Self) {
         self.input_ids = new_node.input_ids.clone();
-    }
-}
-
-impl HasId for PhaseNode {
-    fn get_id(&self) -> usize {
-        self.id
     }
 }
 
