@@ -1,4 +1,3 @@
-use crate::sort::has_id::HasId;
 use crate::{declare_get_id, declare_get_input_ids, declare_input_ids, declare_update};
 use crate::{node_trait::NodeTrait, values_by_id::ValuesById};
 use serde::Deserialize;
@@ -12,10 +11,10 @@ pub(crate) struct DivideNode {
 }
 
 declare_get_id! {DivideNode}
+declare_get_input_ids! {DivideNode,input1, input2}
 
 impl NodeTrait for DivideNode {
     declare_update! {}
-    declare_get_input_ids! {input1, input2}
 
     fn process(&mut self, node_values: &ValuesById) -> f32 {
         let input1 = node_values[&self.input_ids.input1];
