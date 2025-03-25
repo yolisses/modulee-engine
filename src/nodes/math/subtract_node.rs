@@ -1,8 +1,6 @@
-use crate::{declare_get_id, declare_get_input_ids, declare_input_ids, declare_update};
+use crate::{declare_get_id, declare_get_input_ids_and_its_getter, declare_update};
 use crate::{node_trait::NodeTrait, values_by_id::ValuesById};
 use serde::Deserialize;
-
-declare_input_ids!(input1, input2);
 
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct SubtractNode {
@@ -12,7 +10,7 @@ pub(crate) struct SubtractNode {
 
 declare_get_id! {SubtractNode}
 declare_update! {SubtractNode}
-declare_get_input_ids! {SubtractNode, input1, input2}
+declare_get_input_ids_and_its_getter! {SubtractNode, input1, input2}
 
 impl NodeTrait for SubtractNode {
     fn process(&mut self, node_values: &ValuesById) -> f32 {

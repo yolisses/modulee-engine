@@ -1,8 +1,6 @@
-use crate::{declare_get_id, declare_get_input_ids, declare_input_ids, declare_update};
+use crate::{declare_get_id, declare_get_input_ids_and_its_getter, declare_update};
 use crate::{node_trait::NodeTrait, values_by_id::ValuesById};
 use serde::Deserialize;
-
-declare_input_ids!(pitch);
 
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct FrequencyNode {
@@ -12,7 +10,7 @@ pub(crate) struct FrequencyNode {
 
 declare_get_id! {FrequencyNode}
 declare_update! {FrequencyNode}
-declare_get_input_ids! {FrequencyNode, pitch}
+declare_get_input_ids_and_its_getter! {FrequencyNode, pitch}
 
 impl NodeTrait for FrequencyNode {
     fn process(&mut self, node_values: &ValuesById) -> f32 {

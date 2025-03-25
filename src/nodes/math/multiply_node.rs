@@ -1,8 +1,6 @@
-use crate::{declare_get_id, declare_get_input_ids, declare_input_ids, declare_update};
+use crate::{declare_get_id, declare_get_input_ids_and_its_getter, declare_update};
 use crate::{node_trait::NodeTrait, values_by_id::ValuesById};
 use serde::Deserialize;
-
-declare_input_ids!(input1, input2);
 
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct MultiplyNode {
@@ -12,7 +10,7 @@ pub(crate) struct MultiplyNode {
 
 declare_get_id! {MultiplyNode}
 declare_update! {MultiplyNode}
-declare_get_input_ids! {MultiplyNode, input1, input2}
+declare_get_input_ids_and_its_getter! {MultiplyNode, input1, input2}
 
 impl NodeTrait for MultiplyNode {
     fn process(&mut self, node_values: &ValuesById) -> f32 {
