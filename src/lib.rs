@@ -3,7 +3,7 @@ pub mod filter;
 mod get_inputs_trait;
 mod get_items_by_id;
 mod get_u64_seed_from_f32;
-pub mod graph;
+mod graph;
 mod has_update;
 mod math;
 mod module;
@@ -16,3 +16,5 @@ mod set_note_trait;
 mod sort;
 mod tests;
 mod voice;
+
+pub use self::graph::graph::Graph;
