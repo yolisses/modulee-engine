@@ -34,30 +34,29 @@ mod tests {
         nodes::random::random_from_value_node::{InputIds, RandomFromValueNode},
     };
     use assert_approx_eq::assert_approx_eq;
-    use nohash_hasher::IntMap;
 
     #[test]
     fn test_random_from_value_node() {
         let mut node = RandomFromValueNode {
             id: 1,
-            input_ids: InputIds { value: 2 },
+            input_ids: InputIds { value: 0 },
         };
 
-        let mut node_values = IntMap::default();
+        let mut node_values: Vec<f32> = Default::default();
 
-        node_values.insert(2, 0.);
+        node_values.insert(0, 0.);
         assert_approx_eq!(node.process(&node_values), 0.32457525);
 
-        node_values.insert(2, 1.);
+        node_values.insert(0, 1.);
         assert_approx_eq!(node.process(&node_values), 0.3364141);
 
-        node_values.insert(2, 2.);
+        node_values.insert(0, 2.);
         assert_approx_eq!(node.process(&node_values), 0.9303049);
 
-        node_values.insert(2, 3.);
+        node_values.insert(0, 3.);
         assert_approx_eq!(node.process(&node_values), 0.8127602);
 
-        node_values.insert(2, 4.);
+        node_values.insert(0, 4.);
         assert_approx_eq!(node.process(&node_values), 0.6547286);
     }
 }
