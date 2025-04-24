@@ -24,7 +24,7 @@ impl HasUpdate for ConstantNode {
 }
 
 impl NodeTrait for ConstantNode {
-    fn process(&mut self, _node_values: &Vec<f32>) -> f32 {
+    fn process(&mut self, _node_values: &[f32]) -> f32 {
         self.extras.value
     }
 }

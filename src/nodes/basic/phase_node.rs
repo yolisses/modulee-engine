@@ -28,7 +28,7 @@ fn get_default_sample_rate() -> f32 {
 }
 
 impl NodeTrait for PhaseNode {
-    fn process(&mut self, node_values: &Vec<f32>) -> f32 {
+    fn process(&mut self, node_values: &[f32]) -> f32 {
         let frequency = node_values[self.input_ids.frequency];
 
         if frequency != self.last_frequency {
@@ -52,7 +52,7 @@ mod tests {
 
     fn get_test_values(
         phase_node: &mut PhaseNode,
-        node_values: &Vec<f32>,
+        node_values: &[f32],
         iterations: usize,
     ) -> Vec<f32> {
         let mut values = vec![];

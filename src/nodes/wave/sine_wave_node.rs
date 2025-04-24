@@ -13,7 +13,7 @@ declare_update! {SineWaveNode}
 declare_get_input_ids_and_its_getter! {SineWaveNode, phase}
 
 impl NodeTrait for SineWaveNode {
-    fn process(&mut self, node_values: &Vec<f32>) -> f32 {
+    fn process(&mut self, node_values: &[f32]) -> f32 {
         let phase = node_values[self.input_ids.phase];
         (phase * 2.0 * std::f32::consts::PI).sin()
     }

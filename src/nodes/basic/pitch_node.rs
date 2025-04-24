@@ -19,7 +19,7 @@ impl HasUpdate for PitchNode {
 }
 
 impl NodeTrait for PitchNode {
-    fn process(&mut self, _node_values: &Vec<f32>) -> f32 {
+    fn process(&mut self, _node_values: &[f32]) -> f32 {
         self.pitch
     }
 }

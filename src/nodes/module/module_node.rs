@@ -52,7 +52,7 @@ impl HasInputs for ModuleNode {
 }
 
 impl NodeTrait for ModuleNode {
-    fn process(&mut self, node_values: &Vec<f32>) -> f32 {
+    fn process(&mut self, node_values: &[f32]) -> f32 {
         if let Some(module) = &mut self.module {
             module.update_input_nodes(node_values, &self.extras.input_target_ids);
             module.process();
