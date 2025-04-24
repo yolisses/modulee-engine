@@ -1,6 +1,6 @@
 use crate::{
     declare_get_id, declare_get_input_ids_and_its_getter, declare_update,
-    filter::filter_wrapper::FilterWrapper, node_trait::NodeTrait, values_by_id::ValuesById,
+    filter::filter_wrapper::FilterWrapper, node_trait::NodeTrait,
 };
 use serde::Deserialize;
 
@@ -22,10 +22,10 @@ declare_update! {AllPassNode}
 declare_get_input_ids_and_its_getter! {AllPassNode, input, frequency, resonance}
 
 impl NodeTrait for AllPassNode {
-    fn process(&mut self, node_values: &ValuesById) -> f32 {
-        let input = node_values[&self.input_ids.input];
-        let frequency = node_values[&self.input_ids.frequency];
-        let resonance = node_values[&self.input_ids.resonance];
+    fn process(&mut self, node_values: &Vec<f32>) -> f32 {
+        let input = node_values[self.input_ids.input];
+        let frequency = node_values[self.input_ids.frequency];
+        let resonance = node_values[self.input_ids.resonance];
         self.filter_wrapper.process(input, frequency, resonance)
     }
 }

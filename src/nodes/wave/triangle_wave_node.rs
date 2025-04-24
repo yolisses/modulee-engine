@@ -1,5 +1,5 @@
+use crate::node_trait::NodeTrait;
 use crate::{declare_get_id, declare_get_input_ids_and_its_getter, declare_update};
-use crate::{node_trait::NodeTrait, values_by_id::ValuesById};
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone)]
@@ -13,8 +13,8 @@ declare_update! {TriangleWaveNode}
 declare_get_input_ids_and_its_getter! {TriangleWaveNode, phase}
 
 impl NodeTrait for TriangleWaveNode {
-    fn process(&mut self, node_values: &ValuesById) -> f32 {
-        let phase = node_values[&self.input_ids.phase];
+    fn process(&mut self, node_values: &Vec<f32>) -> f32 {
+        let phase = node_values[self.input_ids.phase];
         let t = phase % 1.0;
         if t < 0.5 {
             4.0 * t - 1.0

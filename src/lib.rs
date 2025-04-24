@@ -18,5 +18,4 @@ mod sample_rate;
 mod set_note_trait;
 mod sort;
 mod tests;
-mod values_by_id;
 mod voice;

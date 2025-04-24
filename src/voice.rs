@@ -1,4 +1,4 @@
-use crate::{module::Module, set_note_trait::SetNoteTrait, values_by_id::ValuesById};
+use crate::{module::Module, set_note_trait::SetNoteTrait};
 use nohash_hasher::IntMap;
 
 // TODO check if all these derives make sense to be used here
@@ -27,10 +27,11 @@ impl Voice {
 
     pub(crate) fn update_input_nodes(
         &mut self,
-        node_values: &ValuesById,
+        node_values: &Vec<f32>,
         input_target_ids: &IntMap<usize, usize>,
     ) {
-        self.module.update_input_nodes(node_values, input_target_ids);
+        self.module
+            .update_input_nodes(node_values, input_target_ids);
     }
 
     pub(crate) fn get_output_value(&self) -> f32 {

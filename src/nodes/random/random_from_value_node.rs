@@ -1,6 +1,6 @@
 use crate::{
     declare_get_id, declare_get_input_ids_and_its_getter, declare_update,
-    get_u64_seed_from_f32::get_u64_seed_from_f32, node_trait::NodeTrait, values_by_id::ValuesById,
+    get_u64_seed_from_f32::get_u64_seed_from_f32, node_trait::NodeTrait,
 };
 use rand::{Rng, SeedableRng};
 use rand_xoshiro::Xoshiro256PlusPlus;
@@ -17,8 +17,8 @@ declare_update! {RandomFromValueNode}
 declare_get_input_ids_and_its_getter! {RandomFromValueNode, value}
 
 impl NodeTrait for RandomFromValueNode {
-    fn process(&mut self, node_values: &ValuesById) -> f32 {
-        let value = node_values[&self.input_ids.value];
+    fn process(&mut self, node_values: &Vec<f32>) -> f32 {
+        let value = node_values[self.input_ids.value];
 
         let seed = get_u64_seed_from_f32(value);
 
