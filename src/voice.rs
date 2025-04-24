@@ -1,4 +1,4 @@
-use crate::{module::Module, set_note_trait::SetNoteTrait};
+use crate::{module::module::Module, set_note_trait::SetNoteTrait};
 use nohash_hasher::IntMap;
 
 // TODO check if all these derives make sense to be used here
