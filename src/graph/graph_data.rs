@@ -10,7 +10,13 @@ pub(crate) struct GraphData {
 impl GraphData {
     pub(crate) fn prepare(&mut self) {
         for module in &mut self.modules {
-            module.prepare();
+            module.prepare_nodes();
+        }
+
+        // TODO allow arbitrarily deep preparation
+        let module_options = &self.modules.clone();
+        for module in &mut self.modules {
+            module.prepare_modules_in_nodes(module_options);
         }
     }
 }

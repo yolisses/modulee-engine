@@ -27,11 +27,6 @@ impl Graph {
             }
         }
 
-        let current_modules = self.modules_by_id.clone();
-        for module in self.modules_by_id.values_mut() {
-            module.update_modules_in_nodes(&current_modules)?;
-        }
-
         Ok(())
     }
 

@@ -1,18 +1,11 @@
 use super::deserialize_int_map::deserialize_int_map;
 use crate::{
-    declare_get_id,
-    get_inputs_trait::GetInputsTrait,
-    has_update::HasUpdate,
-    module::{get_updated_module::get_updated_module, module::Module},
-    node_trait::NodeTrait,
-    set_input_indexes_trait::SetInputIndexesTrait,
-    set_note_trait::SetNoteTrait,
-    sort::node_indexes::NodeIndexes,
-    voice::Voice,
+    declare_get_id, get_inputs_trait::GetInputsTrait, has_update::HasUpdate,
+    module::module::Module, node_trait::NodeTrait, set_input_indexes_trait::SetInputIndexesTrait,
+    set_note_trait::SetNoteTrait, sort::node_indexes::NodeIndexes, voice::Voice,
 };
 use nohash_hasher::IntMap;
 use serde::Deserialize;
-use std::error::Error;
 
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct Extras {
@@ -35,18 +28,23 @@ pub(crate) struct ModuleVoicesNode {
 }
 
 impl ModuleVoicesNode {
-    pub(crate) fn update_modules(
-        &mut self,
-        new_modules: &IntMap<usize, Module>,
-    ) -> Result<(), Box<dyn Error>> {
-        self.module = get_updated_module(
-            self.module.take(),
-            self.extras.target_module_id,
-            new_modules,
-        )?;
-        Ok(())
+    pub(crate) fn prepare_module(&mut self, possible_modules: &Vec<Module>) {
+        if let Some(target_module_id) = self.extras.target_module_id {
+            let module = possible_modules
+                .iter()
+                .find(|module| module.get_id() == target_module_id);
+            if let Some(module) = module {
+                self.module = Some(module.clone())
+            } else {
+                self.module = None
+            }
+        } else {
+            self.module = None
+        }
     }
+}
 
+impl ModuleVoicesNode {
     pub(crate) fn remove_non_pending_voices(&mut self) {
         self.voices.retain(|voice| voice.get_is_pending());
     }
