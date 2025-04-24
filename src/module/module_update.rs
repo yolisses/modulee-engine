@@ -8,11 +8,6 @@ use nohash_hasher::IntMap;
 use std::error::Error;
 
 impl Module {
-    pub(crate) fn sort_nodes_topologically(&mut self) -> Result<(), Box<dyn Error>> {
-        sort_nodes_topologically(&mut self.nodes)?;
-        Ok(())
-    }
-
     pub(crate) fn update(&mut self, new_module: &Module) -> Result<(), Box<dyn Error>> {
         let new_nodes = &new_module.nodes;
 
@@ -34,8 +29,6 @@ impl Module {
                 self.nodes.push(new_node.clone());
             }
         }
-
-        self.sort_nodes_topologically()?;
 
         // Clears the node_values to prevent hard to find bugs involving deleted
         // nodes values
