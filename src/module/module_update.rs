@@ -60,4 +60,13 @@ impl Module {
         }
         Ok(())
     }
+
+    pub(crate) fn prepare(&mut self) {
+        // TODO use result instead of unwrap
+        sort_nodes_topologically(&mut self.nodes).unwrap();
+
+        // TODO set input ids to indexes
+
+        // TODO find a better name for InputIds, since they can represent indexes
+    }
 }
