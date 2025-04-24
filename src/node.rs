@@ -57,7 +57,7 @@ macro_rules! define_node_enum {
         }
 
         impl NodeTrait for Node {
-            fn process(&mut self, node_values: &Vec<f32>) -> f32 {
+            fn process(&mut self, node_values: &[f32]) -> f32 {
                 match self {
                     $(Node::$variant(node) => node.process(node_values)),+
                 }

@@ -17,7 +17,7 @@ declare_empty_update! {TimeNode}
 declare_empty_get_input_ids! {TimeNode}
 
 impl NodeTrait for TimeNode {
-    fn process(&mut self, _node_values: &Vec<f32>) -> f32 {
+    fn process(&mut self, _node_values: &[f32]) -> f32 {
         self.value += 1. / SAMPLE_RATE;
         self.value
     }

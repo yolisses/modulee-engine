@@ -23,7 +23,7 @@ declare_update! {PeakNode}
 declare_get_input_ids_and_its_getter! {PeakNode, input, frequency, resonance, gain}
 
 impl NodeTrait for PeakNode {
-    fn process(&mut self, node_values: &Vec<f32>) -> f32 {
+    fn process(&mut self, node_values: &[f32]) -> f32 {
         let gain = node_values[self.input_ids.gain];
         let input = node_values[self.input_ids.input];
         let frequency = node_values[self.input_ids.frequency];

@@ -17,7 +17,7 @@ declare_update! {RandomFromValueNode}
 declare_get_input_ids_and_its_getter! {RandomFromValueNode, value}
 
 impl NodeTrait for RandomFromValueNode {
-    fn process(&mut self, node_values: &Vec<f32>) -> f32 {
+    fn process(&mut self, node_values: &[f32]) -> f32 {
         let value = node_values[self.input_ids.value];
 
         let seed = get_u64_seed_from_f32(value);

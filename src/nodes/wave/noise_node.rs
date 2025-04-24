@@ -16,7 +16,7 @@ declare_empty_update! {NoiseNode}
 declare_empty_get_input_ids! {NoiseNode}
 
 impl NodeTrait for NoiseNode {
-    fn process(&mut self, _node_values: &Vec<f32>) -> f32 {
+    fn process(&mut self, _node_values: &[f32]) -> f32 {
         self.generator.random_range(-1. ..1.)
     }
 }

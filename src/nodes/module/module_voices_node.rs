@@ -61,7 +61,7 @@ impl HasInputs for ModuleVoicesNode {
 }
 
 impl NodeTrait for ModuleVoicesNode {
-    fn process(&mut self, node_values: &Vec<f32>) -> f32 {
+    fn process(&mut self, node_values: &[f32]) -> f32 {
         let mut sum = 0.;
         for voice in &mut self.voices {
             voice.update_input_nodes(node_values, &self.extras.input_target_ids);

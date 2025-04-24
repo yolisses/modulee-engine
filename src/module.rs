@@ -29,7 +29,7 @@ impl Module {
     // responsibility division, but improves performance
     pub(crate) fn update_input_nodes(
         &mut self,
-        node_values: &Vec<f32>,
+        node_values: &[f32],
         input_target_ids: &IntMap<usize, usize>,
     ) {
         for node in &mut self.nodes {
