@@ -1,6 +1,6 @@
 use super::deserialize_int_map::deserialize_int_map;
 use crate::{
-    declare_get_id, get_updated_module::get_updated_module, has_inputs::HasInputs,
+    declare_get_id, get_inputs_trait::GetInputsTrait, get_updated_module::get_updated_module,
     has_update::HasUpdate, module::Module, node_trait::NodeTrait, set_note_trait::SetNoteTrait,
     voice::Voice,
 };
@@ -54,7 +54,7 @@ impl HasUpdate for ModuleVoicesNode {
     }
 }
 
-impl HasInputs for ModuleVoicesNode {
+impl GetInputsTrait for ModuleVoicesNode {
     fn get_input_ids(&self) -> Vec<usize> {
         self.extras.input_target_ids.values().cloned().collect()
     }
