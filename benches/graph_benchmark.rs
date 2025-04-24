@@ -1,5 +1,5 @@
 use criterion::{criterion_group, criterion_main, Criterion};
-use modulee_engine::graph::Graph;
+use modulee_engine::Graph;
 
 pub fn criterion_benchmark(c: &mut Criterion) {
     c.bench_function("graph process 10 sine waves", |b| {
