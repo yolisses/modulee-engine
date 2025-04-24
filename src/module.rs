@@ -10,10 +10,10 @@ use std::error::Error;
 pub struct Module {
     id: usize,
     nodes: Vec<Node>,
-    // node_values is a variable used in process method. It's here to prevent
-    // costly allocations in each iteration
+    // node_values is a variable used only in the process method. It is declared
+    // in the struct to prevent costly allocations in each iteration
     #[serde(skip)]
-    node_values: ValuesById,
+    node_values: Vec<f32>,
 }
 
 declare_get_id! {Module}

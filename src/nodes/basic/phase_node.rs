@@ -1,6 +1,6 @@
 use crate::{
     declare_get_id, declare_get_input_ids_and_its_getter, declare_update, node_trait::NodeTrait,
-    sample_rate::SAMPLE_RATE, 
+    sample_rate::SAMPLE_RATE,
 };
 use serde::Deserialize;
 
@@ -48,7 +48,6 @@ mod tests {
     use super::PhaseNode;
     use crate::node_trait::NodeTrait;
     use crate::tests::relative_eq_array::relative_eq_array;
-    use crate::;
     use nohash_hasher::IntMap;
 
     fn get_test_values(
