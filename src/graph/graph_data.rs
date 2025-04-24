@@ -1,4 +1,4 @@
-use crate::module::Module;
+use crate::module::module::Module;
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
