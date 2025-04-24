@@ -1,7 +1,6 @@
 use crate::{
     declare_get_id, has_update::HasUpdate, node::Node, node_trait::NodeTrait,
     set_note_trait::SetNoteTrait, sort::sort_nodes_topologically::sort_nodes_topologically,
-    values_by_id::ValuesById,
 };
 use nohash_hasher::IntMap;
 use serde::Deserialize;
@@ -30,13 +29,13 @@ impl Module {
     // responsibility division, but improves performance
     pub(crate) fn update_input_nodes(
         &mut self,
-        node_values: &ValuesById,
+        node_values: &Vec<f32>,
         input_target_ids: &IntMap<usize, usize>,
     ) {
         for node in &mut self.nodes {
             if let Node::InputNode(input_node) = node {
                 let target_id = input_target_ids[&input_node.get_id()];
-                let value = node_values[&target_id];
+                let value = node_values[target_id];
                 input_node.set_value(value);
             }
         }

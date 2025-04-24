@@ -2,7 +2,7 @@ use super::deserialize_int_map::deserialize_int_map;
 use crate::{
     declare_get_id, get_updated_module::get_updated_module, has_inputs::HasInputs,
     has_update::HasUpdate, module::Module, node_trait::NodeTrait, set_note_trait::SetNoteTrait,
-    values_by_id::ValuesById, voice::Voice,
+    voice::Voice,
 };
 use nohash_hasher::IntMap;
 use serde::Deserialize;
@@ -61,7 +61,7 @@ impl HasInputs for ModuleVoicesNode {
 }
 
 impl NodeTrait for ModuleVoicesNode {
-    fn process(&mut self, node_values: &ValuesById) -> f32 {
+    fn process(&mut self, node_values: &Vec<f32>) -> f32 {
         let mut sum = 0.;
         for voice in &mut self.voices {
             voice.update_input_nodes(node_values, &self.extras.input_target_ids);
