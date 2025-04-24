@@ -5,7 +5,6 @@ mod get_items_by_id;
 mod get_u64_seed_from_f32;
 mod get_updated_module;
 pub mod graph;
-mod graph_data;
 mod has_update;
 mod math;
 mod module;
