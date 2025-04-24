@@ -51,9 +51,9 @@ impl Module {
     }
 
     pub(crate) fn process(&mut self) {
-        for node in &mut self.nodes {
+        for (index, node) in self.nodes.iter_mut().enumerate() {
             let value = node.process(&self.node_values);
-            self.node_values.insert(node.get_id(), value);
+            self.node_values.insert(index, value);
         }
     }
 
