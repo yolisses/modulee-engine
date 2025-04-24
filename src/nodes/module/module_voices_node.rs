@@ -1,8 +1,9 @@
 use super::deserialize_int_map::deserialize_int_map;
 use crate::{
     declare_get_id, get_inputs_trait::GetInputsTrait, get_updated_module::get_updated_module,
-    has_update::HasUpdate, module::Module, node_trait::NodeTrait, set_note_trait::SetNoteTrait,
-    voice::Voice,
+    has_update::HasUpdate, module::Module, node_trait::NodeTrait,
+    set_input_indexes_trait::SetInputIndexesTrait, set_note_trait::SetNoteTrait,
+    sort::node_indexes::NodeIndexes, voice::Voice,
 };
 use nohash_hasher::IntMap;
 use serde::Deserialize;
@@ -57,6 +58,21 @@ impl HasUpdate for ModuleVoicesNode {
 impl GetInputsTrait for ModuleVoicesNode {
     fn get_input_ids(&self) -> Vec<usize> {
         self.extras.input_target_ids.values().cloned().collect()
+    }
+}
+
+impl SetInputIndexesTrait for ModuleVoicesNode {
+    fn set_input_indexes(&mut self, node_indexes: &NodeIndexes) {
+        let updates: Vec<(usize, usize)> = self
+            .extras
+            .input_target_ids
+            .iter()
+            .map(|(input_id, target_id)| (*input_id, node_indexes[target_id]))
+            .collect();
+
+        for (input_id, index) in updates {
+            self.extras.input_target_ids.insert(input_id, index);
+        }
     }
 }
 

@@ -7,7 +7,6 @@ mod get_updated_module;
 pub mod graph;
 mod graph_data;
 mod has_update;
-mod input_ids_trait;
 mod math;
 mod module;
 mod modules_by_id;
