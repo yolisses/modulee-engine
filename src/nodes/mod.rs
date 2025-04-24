@@ -7,6 +7,7 @@ pub(crate) mod declare_input_ids;
 mod declare_input_ids_and_its_getter;
 pub(crate) mod declare_update;
 pub(crate) mod filter;
+pub(crate) mod input_ids_trait;
 pub(crate) mod math;
 pub(crate) mod module;
 pub(crate) mod random;

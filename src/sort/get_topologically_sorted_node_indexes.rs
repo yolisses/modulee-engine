@@ -1,24 +1,27 @@
-use super::{inputs_mapping::InputsMapping, shifts::Shifts, update_shifts::update_shifts};
+use super::{
+    inputs_mapping::InputsMapping, node_indexes::NodeIndexes,
+    update_node_indexes::update_node_indexes,
+};
 
-pub(crate) fn get_topologically_sorted_node_indexes(inputs_mapping: &InputsMapping) -> Shifts {
+pub(crate) fn get_topologically_sorted_node_indexes(inputs_mapping: &InputsMapping) -> NodeIndexes {
     let mut counter = 0;
-    let mut shifts = Shifts::default();
+    let mut node_indexes: NodeIndexes = Default::default();
 
     // Sort nodes_ids to avoid unpredictable behaviors due to IntMap random keys
     // order
     let mut node_ids: Vec<_> = inputs_mapping.keys().cloned().collect();
     node_ids.sort();
     for node_id in node_ids {
-        update_shifts(node_id, &mut shifts, &mut counter, inputs_mapping);
+        update_node_indexes(node_id, &mut node_indexes, &mut counter, inputs_mapping);
     }
 
-    shifts
+    node_indexes
 }
 
 #[cfg(test)]
 mod tests {
     use crate::sort::tests::create_inputs_mapping::create_inputs_mapping;
-    use crate::sort::tests::create_shifts::create_shifts;
+    use crate::sort::tests::create_nodes_indexes::create_nodes_indexes;
 
     use super::*;
 
@@ -36,7 +39,7 @@ mod tests {
 
         assert_eq!(
             topologically_sorted_ids,
-            create_shifts(&[(1, 1), (3, 2), (2, 3)])
+            create_nodes_indexes(&[(1, 1), (3, 2), (2, 3)])
         );
     }
 
@@ -65,7 +68,7 @@ mod tests {
 
         assert_eq!(
             topologically_sorted_ids,
-            create_shifts(&[(5, 1), (2, 2), (3, 3), (1, 4), (4, 5)])
+            create_nodes_indexes(&[(5, 1), (2, 2), (3, 3), (1, 4), (4, 5)])
         );
     }
 
@@ -95,7 +98,7 @@ mod tests {
 
         assert_eq!(
             topologically_sorted_ids,
-            create_shifts(&[(5, 1), (2, 2), (3, 3), (1, 4), (4, 5)])
+            create_nodes_indexes(&[(5, 1), (2, 2), (3, 3), (1, 4), (4, 5)])
         );
     }
 
@@ -133,7 +136,7 @@ mod tests {
 
         assert_eq!(
             topologically_sorted_ids,
-            create_shifts(&[(1, 1), (2, 2), (5, 3), (4, 4), (6, 5), (7, 6), (3, 7)])
+            create_nodes_indexes(&[(1, 1), (2, 2), (5, 3), (4, 4), (6, 5), (7, 6), (3, 7)])
         );
     }
 
@@ -159,7 +162,7 @@ mod tests {
 
         assert_eq!(
             topologically_sorted_ids,
-            create_shifts(&[(0, 1), (7, 2), (9, 3), (8, 4)])
+            create_nodes_indexes(&[(0, 1), (7, 2), (9, 3), (8, 4)])
         );
     }
 }
