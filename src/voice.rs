@@ -25,13 +25,13 @@ impl Voice {
         self.module.get_is_pending()
     }
 
-    pub(crate) fn update_input_nodes(
+    pub(crate) fn set_input_node_values(
         &mut self,
         node_values: &[f32],
         input_target_ids: &IntMap<usize, usize>,
     ) {
         self.module
-            .update_input_nodes(node_values, input_target_ids);
+            .set_input_node_values(node_values, input_target_ids);
     }
 
     pub(crate) fn get_output_value(&self) -> f32 {
