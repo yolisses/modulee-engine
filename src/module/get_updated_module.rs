@@ -15,8 +15,7 @@ pub(crate) fn get_updated_module(
                 module.update(new_module)?;
                 Ok(Some(module))
             } else {
-                let mut module = new_module.clone();
-                module.sort_nodes_topologically()?;
+                let module = new_module.clone();
                 Ok(Some(module))
             }
         } else {
