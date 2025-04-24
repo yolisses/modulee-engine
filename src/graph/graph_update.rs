@@ -3,10 +3,10 @@ use crate::{get_items_by_id::get_items_by_id, sort::has_id::HasId};
 use std::error::Error;
 
 impl Graph {
-    fn update(&mut self, new_graph: GraphData) -> Result<(), Box<dyn Error>> {
-        self.main_module_id = new_graph.main_module_id;
+    fn update(&mut self, new_graph_data: GraphData) -> Result<(), Box<dyn Error>> {
+        self.main_module_id = new_graph_data.main_module_id;
 
-        let new_modules = get_items_by_id(new_graph.modules);
+        let new_modules = get_items_by_id(new_graph_data.modules);
 
         // Remove modules not present in new modules
         self.modules_by_id.retain(|module_id, _| {
@@ -36,7 +36,8 @@ impl Graph {
     }
 
     pub fn update_from_json(&mut self, modules_json: &str) -> Result<(), Box<dyn Error>> {
-        let new_graph: GraphData = serde_json::from_str(modules_json)?;
-        self.update(new_graph)
+        let mut new_graph_data: GraphData = serde_json::from_str(modules_json)?;
+        new_graph_data.prepare();
+        self.update(new_graph_data)
     }
 }

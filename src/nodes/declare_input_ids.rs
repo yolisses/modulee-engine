@@ -1,3 +1,5 @@
+// TODO find a better name for InputIds, since they can represent indexes
+
 #[macro_export]
 macro_rules! declare_input_ids {
     ($($field:ident),+) => {
