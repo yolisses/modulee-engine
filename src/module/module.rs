@@ -1,4 +1,5 @@
 use crate::{declare_get_id, node::Node, node_trait::NodeTrait, set_note_trait::SetNoteTrait};
+use nohash_hasher::IntMap;
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone)]
@@ -49,6 +50,22 @@ impl Module {
         for node in &mut self.nodes {
             if let Node::ModuleVoicesNode(module_voices_node) = node {
                 module_voices_node.remove_non_pending_voices();
+            }
+        }
+    }
+
+    // Passing node_values and input_target_ids may be a violation of the
+    // responsibility division, but improves performance
+    pub(crate) fn set_input_node_values(
+        &mut self,
+        node_values: &[f32],
+        input_target_ids: &IntMap<usize, usize>,
+    ) {
+        for node in &mut self.nodes {
+            if let Node::InputNode(input_node) = node {
+                let target_id = input_target_ids[&input_node.get_id()];
+                let value = node_values[target_id];
+                input_node.set_value(value);
             }
         }
     }

@@ -8,22 +8,6 @@ use nohash_hasher::IntMap;
 use std::error::Error;
 
 impl Module {
-    // Passing node_values and input_target_ids may be a violation of the
-    // responsibility division, but improves performance
-    pub(crate) fn update_input_nodes(
-        &mut self,
-        node_values: &[f32],
-        input_target_ids: &IntMap<usize, usize>,
-    ) {
-        for node in &mut self.nodes {
-            if let Node::InputNode(input_node) = node {
-                let target_id = input_target_ids[&input_node.get_id()];
-                let value = node_values[target_id];
-                input_node.set_value(value);
-            }
-        }
-    }
-
     pub(crate) fn sort_nodes_topologically(&mut self) -> Result<(), Box<dyn Error>> {
         sort_nodes_topologically(&mut self.nodes)?;
         Ok(())
