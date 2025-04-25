@@ -33,7 +33,7 @@ impl Module {
     pub(crate) fn process(&mut self) {
         for (index, node) in self.nodes.iter_mut().enumerate() {
             let value = node.process(&self.node_values);
-            self.node_values.insert(index, value);
+            self.node_values[index] = value;
         }
     }
 
