@@ -30,6 +30,12 @@ impl Graph {
         }
     }
 
+    fn remove_non_pending_voices(&mut self) {
+        for module in self.modules_by_id.values_mut() {
+            module.remove_non_pending_voices();
+        }
+    }
+
     pub fn process(&mut self) {
         // TODO try to find a most elegant solution than just returning if
         // main_module_id is not present
@@ -42,12 +48,6 @@ impl Graph {
         if self.counter > VOICES_REMOTION_CYCLE_SIZE {
             self.counter = 0;
             self.remove_non_pending_voices();
-        }
-    }
-
-    fn remove_non_pending_voices(&mut self) {
-        for module in self.modules_by_id.values_mut() {
-            module.remove_non_pending_voices();
         }
     }
 
