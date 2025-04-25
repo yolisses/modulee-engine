@@ -30,16 +30,21 @@ impl Module {
         }
 
         sort_by_other_vec_order(&mut self.nodes, new_nodes);
+        self.reset_node_values();
 
+        Ok(())
+    }
+
+    fn reset_node_values(&mut self) {
         // TODO find a better way to clear node_values while ensuring that []
         // still works
         self.node_values = vec![0.; self.nodes.len()];
-        Ok(())
     }
 
     pub(crate) fn prepare_nodes(&mut self) {
         // TODO use result instead of unwrap
         sort_nodes_topologically(&mut self.nodes).unwrap();
+        self.reset_node_values();
     }
 
     pub(crate) fn prepare_modules_in_nodes(&mut self, possible_modules: &Vec<Module>) {
