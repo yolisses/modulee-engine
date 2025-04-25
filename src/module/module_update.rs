@@ -1,4 +1,4 @@
-use super::module::Module;
+use super::{module::Module, sort_by_other_vec_order::sort_by_other_vec_order};
 use crate::{
     has_update::HasUpdate,
     node::Node,
@@ -28,6 +28,8 @@ impl Module {
                 self.nodes.push(new_node.clone());
             }
         }
+
+        sort_by_other_vec_order(&mut self.nodes, new_nodes);
 
         // TODO find a better way to clear node_values while ensuring that []
         // still works
