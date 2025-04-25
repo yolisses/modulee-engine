@@ -29,17 +29,15 @@ impl Module {
             }
         }
 
-        // Clears the node_values to prevent hard to find bugs involving deleted
-        // nodes values
-        self.node_values.clear();
+        // TODO find a better way to clear node_values while ensuring that []
+        // still works
+        self.node_values = vec![0.; self.nodes.len()];
         Ok(())
     }
 
     pub(crate) fn prepare_nodes(&mut self) {
         // TODO use result instead of unwrap
         sort_nodes_topologically(&mut self.nodes).unwrap();
-
-        // TODO set input ids to indexes
     }
 
     pub(crate) fn prepare_modules_in_nodes(&mut self, possible_modules: &Vec<Module>) {

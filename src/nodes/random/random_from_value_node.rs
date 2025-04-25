@@ -42,21 +42,21 @@ mod tests {
             input_ids: InputIds { value: 0 },
         };
 
-        let mut node_values: Vec<f32> = Default::default();
+        let mut node_values: Vec<f32> = vec![0.];
 
-        node_values.insert(0, 0.);
+        node_values[0] = 0.;
         assert_approx_eq!(node.process(&node_values), 0.32457525);
 
-        node_values.insert(0, 1.);
+        node_values[0] = 1.;
         assert_approx_eq!(node.process(&node_values), 0.3364141);
 
-        node_values.insert(0, 2.);
+        node_values[0] = 2.;
         assert_approx_eq!(node.process(&node_values), 0.9303049);
 
-        node_values.insert(0, 3.);
+        node_values[0] = 3.;
         assert_approx_eq!(node.process(&node_values), 0.8127602);
 
-        node_values.insert(0, 4.);
+        node_values[0] = 4.;
         assert_approx_eq!(node.process(&node_values), 0.6547286);
     }
 }
