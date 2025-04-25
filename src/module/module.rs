@@ -6,8 +6,11 @@ use serde::Deserialize;
 pub struct Module {
     id: usize,
     pub(crate) nodes: Vec<Node>,
-    // node_values is a variable used only in the process method. It is declared
-    // in the struct to prevent costly allocations in each iteration
+    /// The output values of the nodes of the module. It's used only in
+    /// the process method, but is declared in the struct to prevent costly
+    /// allocations in each iteration.
+    ///
+    /// Also by performance reasons, it's a vector instead of a hash map.
     #[serde(skip)]
     pub(crate) node_values: Vec<f32>,
 }
