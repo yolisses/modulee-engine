@@ -2,7 +2,6 @@ pub(crate) mod basic;
 mod declare_empty_get_input_ids;
 pub(crate) mod declare_empty_update;
 pub(crate) mod declare_get_id;
-pub(crate) mod declare_get_input_ids;
 pub(crate) mod declare_input_ids;
 mod declare_input_ids_and_its_getter;
 pub(crate) mod declare_update;

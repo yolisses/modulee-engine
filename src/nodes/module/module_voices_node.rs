@@ -1,12 +1,11 @@
 use super::deserialize_int_map::deserialize_int_map;
 use crate::{
-    declare_get_id, get_updated_module::get_updated_module, has_inputs::HasInputs,
-    has_update::HasUpdate, module::Module, node_trait::NodeTrait, set_note_trait::SetNoteTrait,
-    values_by_id::ValuesById, voice::Voice,
+    declare_get_id, get_inputs_trait::GetInputsTrait, has_update::HasUpdate,
+    module::module::Module, node_trait::NodeTrait, set_input_indexes_trait::SetInputIndexesTrait,
+    set_note_trait::SetNoteTrait, sort::node_indexes::NodeIndexes, voice::Voice,
 };
 use nohash_hasher::IntMap;
 use serde::Deserialize;
-use std::error::Error;
 
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct Extras {
@@ -29,18 +28,23 @@ pub(crate) struct ModuleVoicesNode {
 }
 
 impl ModuleVoicesNode {
-    pub(crate) fn update_modules(
-        &mut self,
-        new_modules: &IntMap<usize, Module>,
-    ) -> Result<(), Box<dyn Error>> {
-        self.module = get_updated_module(
-            self.module.take(),
-            self.extras.target_module_id,
-            new_modules,
-        )?;
-        Ok(())
+    pub(crate) fn prepare_module(&mut self, possible_modules: &Vec<Module>) {
+        if let Some(target_module_id) = self.extras.target_module_id {
+            let module = possible_modules
+                .iter()
+                .find(|module| module.get_id() == target_module_id);
+            if let Some(module) = module {
+                self.module = Some(module.clone())
+            } else {
+                self.module = None
+            }
+        } else {
+            self.module = None
+        }
     }
+}
 
+impl ModuleVoicesNode {
     pub(crate) fn remove_non_pending_voices(&mut self) {
         self.voices.retain(|voice| voice.get_is_pending());
     }
@@ -54,17 +58,32 @@ impl HasUpdate for ModuleVoicesNode {
     }
 }
 
-impl HasInputs for ModuleVoicesNode {
+impl GetInputsTrait for ModuleVoicesNode {
     fn get_input_ids(&self) -> Vec<usize> {
         self.extras.input_target_ids.values().cloned().collect()
     }
 }
 
+impl SetInputIndexesTrait for ModuleVoicesNode {
+    fn set_input_indexes(&mut self, node_indexes: &NodeIndexes) {
+        let updates: Vec<(usize, usize)> = self
+            .extras
+            .input_target_ids
+            .iter()
+            .map(|(input_id, target_id)| (*input_id, node_indexes[target_id]))
+            .collect();
+
+        for (input_id, index) in updates {
+            self.extras.input_target_ids.insert(input_id, index);
+        }
+    }
+}
+
 impl NodeTrait for ModuleVoicesNode {
-    fn process(&mut self, node_values: &ValuesById) -> f32 {
+    fn process(&mut self, node_values: &[f32]) -> f32 {
         let mut sum = 0.;
         for voice in &mut self.voices {
-            voice.update_input_nodes(node_values, &self.extras.input_target_ids);
+            voice.set_input_node_values(node_values, &self.extras.input_target_ids);
             voice.process();
             sum += voice.get_output_value()
         }

@@ -1,6 +1,6 @@
 use crate::{
     declare_empty_get_input_ids, declare_empty_update, declare_get_id, node_trait::NodeTrait,
-    set_note_trait::SetNoteTrait, values_by_id::ValuesById,
+    set_note_trait::SetNoteTrait,
 };
 use nohash_hasher::IntSet;
 use serde::Deserialize;
@@ -19,7 +19,7 @@ declare_empty_update! {GateNode}
 declare_empty_get_input_ids! {GateNode}
 
 impl NodeTrait for GateNode {
-    fn process(&mut self, _node_values: &ValuesById) -> f32 {
+    fn process(&mut self, _node_values: &[f32]) -> f32 {
         if self.is_active {
             1.
         } else {

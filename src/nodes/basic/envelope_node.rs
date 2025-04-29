@@ -1,7 +1,7 @@
 use crate::{
     declare_get_id, declare_get_input_ids_and_its_getter, envelope::envelope::Envelope,
     has_update::HasUpdate, node_trait::NodeTrait, sample_rate::SAMPLE_RATE,
-    set_note_trait::SetNoteTrait, values_by_id::ValuesById,
+    set_note_trait::SetNoteTrait,
 };
 use serde::Deserialize;
 
@@ -31,11 +31,11 @@ impl HasUpdate for EnvelopeNode {
 }
 
 impl NodeTrait for EnvelopeNode {
-    fn process(&mut self, node_values: &ValuesById) -> f32 {
-        let attack = node_values[&self.input_ids.attack];
-        let decay = node_values[&self.input_ids.decay];
-        let sustain = node_values[&self.input_ids.sustain];
-        let release = node_values[&self.input_ids.release];
+    fn process(&mut self, node_values: &[f32]) -> f32 {
+        let attack = node_values[self.input_ids.attack];
+        let decay = node_values[self.input_ids.decay];
+        let sustain = node_values[self.input_ids.sustain];
+        let release = node_values[self.input_ids.release];
         self.envelope
             .update_parameters(attack, decay, sustain, release);
 

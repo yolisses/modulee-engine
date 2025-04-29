@@ -1,6 +1,6 @@
 use crate::{
     declare_empty_get_input_ids, declare_empty_update, declare_get_id, node_trait::NodeTrait,
-    sample_rate::SAMPLE_RATE, values_by_id::ValuesById,
+    sample_rate::SAMPLE_RATE,
 };
 use serde::Deserialize;
 
@@ -17,7 +17,7 @@ declare_empty_update! {TimeNode}
 declare_empty_get_input_ids! {TimeNode}
 
 impl NodeTrait for TimeNode {
-    fn process(&mut self, _node_values: &ValuesById) -> f32 {
+    fn process(&mut self, _node_values: &[f32]) -> f32 {
         self.value += 1. / SAMPLE_RATE;
         self.value
     }

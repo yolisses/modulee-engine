@@ -1,22 +1,20 @@
-pub mod filter;
-pub mod graph;
-
 mod envelope;
+pub mod filter;
+mod get_inputs_trait;
 mod get_items_by_id;
 mod get_u64_seed_from_f32;
-mod get_updated_module;
-mod graph_data;
-mod has_inputs;
+mod graph;
 mod has_update;
 mod math;
 mod module;
-mod modules_by_id;
 mod node;
 mod node_trait;
 mod nodes;
 mod sample_rate;
+mod set_input_indexes_trait;
 mod set_note_trait;
 mod sort;
 mod tests;
-mod values_by_id;
 mod voice;
+
+pub use self::graph::graph::Graph;

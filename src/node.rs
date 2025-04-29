@@ -1,5 +1,5 @@
 use crate::{
-    has_inputs::HasInputs,
+    get_inputs_trait::GetInputsTrait,
     has_update::HasUpdate,
     node_trait::NodeTrait,
     nodes::{
@@ -26,9 +26,10 @@ use crate::{
             sine_wave_node::SineWaveNode, triangle_wave_node::TriangleWaveNode,
         },
     },
+    set_input_indexes_trait::SetInputIndexesTrait,
     set_note_trait::SetNoteTrait,
     sort::has_id::HasId,
-    values_by_id::ValuesById,
+    sort::node_indexes::NodeIndexes,
 };
 use serde::Deserialize;
 
@@ -40,10 +41,18 @@ macro_rules! define_node_enum {
             $($variant($type)),+
         }
 
-        impl HasInputs for Node {
+        impl GetInputsTrait for Node {
             fn get_input_ids(&self) -> Vec<usize> {
                 match self {
                     $(Node::$variant(node) => node.get_input_ids()),+
+                }
+            }
+        }
+
+        impl SetInputIndexesTrait for Node {
+            fn set_input_indexes(&mut self, node_indexes: &NodeIndexes){
+                match self {
+                    $(Node::$variant(node) => node.set_input_indexes(node_indexes)),+
                 }
             }
         }
@@ -58,7 +67,7 @@ macro_rules! define_node_enum {
         }
 
         impl NodeTrait for Node {
-            fn process(&mut self, node_values: &ValuesById) -> f32 {
+            fn process(&mut self, node_values: &[f32]) -> f32 {
                 match self {
                     $(Node::$variant(node) => node.process(node_values)),+
                 }

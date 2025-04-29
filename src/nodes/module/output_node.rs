@@ -1,6 +1,5 @@
 use crate::{
     declare_get_id, declare_get_input_ids_and_its_getter, declare_update, node_trait::NodeTrait,
-    values_by_id::ValuesById,
 };
 use serde::Deserialize;
 
@@ -23,8 +22,8 @@ impl OutputNode {
 }
 
 impl NodeTrait for OutputNode {
-    fn process(&mut self, node_values: &ValuesById) -> f32 {
-        let input = node_values[&self.input_ids.input];
+    fn process(&mut self, node_values: &[f32]) -> f32 {
+        let input = node_values[self.input_ids.input];
         self.value = input;
         self.value
     }

@@ -1,6 +1,6 @@
 use crate::{
     declare_get_id, declare_get_input_ids_and_its_getter, declare_update, node_trait::NodeTrait,
-    sample_rate::SAMPLE_RATE, values_by_id::ValuesById,
+    sample_rate::SAMPLE_RATE,
 };
 use serde::Deserialize;
 
@@ -28,8 +28,8 @@ fn get_default_sample_rate() -> f32 {
 }
 
 impl NodeTrait for PhaseNode {
-    fn process(&mut self, node_values: &ValuesById) -> f32 {
-        let frequency = node_values[&self.input_ids.frequency];
+    fn process(&mut self, node_values: &[f32]) -> f32 {
+        let frequency = node_values[self.input_ids.frequency];
 
         if frequency != self.last_frequency {
             self.last_frequency = frequency;
@@ -48,12 +48,10 @@ mod tests {
     use super::PhaseNode;
     use crate::node_trait::NodeTrait;
     use crate::tests::relative_eq_array::relative_eq_array;
-    use crate::values_by_id::ValuesById;
-    use nohash_hasher::IntMap;
 
     fn get_test_values(
         phase_node: &mut PhaseNode,
-        node_values: &ValuesById,
+        node_values: &[f32],
         iterations: usize,
     ) -> Vec<f32> {
         let mut values = vec![];
@@ -66,7 +64,7 @@ mod tests {
 
     #[test]
     fn test_phase_node() {
-        let frequency_id = 1;
+        let frequency_id = 0;
         let mut phase_node = PhaseNode {
             id: 0,
             step: 0.,
@@ -79,7 +77,7 @@ mod tests {
         };
 
         let frequency = 10.;
-        let mut node_values = IntMap::default();
+        let mut node_values: Vec<f32> = Default::default();
         node_values.insert(frequency_id, frequency);
 
         relative_eq_array(
