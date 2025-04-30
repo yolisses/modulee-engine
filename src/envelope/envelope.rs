@@ -112,10 +112,7 @@ impl Envelope {
     }
 
     pub(crate) fn get_is_pending(&self) -> bool {
-        match self.state {
-            EnvelopeState::Idle => false,
-            _ => true,
-        }
+        !matches!(self.state, EnvelopeState::Idle)
     }
 }
 

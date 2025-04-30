@@ -47,7 +47,7 @@ impl Module {
         self.reset_node_values();
     }
 
-    pub(crate) fn prepare_modules_in_nodes(&mut self, possible_modules: &Vec<Module>) {
+    pub(crate) fn prepare_modules_in_nodes(&mut self, possible_modules: &[Module]) {
         for node in &mut self.nodes {
             match node {
                 Node::ModuleNode(node) => node.prepare_module(possible_modules),

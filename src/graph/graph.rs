@@ -53,9 +53,9 @@ impl Graph {
     }
 
     pub fn process_block(&mut self, buffer: &mut [f32], length: usize) {
-        for index in 0..length {
+        for value in buffer.iter_mut().take(length) {
             self.process();
-            buffer[index] = self.get_output_value();
+            *value = self.get_output_value();
         }
     }
 
