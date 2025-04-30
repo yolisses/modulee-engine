@@ -23,3 +23,31 @@ impl NodeTrait for GreaterNode {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::{
+        node_trait::NodeTrait,
+        nodes::math::greater_node::{GreaterNode, InputIds},
+    };
+
+    #[test]
+    fn test_set_notes_on_and_off() {
+        let mut greater_node = GreaterNode {
+            id: 1,
+            input_ids: InputIds {
+                input1: 0,
+                input2: 1,
+            },
+        };
+
+        let node_values = [10., 20.];
+        assert_eq!(greater_node.process(&node_values), 0.);
+
+        let node_values = [20., 10.];
+        assert_eq!(greater_node.process(&node_values), 1.);
+
+        let node_values = [10., 10.];
+        assert_eq!(greater_node.process(&node_values), 0.);
+    }
+}
