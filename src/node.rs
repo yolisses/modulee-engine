@@ -13,8 +13,8 @@ use crate::{
             peak_node::PeakNode,
         },
         math::{
-            add_node::AddNode, divide_node::DivideNode, greater_node::GreaterNode,
-            multiply_node::MultiplyNode, subtract_node::SubtractNode,
+            add_node::AddNode, divide_node::DivideNode, equals_node::EqualsNode,
+            greater_node::GreaterNode, multiply_node::MultiplyNode, subtract_node::SubtractNode,
         },
         module::{
             input_node::InputNode, module_node::ModuleNode, module_voices_node::ModuleVoicesNode,
@@ -103,6 +103,7 @@ define_node_enum! {
     OutputNode(OutputNode),
     RandomNode(RandomNode),
     ModuleNode(ModuleNode),
+    EqualsNode(EqualsNode),
     AllPassNode(AllPassNode),
     LowPassNode(LowPassNode),
     GreaterNode(GreaterNode),
