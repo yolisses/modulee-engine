@@ -13,8 +13,8 @@ use crate::{
             peak_node::PeakNode,
         },
         math::{
-            add_node::AddNode, divide_node::DivideNode, multiply_node::MultiplyNode,
-            subtract_node::SubtractNode,
+            add_node::AddNode, divide_node::DivideNode, greater_node::GreaterNode,
+            multiply_node::MultiplyNode, subtract_node::SubtractNode,
         },
         module::{
             input_node::InputNode, module_node::ModuleNode, module_voices_node::ModuleVoicesNode,
@@ -28,8 +28,7 @@ use crate::{
     },
     set_input_indexes_trait::SetInputIndexesTrait,
     set_note_trait::SetNoteTrait,
-    sort::has_id::HasId,
-    sort::node_indexes::NodeIndexes,
+    sort::{has_id::HasId, node_indexes::NodeIndexes},
 };
 use serde::Deserialize;
 
@@ -106,6 +105,7 @@ define_node_enum! {
     ModuleNode(ModuleNode),
     AllPassNode(AllPassNode),
     LowPassNode(LowPassNode),
+    GreaterNode(GreaterNode),
     EnvelopeNode(EnvelopeNode),
     HighPassNode(HighPassNode),
     SubtractNode(SubtractNode),
