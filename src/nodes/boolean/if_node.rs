@@ -32,7 +32,7 @@ mod tests {
 
     #[test]
     fn test_if_node_condition_true() {
-        let mut if_node = IfNode {
+        let mut node = IfNode {
             id: 1,
             input_ids: InputIds {
                 condition: 0,
@@ -42,13 +42,13 @@ mod tests {
         };
 
         let node_values = vec![1.0, 42.0, 63.0];
-        let result = if_node.process(&node_values);
+        let result = node.process(&node_values);
         assert_eq!(result, 42.0);
     }
 
     #[test]
     fn test_if_node_condition_false() {
-        let mut if_node = IfNode {
+        let mut node = IfNode {
             id: 1,
             input_ids: InputIds {
                 condition: 0,
@@ -58,7 +58,7 @@ mod tests {
         };
 
         let node_values = vec![0.0, 42.0, 63.0];
-        let result = if_node.process(&node_values);
+        let result = node.process(&node_values);
         assert_eq!(result, 63.0);
     }
 }
