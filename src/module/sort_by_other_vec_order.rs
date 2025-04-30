@@ -1,6 +1,6 @@
 use crate::sort::has_id::HasId;
 
-pub(crate) fn sort_by_other_vec_order(items: &mut Vec<impl HasId>, order_items: &Vec<impl HasId>) {
+pub(crate) fn sort_by_other_vec_order(items: &mut [impl HasId], order_items: &[impl HasId]) {
     let id_order: Vec<usize> = order_items.iter().map(|item| item.get_id()).collect();
     items.sort_by_key(|item| {
         id_order

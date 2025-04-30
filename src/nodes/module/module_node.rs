@@ -24,7 +24,7 @@ pub(crate) struct ModuleNode {
 }
 
 impl ModuleNode {
-    pub(crate) fn prepare_module(&mut self, possible_modules: &Vec<Module>) {
+    pub(crate) fn prepare_module(&mut self, possible_modules: &[Module]) {
         if let Some(target_module_id) = self.extras.target_module_id {
             let module = possible_modules
                 .iter()
