@@ -31,7 +31,7 @@ mod tests {
 
     #[test]
     fn test_and_node_truth_table() {
-        let mut and_node = OrNode {
+        let mut node = OrNode {
             id: 1,
             input_ids: InputIds {
                 input1: 0,
@@ -49,7 +49,7 @@ mod tests {
 
         for (input1, input2, expected) in test_cases {
             let node_values = vec![input1, input2];
-            let result = and_node.process(&node_values);
+            let result = node.process(&node_values);
             assert_eq!(
                 result, expected,
                 "Failed for inputs: ({}, {})",
