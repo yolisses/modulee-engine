@@ -32,7 +32,7 @@ mod tests {
     };
 
     #[test]
-    fn test_set_notes_on_and_off() {
+    fn test_equals_node() {
         let mut equals_node = EqualsNode {
             id: 1,
             input_ids: InputIds {
