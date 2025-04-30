@@ -8,7 +8,7 @@ use crate::{
             frequency_node::FrequencyNode, gate_node::GateNode, phase_node::PhaseNode,
             pitch_node::PitchNode, time_node::TimeNode,
         },
-        boolean::and_node::AndNode,
+        boolean::{and_node::AndNode, or_node::OrNode},
         filter::{
             all_pass_node::AllPassNode, high_pass_node::HighPassNode, low_pass_node::LowPassNode,
             peak_node::PeakNode,
@@ -94,6 +94,7 @@ macro_rules! define_node_enum {
 }
 
 define_node_enum! {
+    OrNode(OrNode),
     AddNode(AddNode),
     AndNode(AndNode),
     GateNode(GateNode),
