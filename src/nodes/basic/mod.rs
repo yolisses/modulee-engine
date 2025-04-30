@@ -2,6 +2,7 @@ pub(crate) mod constant_node;
 pub(crate) mod envelope_node;
 pub(crate) mod frequency_node;
 pub(crate) mod gate_node;
+pub(crate) mod hold_node;
 pub(crate) mod phase_node;
 pub(crate) mod pitch_node;
 pub(crate) mod time_node;

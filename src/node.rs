@@ -5,8 +5,8 @@ use crate::{
     nodes::{
         basic::{
             constant_node::ConstantNode, envelope_node::EnvelopeNode,
-            frequency_node::FrequencyNode, gate_node::GateNode, phase_node::PhaseNode,
-            pitch_node::PitchNode, time_node::TimeNode,
+            frequency_node::FrequencyNode, gate_node::GateNode, hold_node::HoldNode,
+            phase_node::PhaseNode, pitch_node::PitchNode, time_node::TimeNode,
         },
         boolean::{and_node::AndNode, if_node::IfNode, not_node::NotNode, or_node::OrNode},
         filter::{
@@ -100,6 +100,7 @@ define_node_enum! {
     AndNode(AndNode),
     NotNode(NotNode),
     GateNode(GateNode),
+    HoldNode(HoldNode),
     PeakNode(PeakNode),
     TimeNode(TimeNode),
     InputNode(InputNode),
