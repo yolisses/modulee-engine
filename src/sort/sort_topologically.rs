@@ -36,7 +36,6 @@ pub(crate) fn sort_topologically(graph: &InputsMapping) -> Vec<usize> {
 
     // Process all nodes in the graph
     for &node in graph.keys() {
-        let node = node as usize;
         if !visited.contains(&node) {
             dfs(node, graph, &mut visited, &mut result);
         }
