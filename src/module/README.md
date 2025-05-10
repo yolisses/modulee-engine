@@ -14,5 +14,5 @@ cache hit rate.
 Due to these additional constraints, a module passed to the system may be in an
 invalid state. One possible solution is to sort the module's nodes on every
 update. However, it seems simpler to ensure a valid state before the update,
-given the possibility of recursion in modules. It is done with the methods named with "prepare" Time will tell if this was the
-right choice.
+given the possibility of recursion in modules. It is done with the methods named
+with "prepare" Time will tell if this was the right choice.
