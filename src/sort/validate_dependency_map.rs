@@ -1,11 +1,11 @@
 use super::dependency_map::DependencyMap;
 
-pub(crate) fn validate_inputs_mapping(inputs_mapping: &DependencyMap) -> Result<(), String> {
+pub(crate) fn validate_dependency_map(dependency_map: &DependencyMap) -> Result<(), String> {
     let mut missing_mappings = vec![];
 
-    for (key, inputs) in inputs_mapping {
+    for (key, inputs) in dependency_map {
         for input in inputs {
-            if !inputs_mapping.contains_key(input) {
+            if !dependency_map.contains_key(input) {
                 missing_mappings.push(vec![*key, *input]);
             }
         }

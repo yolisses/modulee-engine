@@ -47,26 +47,26 @@ pub(crate) fn sort_topologically(graph: &DependencyMap) -> Vec<usize> {
 
 #[cfg(test)]
 mod tests {
-    use crate::sort::tests::create_inputs_mapping::create_inputs_mapping;
+    use crate::sort::tests::create_dependency_map::create_dependency_map;
 
     use super::*;
 
     #[test]
     fn test_sort_topologically_1() {
-        let inputs_mapping = create_inputs_mapping(&vec![
+        let dependency_map = create_dependency_map(&vec![
             //
             (1, vec![]),
             (2, vec![3]),
             (3, vec![]),
         ]);
-        let topologically_sorted_ids = sort_topologically(&inputs_mapping);
+        let topologically_sorted_ids = sort_topologically(&dependency_map);
 
         assert_eq!(topologically_sorted_ids, vec![1, 3, 2]);
     }
 
     #[test]
     fn test_sort_topologically_2() {
-        let inputs_mapping = create_inputs_mapping(&vec![
+        let dependency_map = create_dependency_map(&vec![
             (1, vec![2, 3]),
             (2, vec![5]),
             (3, vec![]),
@@ -74,14 +74,14 @@ mod tests {
             (5, vec![]),
         ]);
 
-        let topologically_sorted_ids = sort_topologically(&inputs_mapping);
+        let topologically_sorted_ids = sort_topologically(&dependency_map);
 
         assert_eq!(topologically_sorted_ids, vec![5, 2, 3, 1, 4]);
     }
 
     #[test]
     fn test_sort_topologically_3() {
-        let inputs_mapping = create_inputs_mapping(&vec![
+        let dependency_map = create_dependency_map(&vec![
             (1, vec![2, 3]),
             (2, vec![5]),
             (3, vec![5]),
@@ -89,14 +89,14 @@ mod tests {
             (5, vec![]),
         ]);
 
-        let topologically_sorted_ids = sort_topologically(&inputs_mapping);
+        let topologically_sorted_ids = sort_topologically(&dependency_map);
 
         assert_eq!(topologically_sorted_ids, vec![5, 2, 3, 1, 4]);
     }
 
     #[test]
     fn test_sort_topologically_4() {
-        let inputs_mapping = create_inputs_mapping(&vec![
+        let dependency_map = create_dependency_map(&vec![
             (2, vec![]),
             (3, vec![4, 7]),
             (7, vec![1, 6]),
@@ -106,21 +106,21 @@ mod tests {
             (4, vec![5, 2]),
         ]);
 
-        let topologically_sorted_ids = sort_topologically(&inputs_mapping);
+        let topologically_sorted_ids = sort_topologically(&dependency_map);
 
         assert_eq!(topologically_sorted_ids, vec![1, 2, 5, 4, 6, 7, 3]);
     }
 
     #[test]
     fn test_sort_topologically_5() {
-        let inputs_mapping = create_inputs_mapping(&vec![
+        let dependency_map = create_dependency_map(&vec![
             (0, vec![]),
             (7, vec![]),
             (8, vec![9]),
             (9, vec![0, 0]),
         ]);
 
-        let topologically_sorted_ids = sort_topologically(&inputs_mapping);
+        let topologically_sorted_ids = sort_topologically(&dependency_map);
 
         assert_eq!(topologically_sorted_ids, vec![0, 9, 8, 7]);
     }

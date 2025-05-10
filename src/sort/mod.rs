@@ -8,4 +8,4 @@ pub(crate) mod sort_nodes_topologically;
 mod sort_topologically;
 #[cfg(test)]
 mod tests;
-mod validate_inputs_mapping;
+mod validate_dependency_map;

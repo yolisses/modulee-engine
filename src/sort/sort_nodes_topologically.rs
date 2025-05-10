@@ -1,13 +1,13 @@
 use super::{
     get_indexes_map::get_indexes_map, get_nodes_dependency_map::get_nodes_dependency_map,
-    sort_topologically::sort_topologically, validate_inputs_mapping::validate_inputs_mapping,
+    sort_topologically::sort_topologically, validate_dependency_map::validate_dependency_map,
 };
 use crate::node_trait::NodeTrait;
 
 pub(crate) fn sort_nodes_topologically(nodes: &mut Vec<impl NodeTrait>) -> Result<(), String> {
-    let inputs_mapping = get_nodes_dependency_map(nodes);
-    validate_inputs_mapping(&inputs_mapping)?;
-    let nodes_order = sort_topologically(&inputs_mapping);
+    let dependency_map = get_nodes_dependency_map(nodes);
+    validate_dependency_map(&dependency_map)?;
+    let nodes_order = sort_topologically(&dependency_map);
     nodes.sort_by_key(|node| nodes_order.iter().position(|id| *id == node.get_id()));
     let node_indexes = get_indexes_map(nodes_order);
     nodes
