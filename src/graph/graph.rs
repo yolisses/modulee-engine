@@ -1,9 +1,8 @@
 use crate::{module::modules_by_id::ModulesById, set_note_trait::SetNoteTrait};
-use nohash_hasher::IntMap;
 
 // TODO consider storing only the main module, since the updates are data
 // complete.
-#[derive(Debug, Default)]
+#[derive(Debug, Default, PartialEq)]
 pub struct Graph {
     counter: u32,
     pub(crate) modules_by_id: ModulesById,
@@ -14,14 +13,6 @@ pub struct Graph {
 const VOICES_REMOTION_CYCLE_SIZE: u32 = 1000;
 
 impl Graph {
-    pub fn new() -> Self {
-        Graph {
-            counter: 0,
-            main_module_id: None,
-            modules_by_id: IntMap::default(),
-        }
-    }
-
     pub fn get_output_value(&self) -> f32 {
         if let Some(main_module_id) = self.main_module_id {
             let main_module = self.modules_by_id.get(&main_module_id).unwrap();

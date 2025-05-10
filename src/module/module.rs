@@ -2,12 +2,12 @@ use crate::{declare_get_id, node::Node, node_trait::NodeTrait, set_note_trait::S
 use nohash_hasher::IntMap;
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Clone, Default)]
 pub struct Module {
     id: usize,
     pub(crate) nodes: Vec<Node>,
-    /// The output values of the nodes of the module. It's used only in
-    /// the process method, but is declared in the struct to prevent costly
+    /// The output values of the nodes of the module. It's used only in the
+    /// process method, but is declared in the struct to prevent costly
     /// allocations in each iteration.
     ///
     /// Also by performance reasons, it's a vector instead of a hash map.

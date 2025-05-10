@@ -10,6 +10,7 @@ pub(crate) fn get_clamped_value<T: PartialOrd>(value: T, min: T, max: T) -> T {
 
     value
 }
+
 #[cfg(test)]
 mod tests {
     use crate::math::get_clamped_value::get_clamped_value;
