@@ -2,8 +2,6 @@
 mod tests {
     use crate::{sort::has_id::HasId, Graph};
 
-    // Ensure PartialEq is derived for Graph and Module for assert_eq!
-
     #[test]
     fn test_update_modules() {
         let mut graph = Graph::default();
