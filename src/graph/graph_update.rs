@@ -1,30 +1,32 @@
 use super::{graph::Graph, graph_data::GraphData};
-use crate::{get_items_by_id::get_items_by_id, sort::has_id::HasId};
+use crate::sort::has_id::HasId;
 use std::error::Error;
 
 impl Graph {
     fn update(&mut self, new_graph_data: GraphData) {
-        self.main_module_id = new_graph_data.main_module_id;
+        let main_module_id = new_graph_data.main_module_id;
 
-        let new_modules = get_items_by_id(new_graph_data.modules);
-
-        // Remove modules not present in new modules
-        self.modules_by_id.retain(|module_id, _| {
-            new_modules
+        if let Some(main_module_id) = main_module_id {
+            let new_main_module = new_graph_data
+                .modules
                 .iter()
-                .any(|(new_module_id, _)| new_module_id == module_id)
-        });
+                .find(|module| module.get_id() == main_module_id);
 
-        for new_module in new_modules.values() {
-            // Update a module if present in modules. Saves the new module
-            // otherwise
-            if let Some(module) = self.modules_by_id.get_mut(&new_module.get_id()) {
-                module.update(new_module);
+            if let Some(new_main_module) = new_main_module {
+                if let Some(main_module) = &mut self.main_module {
+                    if main_module.get_id() == main_module_id {
+                        main_module.update(&new_main_module);
+                    } else {
+                        self.main_module = Some(new_main_module.clone());
+                    }
+                } else {
+                    self.main_module = Some(new_main_module.clone());
+                }
             } else {
-                let mut module = new_module.clone();
-                module.update(new_module);
-                self.modules_by_id.insert(module.get_id(), module.clone());
+                self.main_module = None;
             }
+        } else {
+            self.main_module = None;
         }
     }
 
