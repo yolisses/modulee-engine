@@ -1,7 +1,4 @@
-use crate::{
-    declare_get_id, node::Node, node_trait::NodeTrait, set_note_trait::SetNoteTrait,
-    sort::dependency_map::DependencyMap,
-};
+use crate::{declare_get_id, node::Node, node_trait::NodeTrait, set_note_trait::SetNoteTrait};
 use nohash_hasher::IntMap;
 use serde::Deserialize;
 
