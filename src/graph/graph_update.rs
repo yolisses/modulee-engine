@@ -32,7 +32,7 @@ impl Graph {
 
     pub fn update_from_json(&mut self, modules_json: &str) -> Result<(), Box<dyn Error>> {
         let mut new_graph_data: GraphData = serde_json::from_str(modules_json)?;
-        new_graph_data.prepare();
+        new_graph_data.prepare()?;
         self.update(new_graph_data)
     }
 }
