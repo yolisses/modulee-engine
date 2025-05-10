@@ -5,7 +5,7 @@ pub fn criterion_benchmark(c: &mut Criterion) {
     c.bench_function("graph process 10 sine waves", |b| {
         let graph_json = include_str!("benchmark_graph.json");
         b.iter(|| {
-            let mut graph = Graph::new();
+            let mut graph = Graph::default();
             graph
                 .update_from_json(graph_json)
                 .expect("Error setting modules from JSON");
