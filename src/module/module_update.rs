@@ -4,10 +4,9 @@ use crate::{
     node::Node,
     sort::{has_id::HasId, sort_nodes_topologically::sort_nodes_topologically},
 };
-use std::error::Error;
 
 impl Module {
-    pub(crate) fn update(&mut self, new_module: &Module) -> Result<(), Box<dyn Error>> {
+    pub(crate) fn update(&mut self, new_module: &Module) {
         let new_nodes = &new_module.nodes;
 
         // Remove nodes not present in new nodes
@@ -31,8 +30,6 @@ impl Module {
 
         sort_by_other_vec_order(&mut self.nodes, new_nodes);
         self.reset_node_values();
-
-        Ok(())
     }
 
     fn reset_node_values(&mut self) {

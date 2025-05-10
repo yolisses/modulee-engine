@@ -15,10 +15,11 @@ impl GraphData {
 
         sort_modules_topologically(&mut self.modules)?;
 
-        // TODO allow arbitrarily deep preparation
-        let module_options = &self.modules.clone();
-        for module in &mut self.modules {
-            module.prepare_modules_in_nodes(module_options);
+        // Iterate over indices to avoid mutable borrow conflict
+        for i in 0..self.modules.len() {
+            let modules = self.modules.clone();
+            let module = &mut self.modules[i];
+            module.prepare_modules_in_nodes(&modules);
         }
         Ok(())
     }

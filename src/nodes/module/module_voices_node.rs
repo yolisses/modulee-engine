@@ -57,8 +57,17 @@ impl ModuleVoicesNode {
 declare_get_id! {ModuleVoicesNode}
 
 impl HasUpdate for ModuleVoicesNode {
-    fn update(&mut self, new_node: &Self) {
-        self.extras = new_node.extras.clone();
+    fn update(&mut self, new_module: &Self) {
+        self.extras = new_module.extras.clone();
+        self.module = new_module.module.clone();
+
+        if let Some(module) = &self.module {
+            for voice in &mut self.voices {
+                voice.update_module(&module);
+            }
+        } else {
+            self.voices = vec![];
+        }
     }
 }
 

@@ -44,6 +44,10 @@ impl Voice {
     pub(crate) fn process(&mut self) {
         self.module.process();
     }
+
+    pub(crate) fn update_module(&mut self, new_module: &Module) {
+        self.module.update(new_module);
+    }
 }
 
 impl SetNoteTrait for Voice {

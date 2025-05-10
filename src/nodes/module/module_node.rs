@@ -47,8 +47,9 @@ impl ModuleNode {
 declare_get_id! {ModuleNode}
 
 impl HasUpdate for ModuleNode {
-    fn update(&mut self, new_node: &Self) {
-        self.extras = new_node.extras.clone();
+    fn update(&mut self, new_module: &Self) {
+        self.extras = new_module.extras.clone();
+        self.module = new_module.module.clone();
     }
 }
 
