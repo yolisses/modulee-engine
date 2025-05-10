@@ -1,17 +1,17 @@
-use super::inputs_mapping::InputsMapping;
+use super::dependency_map::DependencyMap;
 use std::collections::HashSet;
 
 /// Performs topological sorting on a directed acyclic graph (DAG). Takes an
 /// InputsMapping where keys are node IDs and values are vectors of dependent
 /// node IDs. Returns a vector of node IDs in topological order. Assumes the
 /// input graph has no cycles.
-pub(crate) fn sort_topologically(graph: &InputsMapping) -> Vec<usize> {
+pub(crate) fn sort_topologically(graph: &DependencyMap) -> Vec<usize> {
     let mut result = Vec::new();
     let mut visited = HashSet::new();
 
     fn dfs(
         node: usize,
-        graph: &InputsMapping,
+        graph: &DependencyMap,
         visited: &mut HashSet<usize>,
         result: &mut Vec<usize>,
     ) {

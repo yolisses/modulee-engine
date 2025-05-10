@@ -1,6 +1,6 @@
-use super::inputs_mapping::InputsMapping;
+use super::dependency_map::DependencyMap;
 
-pub(crate) fn validate_inputs_mapping(inputs_mapping: &InputsMapping) -> Result<(), String> {
+pub(crate) fn validate_inputs_mapping(inputs_mapping: &DependencyMap) -> Result<(), String> {
     let mut missing_mappings = vec![];
 
     for (key, inputs) in inputs_mapping {
