@@ -1,4 +1,7 @@
-use crate::{declare_get_id, node::Node, node_trait::NodeTrait, set_note_trait::SetNoteTrait};
+use crate::{
+    declare_get_id, node::Node, node_trait::NodeTrait, set_note_trait::SetNoteTrait,
+    sort::inputs_mapping::InputsMapping,
+};
 use nohash_hasher::IntMap;
 use serde::Deserialize;
 
@@ -71,6 +74,28 @@ impl Module {
                 input_node.set_value(value);
             }
         }
+    }
+
+    pub(crate) fn get_child_module_ids(&self) -> Vec<usize> {
+        let mut child_module_ids = vec![];
+
+        for node in &self.nodes {
+            match node {
+                Node::ModuleNode(node) => {
+                    if let Some(target_module_id) = node.get_target_module_id() {
+                        child_module_ids.push(target_module_id);
+                    }
+                }
+                Node::ModuleVoicesNode(node) => {
+                    if let Some(target_module_id) = node.get_target_module_id() {
+                        child_module_ids.push(target_module_id);
+                    }
+                }
+                _ => (),
+            }
+        }
+
+        child_module_ids
     }
 }
 

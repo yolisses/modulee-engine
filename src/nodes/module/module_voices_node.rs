@@ -42,6 +42,10 @@ impl ModuleVoicesNode {
             self.module = None
         }
     }
+
+    pub(crate) fn get_target_module_id(&self) -> Option<usize> {
+        self.extras.target_module_id
+    }
 }
 
 impl ModuleVoicesNode {

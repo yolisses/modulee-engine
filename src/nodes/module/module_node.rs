@@ -38,6 +38,10 @@ impl ModuleNode {
             self.module = None
         }
     }
+
+    pub(crate) fn get_target_module_id(&self) -> Option<usize> {
+        self.extras.target_module_id
+    }
 }
 
 declare_get_id! {ModuleNode}
