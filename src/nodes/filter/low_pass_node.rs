@@ -14,7 +14,7 @@ pub(crate) struct LowPassNode {
 }
 
 fn get_default_filter_wrapper() -> FilterWrapper {
-    FilterWrapper::new(biquad::Type::HighPass)
+    FilterWrapper::new(biquad::Type::LowPass)
 }
 
 declare_get_id! {LowPassNode}
