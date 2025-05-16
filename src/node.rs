@@ -4,7 +4,7 @@ use crate::{
     node_trait::NodeTrait,
     nodes::{
         basic::{
-            constant_node::ConstantNode, envelope_node::EnvelopeNode,
+            constant_node::ConstantNode, control_node::ControlNode, envelope_node::EnvelopeNode,
             frequency_node::FrequencyNode, gate_node::GateNode, hold_node::HoldNode,
             phase_node::PhaseNode, pitch_node::PitchNode, time_node::TimeNode,
         },
@@ -113,6 +113,7 @@ define_node_enum! {
     ModuleNode(ModuleNode),
     EqualsNode(EqualsNode),
     ModuloNode(ModuloNode),
+    ControlNode(ControlNode),
     AllPassNode(AllPassNode),
     LowPassNode(LowPassNode),
     GreaterNode(GreaterNode),
