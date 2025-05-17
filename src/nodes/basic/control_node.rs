@@ -6,7 +6,7 @@ use crate::{
 };
 use serde::Deserialize;
 
-const SLEW_RATE: f32 = 0.05; // 50 ms default
+const SLEW_DURATION: f32 = 0.05; // 50 ms default
 
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct Extras {
@@ -37,7 +37,7 @@ impl ControlNode {
                 .curve
                 .as_ref()
                 .map_or(self.extras.value, |c| c.get_value());
-            self.curve = Some(Curve::new(from, new_value, SLEW_RATE, SAMPLE_RATE));
+            self.curve = Some(Curve::new(from, new_value, SLEW_DURATION, SAMPLE_RATE));
         }
     }
 }
@@ -110,7 +110,7 @@ mod tests {
     #[test]
     fn test_process_returns_curve_value_when_curve_active() {
         let mut node = make_node(0.0);
-        node.curve = Some(Curve::new(0.0, 1.0, SLEW_RATE, SAMPLE_RATE));
+        node.curve = Some(Curve::new(0.0, 1.0, SLEW_DURATION, SAMPLE_RATE));
 
         let result = node.process(&[]);
 
