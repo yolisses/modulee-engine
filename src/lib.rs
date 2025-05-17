@@ -17,4 +17,5 @@ mod sort;
 mod tests;
 mod voice;
 
+pub use self::control_update_data::ControlUpdateData;
 pub use self::graph::graph::Graph;
