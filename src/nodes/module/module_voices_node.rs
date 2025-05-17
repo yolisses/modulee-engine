@@ -73,7 +73,7 @@ impl HasUpdate for ModuleVoicesNode {
 
         if let Some(module) = &self.module {
             for voice in &mut self.voices {
-                voice.update_module(&module);
+                voice.update_module(module);
             }
         } else {
             self.voices = vec![];

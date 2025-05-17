@@ -15,7 +15,7 @@ impl Graph {
             if let Some(new_main_module) = new_main_module {
                 if let Some(main_module) = &mut self.main_module {
                     if main_module.get_id() == main_module_id {
-                        main_module.update(&new_main_module);
+                        main_module.update(new_main_module);
                     } else {
                         self.main_module = Some(new_main_module.clone());
                     }
