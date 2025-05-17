@@ -33,10 +33,11 @@ impl ControlNode {
 
     fn update_value(&mut self, new_value: f32) {
         if self.extras.value != new_value {
-            let from = self
-                .curve
-                .as_ref()
-                .map_or(self.extras.value, |c| c.get_value());
+            let from = if let Some(curve) = &self.curve {
+                curve.get_value()
+            } else {
+                self.extras.value
+            };
             self.curve = Some(Curve::new(from, new_value, SLEW_DURATION, SAMPLE_RATE));
         }
     }
