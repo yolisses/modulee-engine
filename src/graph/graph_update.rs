@@ -1,5 +1,5 @@
 use super::{graph::Graph, graph_data::GraphData};
-use crate::sort::has_id::HasId;
+use crate::{control_update_data::ControlUpdateData, sort::has_id::HasId};
 use std::error::Error;
 
 impl Graph {
@@ -35,5 +35,11 @@ impl Graph {
         new_graph_data.prepare()?;
         self.update(new_graph_data);
         Ok(())
+    }
+
+    pub fn update_control(&mut self, control_update_data: &ControlUpdateData) {
+        if let Some(main_module) = &mut self.main_module {
+            main_module.update_control(control_update_data);
+        }
     }
 }

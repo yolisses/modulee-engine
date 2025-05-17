@@ -1,3 +1,4 @@
+use crate::control_update_data::ControlUpdateData;
 use crate::envelope::curve::Curve;
 use crate::{
     declare_empty_get_input_ids, declare_get_id, has_update::HasUpdate, node_trait::NodeTrait,
@@ -23,16 +24,27 @@ pub(crate) struct ControlNode {
 declare_get_id! {ControlNode}
 declare_empty_get_input_ids! {ControlNode}
 
-impl HasUpdate for ControlNode {
-    fn update(&mut self, new_node: &Self) {
-        if self.extras.value != new_node.extras.value {
+impl ControlNode {
+    pub(crate) fn update_control(&mut self, control_update_data: &ControlUpdateData) {
+        if self.id == control_update_data.id {
+            self.update_value(control_update_data.value);
+        }
+    }
+
+    fn update_value(&mut self, new_value: f32) {
+        if self.extras.value != new_value {
             let from = self
                 .curve
                 .as_ref()
                 .map_or(self.extras.value, |c| c.get_value());
-            let to = new_node.extras.value;
-            self.curve = Some(Curve::new(from, to, SLEW_RATE, SAMPLE_RATE));
+            self.curve = Some(Curve::new(from, new_value, SLEW_RATE, SAMPLE_RATE));
         }
+    }
+}
+
+impl HasUpdate for ControlNode {
+    fn update(&mut self, new_node: &Self) {
+        self.update_value(new_node.extras.value);
         self.extras = new_node.extras.clone();
     }
 }

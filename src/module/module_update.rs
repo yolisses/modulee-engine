@@ -1,5 +1,6 @@
 use super::{module::Module, sort_by_other_vec_order::sort_by_other_vec_order};
 use crate::{
+    control_update_data::ControlUpdateData,
     has_update::HasUpdate,
     node::Node,
     sort::{has_id::HasId, sort_nodes_topologically::sort_nodes_topologically},
@@ -49,6 +50,17 @@ impl Module {
             match node {
                 Node::ModuleNode(node) => node.prepare_module(possible_modules),
                 Node::ModuleVoicesNode(node) => node.prepare_module(possible_modules),
+                _ => (),
+            }
+        }
+    }
+
+    pub(crate) fn update_control(&mut self, control_update_data: &ControlUpdateData) {
+        for node in &mut self.nodes {
+            match node {
+                Node::ControlNode(node) => node.update_control(control_update_data),
+                Node::ModuleNode(node) => node.update_control(control_update_data),
+                Node::ModuleVoicesNode(node) => node.update_control(control_update_data),
                 _ => (),
             }
         }

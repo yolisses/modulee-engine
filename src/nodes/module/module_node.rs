@@ -1,8 +1,14 @@
 use super::deserialize_int_map::deserialize_int_map;
 use crate::{
-    declare_get_id, get_inputs_trait::GetInputsTrait, has_update::HasUpdate,
-    module::module::Module, node_trait::NodeTrait, set_input_indexes_trait::SetInputIndexesTrait,
-    set_note_trait::SetNoteTrait, sort::node_indexes::NodeIndexes,
+    control_update_data::ControlUpdateData,
+    declare_get_id,
+    get_inputs_trait::GetInputsTrait,
+    has_update::HasUpdate,
+    module::{self, module::Module},
+    node_trait::NodeTrait,
+    set_input_indexes_trait::SetInputIndexesTrait,
+    set_note_trait::SetNoteTrait,
+    sort::node_indexes::NodeIndexes,
 };
 use nohash_hasher::IntMap;
 use serde::Deserialize;
@@ -41,6 +47,12 @@ impl ModuleNode {
 
     pub(crate) fn get_target_module_id(&self) -> Option<usize> {
         self.extras.target_module_id
+    }
+
+    pub(crate) fn update_control(&mut self, control_update_data: &ControlUpdateData) {
+        if let Some(module) = &mut self.module {
+            module.update_control(control_update_data)
+        }
     }
 }
 

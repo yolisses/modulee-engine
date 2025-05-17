@@ -1,3 +1,4 @@
+mod control_update_data;
 mod envelope;
 pub mod filter;
 mod get_inputs_trait;
