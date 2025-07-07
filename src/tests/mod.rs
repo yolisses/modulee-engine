@@ -1,1 +1,1 @@
-pub(crate) mod relative_eq_array;
+pub(crate) mod assert_array_approx_eq;

@@ -119,7 +119,7 @@ impl Envelope {
 #[cfg(test)]
 mod tests {
     use super::Envelope;
-    use crate::tests::relative_eq_array::relative_eq_array;
+    use crate::tests::relative_eq_array::assert_array_approx_eq;
 
     fn get_test_values(envelope: &mut Envelope, iterations: usize) -> Vec<f32> {
         let mut values = vec![];
@@ -135,34 +135,34 @@ mod tests {
         let mut envelope = Envelope::new(4., 3., 0.4, 4., 1.);
 
         // Idle
-        relative_eq_array(&get_test_values(&mut envelope, 3), &vec![0., 0., 0.]);
+        assert_array_approx_eq(&get_test_values(&mut envelope, 3), &vec![0., 0., 0.]);
         assert_eq!(envelope.get_is_pending(), false);
 
         envelope.set_note_on();
 
         // Attack
-        relative_eq_array(
+        assert_array_approx_eq(
             &get_test_values(&mut envelope, 4),
             &vec![0.25, 0.5, 0.75, 1.],
         );
         assert_eq!(envelope.get_is_pending(), true);
 
         // Decay
-        relative_eq_array(&get_test_values(&mut envelope, 3), &vec![0.8, 0.6, 0.4]);
+        assert_array_approx_eq(&get_test_values(&mut envelope, 3), &vec![0.8, 0.6, 0.4]);
         assert_eq!(envelope.get_is_pending(), true);
 
         // Sustain
-        relative_eq_array(&get_test_values(&mut envelope, 7), &vec![0.4; 7]);
+        assert_array_approx_eq(&get_test_values(&mut envelope, 7), &vec![0.4; 7]);
         assert_eq!(envelope.get_is_pending(), true);
 
         envelope.set_note_off();
 
         // Release
-        relative_eq_array(&get_test_values(&mut envelope, 4), &vec![0.3, 0.2, 0.1, 0.]);
+        assert_array_approx_eq(&get_test_values(&mut envelope, 4), &vec![0.3, 0.2, 0.1, 0.]);
         assert_eq!(envelope.get_is_pending(), true);
 
         // Idle
-        relative_eq_array(&get_test_values(&mut envelope, 7), &vec![0.; 7]);
+        assert_array_approx_eq(&get_test_values(&mut envelope, 7), &vec![0.; 7]);
         assert_eq!(envelope.get_is_pending(), false);
     }
 }

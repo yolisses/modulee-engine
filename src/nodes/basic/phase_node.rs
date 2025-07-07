@@ -47,7 +47,7 @@ impl NodeTrait for PhaseNode {
 mod tests {
     use super::PhaseNode;
     use crate::node_trait::NodeTrait;
-    use crate::tests::relative_eq_array::relative_eq_array;
+    use crate::tests::relative_eq_array::assert_array_approx_eq;
 
     fn get_test_values(
         phase_node: &mut PhaseNode,
@@ -80,7 +80,7 @@ mod tests {
         let mut node_values: Vec<f32> = Default::default();
         node_values.insert(frequency_id, frequency);
 
-        relative_eq_array(
+        assert_array_approx_eq(
             &get_test_values(&mut phase_node, &node_values, 10),
             &vec![0.2, 0.4, 0.6, 0.8, 0.0, 0.2, 0.4, 0.6, 0.8, 0.0],
         );
