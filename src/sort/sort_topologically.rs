@@ -47,9 +47,8 @@ pub(crate) fn sort_topologically(graph: &DependencyMap) -> Vec<usize> {
 
 #[cfg(test)]
 mod tests {
-    use crate::sort::tests::create_dependency_map::create_dependency_map;
-
     use super::*;
+    use crate::sort::tests::create_dependency_map::create_dependency_map;
 
     #[test]
     fn test_sort_topologically_1() {

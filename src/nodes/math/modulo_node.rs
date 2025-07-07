@@ -27,9 +27,8 @@ impl NodeTrait for ModuloNode {
 
 #[cfg(test)]
 mod tests {
-    use assert_approx_eq::assert_approx_eq;
-
     use super::*;
+    use assert_approx_eq::assert_approx_eq;
 
     #[test]
     fn test_modulo_node_process() {

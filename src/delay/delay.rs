@@ -1,6 +1,5 @@
-use serde::Deserialize;
-
 use crate::math::get_clamped_value::get_clamped_value;
+use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct Delay {
@@ -30,11 +29,9 @@ impl Delay {
 
 #[cfg(test)]
 mod tests {
-    use assert_approx_eq::assert_approx_eq;
-
-    use crate::tests::assert_array_approx_eq::assert_array_approx_eq;
-
     use super::Delay;
+    use crate::tests::assert_array_approx_eq::assert_array_approx_eq;
+    use assert_approx_eq::assert_approx_eq;
 
     #[test]
     fn test_delay() {
