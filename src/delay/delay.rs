@@ -22,7 +22,7 @@ impl Delay {
     }
 
     pub(crate) fn push_input(&mut self, input: f32) {
-        if self.buffer.len() > 0 {
+        if !self.buffer.is_empty() {
             self.buffer.remove(0);
         }
         self.buffer.push(input);
