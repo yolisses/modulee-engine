@@ -34,10 +34,13 @@ impl NodeTrait for DelayNode {
         let input = node_values[self.input_ids.input];
         let time = node_values[self.input_ids.time];
         let max_time = node_values[self.input_ids.max_time];
-        // self.delay.update_max_time(max_time);
+
+        self.delay.update_max_time(max_time);
 
         let output = self.delay.get_value(time);
+
         self.delay.push_input(input);
+
         output
     }
 
