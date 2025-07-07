@@ -119,7 +119,7 @@ impl Envelope {
 #[cfg(test)]
 mod tests {
     use super::Envelope;
-    use crate::tests::relative_eq_array::assert_array_approx_eq;
+    use crate::tests::assert_array_approx_eq::assert_array_approx_eq;
 
     fn get_test_values(envelope: &mut Envelope, iterations: usize) -> Vec<f32> {
         let mut values = vec![];

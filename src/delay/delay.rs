@@ -32,7 +32,7 @@ impl Delay {
 mod tests {
     use assert_approx_eq::assert_approx_eq;
 
-    use crate::tests::relative_eq_array::assert_array_approx_eq;
+    use crate::tests::assert_array_approx_eq::assert_array_approx_eq;
 
     use super::Delay;
 

@@ -47,7 +47,7 @@ impl NodeTrait for PhaseNode {
 mod tests {
     use super::PhaseNode;
     use crate::node_trait::NodeTrait;
-    use crate::tests::relative_eq_array::assert_array_approx_eq;
+    use crate::tests::assert_array_approx_eq::assert_array_approx_eq;
 
     fn get_test_values(
         phase_node: &mut PhaseNode,
