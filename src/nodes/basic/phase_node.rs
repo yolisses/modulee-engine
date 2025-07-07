@@ -81,8 +81,8 @@ mod tests {
         node_values.insert(frequency_id, frequency);
 
         relative_eq_array(
-            get_test_values(&mut phase_node, &node_values, 10),
-            vec![0.2, 0.4, 0.6, 0.8, 0.0, 0.2, 0.4, 0.6, 0.8, 0.0],
+            &get_test_values(&mut phase_node, &node_values, 10),
+            &vec![0.2, 0.4, 0.6, 0.8, 0.0, 0.2, 0.4, 0.6, 0.8, 0.0],
         );
     }
 }
