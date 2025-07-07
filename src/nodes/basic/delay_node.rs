@@ -34,17 +34,14 @@ impl NodeTrait for DelayNode {
         let input = node_values[self.input_ids.input];
         let time = node_values[self.input_ids.time];
         let max_time = node_values[self.input_ids.max_time];
-        // self.delay.update_parameters(input, time, max_time);
+        // self.delay.update_max_time(max_time);
 
-        // self.delay.process();
-        // self.delay.get_value()
-        // DEBUG
-        0.
+        let output = self.delay.get_value(time);
+        self.delay.push_input(input);
+        output
     }
 
     fn get_is_pending(&self) -> bool {
-        // self.delay.get_is_pending()
-        // DEBUG
-        false
+        self.delay.get_is_pending()
     }
 }

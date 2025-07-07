@@ -25,6 +25,11 @@ impl Delay {
         index = get_clamped_value(index, 0, self.buffer.len() - 1);
         self.buffer[index]
     }
+
+    /// Returns true if there is some non zero value in the delay buffer
+    pub(crate) fn get_is_pending(&self) -> bool {
+        self.buffer.iter().any(|&x| x != 0.)
+    }
 }
 
 #[cfg(test)]
