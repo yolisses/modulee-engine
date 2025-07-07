@@ -1,6 +1,10 @@
 use crate::math::get_clamped_value::get_clamped_value;
 use serde::Deserialize;
 
+/// Delay line implemented with a limited size queue.
+///
+/// It stores a least one value, to prevent returning zero when `max_time` is
+/// zero
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct Delay {
     buffer: Vec<f32>,
@@ -9,14 +13,18 @@ pub(crate) struct Delay {
 
 impl Delay {
     pub(crate) fn new(max_time: f32, sample_rate: f32) -> Self {
-        Self {
+        let mut it = Self {
             sample_rate,
-            buffer: vec![0.; (max_time * sample_rate) as usize],
-        }
+            buffer: vec![],
+        };
+        it.update_max_time(max_time);
+        it
     }
 
     pub(crate) fn push_input(&mut self, input: f32) {
-        self.buffer.remove(0);
+        if self.buffer.len() > 0 {
+            self.buffer.remove(0);
+        }
         self.buffer.push(input);
     }
 
@@ -33,7 +41,10 @@ impl Delay {
 
     /// Updates the maximum delay time by resizing the buffer
     pub(crate) fn update_max_time(&mut self, max_time: f32) {
-        let new_size = (max_time * self.sample_rate) as usize;
+        let mut new_size = (max_time * self.sample_rate) as usize;
+        if new_size < 1 {
+            new_size = 1;
+        }
         let current_size = self.buffer.len();
 
         if new_size != current_size {
@@ -76,7 +87,6 @@ mod tests {
         assert_approx_eq!(delay.get_value(3.), 4.);
         assert_approx_eq!(delay.get_value(4.), 4.);
     }
-
     #[test]
     fn test_update_max_time_expand() {
         let mut delay = Delay::new(2., 1.);
@@ -105,5 +115,20 @@ mod tests {
         let original_buffer = delay.buffer.clone();
         delay.update_max_time(2.);
         assert_array_approx_eq(&delay.buffer, &original_buffer);
+    }
+
+    #[test]
+    fn test_delay_with_max_time_zero() {
+        let mut delay = Delay::new(0., 1.);
+
+        assert_array_approx_eq(&delay.buffer, &vec![0.]);
+
+        delay.push_input(1.);
+
+        assert_array_approx_eq(&delay.buffer, &vec![1.]);
+
+        assert_approx_eq!(delay.get_value(-1.), 1.);
+        assert_approx_eq!(delay.get_value(0.), 1.);
+        assert_approx_eq!(delay.get_value(1.), 1.);
     }
 }
