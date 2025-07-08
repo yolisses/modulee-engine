@@ -1,21 +1,22 @@
 use crate::math::get_clamped_value::get_clamped_value;
 use serde::Deserialize;
+use std::collections::VecDeque;
 
 /// Delay line implemented with a limited size queue.
 ///
-/// It stores a least one value, to prevent returning zero when `max_time` is
+/// It stores at least one value, to prevent returning zero when `max_time` is
 /// zero
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct Delay {
-    buffer: Vec<f32>,
     sample_rate: f32,
+    buffer: VecDeque<f32>,
 }
 
 impl Delay {
     pub(crate) fn new(max_time: f32, sample_rate: f32) -> Self {
         let mut it = Self {
             sample_rate,
-            buffer: vec![],
+            buffer: VecDeque::new(),
         };
         it.update_max_time(max_time);
         it
@@ -23,14 +24,14 @@ impl Delay {
 
     pub(crate) fn push_input(&mut self, input: f32) {
         if !self.buffer.is_empty() {
-            self.buffer.remove(0);
+            self.buffer.pop_front();
         }
-        self.buffer.push(input);
+        self.buffer.push_back(input);
     }
 
     pub(crate) fn get_value(&self, time: f32) -> f32 {
         let mut index = (time * self.sample_rate) as usize;
-        index = get_clamped_value(index, 0, self.buffer.len() - 1);
+        index = get_clamped_value(index, 0, self.buffer.len().saturating_sub(1));
         self.buffer[index]
     }
 
@@ -48,19 +49,17 @@ impl Delay {
         let current_size = self.buffer.len();
 
         if new_size != current_size {
-            let mut new_buffer = vec![0.; new_size];
-
-            // Copy existing data to the new buffer, preserving as much as possible
             if new_size > current_size {
-                // If expanding, copy all existing data and pad with zeros
-                new_buffer[..current_size].copy_from_slice(&self.buffer);
+                // If expanding, pad with zeros at the back
+                for _ in 0..(new_size - current_size) {
+                    self.buffer.push_back(0.);
+                }
             } else {
-                // If shrinking, copy only the most recent samples
-                let start = current_size - new_size;
-                new_buffer.copy_from_slice(&self.buffer[start..]);
+                // If shrinking, keep only the most recent samples
+                for _ in 0..(current_size - new_size) {
+                    self.buffer.pop_front();
+                }
             }
-
-            self.buffer = new_buffer;
         }
     }
 }
@@ -71,6 +70,10 @@ mod tests {
     use crate::tests::assert_array_approx_eq::assert_array_approx_eq;
     use assert_approx_eq::assert_approx_eq;
 
+    fn deque_to_vec(d: &std::collections::VecDeque<f32>) -> Vec<f32> {
+        d.iter().copied().collect()
+    }
+
     #[test]
     fn test_delay() {
         let mut delay = Delay::new(4., 1.);
@@ -79,7 +82,7 @@ mod tests {
         delay.push_input(3.);
         delay.push_input(4.);
 
-        assert_array_approx_eq(&delay.buffer, &vec![1., 2., 3., 4.]);
+        assert_array_approx_eq(&deque_to_vec(&delay.buffer), &vec![1., 2., 3., 4.]);
         assert_approx_eq!(delay.get_value(-1.), 1.);
         assert_approx_eq!(delay.get_value(0.), 1.);
         assert_approx_eq!(delay.get_value(1.), 2.);
@@ -93,7 +96,7 @@ mod tests {
         delay.push_input(1.);
         delay.push_input(2.);
         delay.update_max_time(4.);
-        assert_array_approx_eq(&delay.buffer, &vec![1., 2., 0., 0.]);
+        assert_array_approx_eq(&deque_to_vec(&delay.buffer), &vec![1., 2., 0., 0.]);
     }
 
     #[test]
@@ -104,7 +107,7 @@ mod tests {
         delay.push_input(3.);
         delay.push_input(4.);
         delay.update_max_time(2.);
-        assert_array_approx_eq(&delay.buffer, &vec![3., 4.]);
+        assert_array_approx_eq(&deque_to_vec(&delay.buffer), &vec![3., 4.]);
     }
 
     #[test]
@@ -114,18 +117,21 @@ mod tests {
         delay.push_input(2.);
         let original_buffer = delay.buffer.clone();
         delay.update_max_time(2.);
-        assert_array_approx_eq(&delay.buffer, &original_buffer);
+        assert_array_approx_eq(
+            &deque_to_vec(&delay.buffer),
+            &deque_to_vec(&original_buffer),
+        );
     }
 
     #[test]
     fn test_delay_with_max_time_zero() {
         let mut delay = Delay::new(0., 1.);
 
-        assert_array_approx_eq(&delay.buffer, &vec![0.]);
+        assert_array_approx_eq(&deque_to_vec(&delay.buffer), &vec![0.]);
 
         delay.push_input(1.);
 
-        assert_array_approx_eq(&delay.buffer, &vec![1.]);
+        assert_array_approx_eq(&deque_to_vec(&delay.buffer), &vec![1.]);
 
         assert_approx_eq!(delay.get_value(-1.), 1.);
         assert_approx_eq!(delay.get_value(0.), 1.);
