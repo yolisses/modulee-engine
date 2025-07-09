@@ -32,7 +32,8 @@ impl Delay {
     pub(crate) fn get_value(&self, time: f32) -> f32 {
         let mut index = (time * self.sample_rate) as usize;
         index = get_clamped_value(index, 0, self.buffer.len().saturating_sub(1));
-        self.buffer[index]
+        // Index from the back: 0 = newest, 1 = previous, etc.
+        self.buffer[self.buffer.len() - 1 - index]
     }
 
     /// Returns true if there is some non zero value in the delay buffer
