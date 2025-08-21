@@ -78,18 +78,18 @@ mod tests {
     #[test]
     fn test_delay() {
         let mut delay = Delay::new(4., 1.);
-        delay.push_input(1.);
-        delay.push_input(2.);
-        delay.push_input(3.);
-        delay.push_input(4.);
+        delay.push_input(5.);
+        delay.push_input(6.);
+        delay.push_input(7.);
+        delay.push_input(8.);
 
-        assert_array_approx_eq(&deque_to_vec(&delay.buffer), &vec![1., 2., 3., 4.]);
-        assert_approx_eq!(delay.get_value(-1.), 1.);
-        assert_approx_eq!(delay.get_value(0.), 1.);
-        assert_approx_eq!(delay.get_value(1.), 2.);
-        assert_approx_eq!(delay.get_value(2.), 3.);
-        assert_approx_eq!(delay.get_value(3.), 4.);
-        assert_approx_eq!(delay.get_value(4.), 4.);
+        assert_array_approx_eq(&deque_to_vec(&delay.buffer), &vec![5., 6., 7., 8.]);
+        assert_approx_eq!(delay.get_value(-1.), 8.);
+        assert_approx_eq!(delay.get_value(0.), 8.);
+        assert_approx_eq!(delay.get_value(1.), 7.);
+        assert_approx_eq!(delay.get_value(2.), 6.);
+        assert_approx_eq!(delay.get_value(3.), 5.);
+        assert_approx_eq!(delay.get_value(4.), 5.);
     }
     #[test]
     fn test_update_max_time_expand() {
