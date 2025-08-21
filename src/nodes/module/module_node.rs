@@ -87,7 +87,7 @@ impl NodeTrait for ModuleNode {
             module.set_input_node_values(node_values, &self.extras.input_target_ids);
             module.process();
             // TODO use all outputs
-            module.get_output_value()
+            module.get_output_values()
         } else {
             0.
         }

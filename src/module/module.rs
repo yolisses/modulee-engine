@@ -24,13 +24,18 @@ impl PartialEq for Module {
 }
 
 impl Module {
-    pub(crate) fn get_output_value(&self) -> f32 {
+    pub(crate) fn get_output_values(&self) -> (f32, f32) {
+        let mut values = (0., 0.);
         for node in &self.nodes {
             if let Node::OutputNode(output_node) = node {
-                return output_node.get_value();
+                match output_node.get_channel() {
+                    0 => values.0 = output_node.get_value(),
+                    1 => values.1 = output_node.get_value(),
+                    _ => (),
+                }
             }
         }
-        0.
+        values
     }
 
     pub(crate) fn process(&mut self) {

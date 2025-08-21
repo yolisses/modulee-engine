@@ -4,8 +4,14 @@ use crate::{
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone)]
+pub(crate) struct Extras {
+    channel: u8,
+}
+
+#[derive(Debug, Deserialize, Clone)]
 pub(crate) struct OutputNode {
     id: usize,
+    extras: Extras,
     input_ids: InputIds,
     #[serde(skip)]
     value: f32,
@@ -18,6 +24,10 @@ declare_get_input_ids_and_its_getter! {OutputNode, input}
 impl OutputNode {
     pub(crate) fn get_value(&self) -> f32 {
         self.value
+    }
+
+    pub(crate) fn get_channel(&self) -> u8 {
+        self.extras.channel
     }
 }
 

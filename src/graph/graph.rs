@@ -32,18 +32,18 @@ impl Graph {
         }
     }
 
-    pub fn get_output_value(&self) -> f32 {
+    pub fn get_output_values(&self) -> (f32, f32) {
         if let Some(main_module) = &self.main_module {
-            main_module.get_output_value()
+            main_module.get_output_values()
         } else {
-            0.
+            (0., 0.)
         }
     }
 
     pub fn process_block(&mut self, buffer: &mut [f32], length: usize) {
         for value in buffer.iter_mut().take(length) {
             self.process();
-            *value = self.get_output_value();
+            *value = self.get_output_values();
         }
     }
 
