@@ -42,31 +42,48 @@ impl Module {
     pub(crate) fn process(&mut self) {
         let mut module_node_outputs: HashMap<usize, (f32, f32)> = HashMap::new();
         for (index, node) in self.nodes.iter_mut().enumerate() {
-            if let Node::ValueFromChannelNode(value_from_channel_node) = node {
-                let input_id = value_from_channel_node.get_input_id();
-                let outputs = module_node_outputs.get(&input_id);
-                if let Some(outputs) = outputs {
-                    let channel = value_from_channel_node.get_channel();
-                    value_from_channel_node.set_value(match channel {
-                        0 => outputs.0,
-                        1 => outputs.1,
-                        _ => 0.,
-                    });
-                }
-            }
+            Module::update_value_from_channel_node(node, &mut module_node_outputs);
+
             let value = node.process(&self.node_values);
             self.node_values[index] = value;
 
-            match node {
-                Node::ModuleNode(node) => {
-                    module_node_outputs.insert(node.get_id(), node.get_last_outputs());
-                }
-                Node::ModuleVoicesNode(node) => {
-                    module_node_outputs.insert(node.get_id(), node.get_last_outputs());
-                }
-                _ => (),
-            };
+            Module::update_module_nodes_output(node, &mut module_node_outputs);
         }
+    }
+
+    pub(crate) fn update_value_from_channel_node(
+        node: &mut Node,
+        module_node_outputs: &mut HashMap<usize, (f32, f32)>,
+    ) {
+        if let Node::ValueFromChannelNode(value_from_channel_node) = node {
+            let input_id = value_from_channel_node.get_input_id();
+            let outputs = module_node_outputs.get(&input_id);
+            if let Some(outputs) = outputs {
+                let channel = value_from_channel_node.get_channel();
+                value_from_channel_node.set_value(match channel {
+                    0 => outputs.0,
+                    1 => outputs.1,
+                    _ => 0.,
+                });
+            } else {
+                value_from_channel_node.set_value(0.);
+            }
+        }
+    }
+
+    pub(crate) fn update_module_nodes_output(
+        node: &Node,
+        module_node_outputs: &mut HashMap<usize, (f32, f32)>,
+    ) {
+        match node {
+            Node::ModuleNode(node) => {
+                module_node_outputs.insert(node.get_id(), node.get_last_outputs());
+            }
+            Node::ModuleVoicesNode(node) => {
+                module_node_outputs.insert(node.get_id(), node.get_last_outputs());
+            }
+            _ => (),
+        };
     }
 
     pub(crate) fn get_is_pending(&self) -> bool {
