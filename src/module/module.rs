@@ -78,6 +78,7 @@ impl Module {
             }
         }
     }
+
     pub(crate) fn get_is_pending(&self) -> bool {
         self.nodes.iter().any(|node| node.get_is_pending())
     }
