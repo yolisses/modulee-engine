@@ -10,8 +10,8 @@ pub(crate) struct Extras {
 
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct OutputNode {
-    id: usize,
     extras: Extras,
+    id: usize,
     input_ids: InputIds,
     #[serde(skip)]
     value: f32,

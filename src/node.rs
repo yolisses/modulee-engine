@@ -20,7 +20,7 @@ use crate::{
         },
         module::{
             input_node::InputNode, module_node::ModuleNode, module_voices_node::ModuleVoicesNode,
-            output_node::OutputNode,
+            output_node::OutputNode, value_from_channel_node::ValueFromChannelNode,
         },
         random::{random_from_value_node::RandomFromValueNode, random_node::RandomNode},
         wave::{
@@ -130,6 +130,7 @@ define_node_enum! {
     SubtractNode(SubtractNode),
     TimeNode(TimeNode),
     TriangleWaveNode(TriangleWaveNode),
+    ValueFromChannelNode(ValueFromChannelNode),
 }
 
 impl SetNoteTrait for Node {

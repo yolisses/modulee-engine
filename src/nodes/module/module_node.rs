@@ -18,13 +18,19 @@ pub(crate) struct Extras {
 /// Returns the phase value between 0 and 1 given a time and a frequency
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct ModuleNode {
-    id: usize,
     extras: Extras,
+    id: usize,
+    #[serde(skip)]
+    last_outputs: (f32, f32),
     #[serde(skip)]
     module: Option<Module>,
 }
 
 impl ModuleNode {
+    pub(crate) fn get_last_outputs(&self) -> (f32, f32) {
+        self.last_outputs
+    }
+
     pub(crate) fn prepare_module(&mut self, possible_modules: &[Module]) {
         if let Some(target_module_id) = self.extras.target_module_id {
             let module = possible_modules
@@ -86,8 +92,8 @@ impl NodeTrait for ModuleNode {
         if let Some(module) = &mut self.module {
             module.set_input_node_values(node_values, &self.extras.input_target_ids);
             module.process();
-            // TODO check if this makes sense using just the first channel
-            module.get_output_values().0
+            self.last_outputs = module.get_output_values();
+            self.last_outputs.0
         } else {
             0.
         }

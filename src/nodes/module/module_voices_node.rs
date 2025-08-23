@@ -18,17 +18,23 @@ pub(crate) struct Extras {
 /// Returns the phase value between 0 and 1 given a time and a frequency
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct ModuleVoicesNode {
-    id: usize,
     extras: Extras,
-    // TODO fix module instantiation. Currently it only creates an empty module.
-    // It should clone a module from graph.
+    id: usize,
     #[serde(skip)]
-    voices: Vec<Voice>,
+    last_outputs: (f32, f32),
     #[serde(skip)]
     module: Option<Module>,
+    #[serde(skip)]
+    voices: Vec<Voice>,
 }
+// TODO fix module instantiation. Currently it only creates an empty module. It
+// should clone a module from graph.
 
 impl ModuleVoicesNode {
+    pub(crate) fn get_last_outputs(&self) -> (f32, f32) {
+        self.last_outputs
+    }
+
     pub(crate) fn prepare_module(&mut self, possible_modules: &[Module]) {
         if let Some(target_module_id) = self.extras.target_module_id {
             let module = possible_modules
@@ -104,14 +110,17 @@ impl SetInputIndexesTrait for ModuleVoicesNode {
 
 impl NodeTrait for ModuleVoicesNode {
     fn process(&mut self, node_values: &[f32]) -> f32 {
-        let mut sum = 0.;
+        let mut sum = (0., 0.);
         for voice in &mut self.voices {
             voice.set_input_node_values(node_values, &self.extras.input_target_ids);
             voice.process();
             // TODO check if this makes sense using just the first channel
-            sum += voice.get_output_values().0
+            let outputs = voice.get_output_values();
+            sum.0 += outputs.0;
+            sum.1 += outputs.1;
         }
-        sum
+        self.last_outputs = sum;
+        self.last_outputs.0
     }
 
     fn get_is_pending(&self) -> bool {
