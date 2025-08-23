@@ -79,12 +79,7 @@ impl Module {
         }
     }
     pub(crate) fn get_is_pending(&self) -> bool {
-        for node in &self.nodes {
-            if node.get_is_pending() {
-                return true;
-            }
-        }
-        false
+        self.nodes.iter().any(|node| node.get_is_pending())
     }
 
     pub(crate) fn remove_non_pending_voices(&mut self) {
