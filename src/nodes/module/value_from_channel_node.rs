@@ -22,16 +22,16 @@ declare_update! {ValueFromChannelNode}
 declare_get_input_ids_and_its_getter! {ValueFromChannelNode, input}
 
 impl ValueFromChannelNode {
-    pub(crate) fn set_value(&mut self, value: f32) {
-        self.value = value;
+    pub(crate) fn get_channel(&mut self) -> u8 {
+        self.extras.channel
     }
 
     pub(crate) fn get_input_id(&mut self) -> usize {
         self.input_ids.input
     }
 
-    pub(crate) fn get_channel(&mut self) -> u8 {
-        self.extras.channel
+    pub(crate) fn set_value(&mut self, value: f32) {
+        self.value = value;
     }
 }
 
