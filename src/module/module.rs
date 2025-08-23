@@ -39,43 +39,9 @@ impl Module {
     }
 
     pub(crate) fn process(&mut self) {
-        self.update_value_from_channel_nodes();
         for (index, node) in self.nodes.iter_mut().enumerate() {
             let value = node.process(&self.node_values);
             self.node_values[index] = value;
-        }
-    }
-
-    pub(crate) fn get_module_node_last_outputs(&self, input_id: usize) -> (f32, f32) {
-        for node in &self.nodes {
-            if node.get_id() == input_id {
-                match node {
-                    Node::ModuleNode(node) => return node.get_last_outputs(),
-                    Node::ModuleVoicesNode(node) => return node.get_last_outputs(),
-                    _ => continue,
-                }
-            }
-        }
-        (0.0, 0.0)
-    }
-
-    pub(crate) fn get_value_from_module_node(&self, input_id: usize, channel: u8) -> f32 {
-        let last_outputs = self.get_module_node_last_outputs(input_id);
-        match channel {
-            0 => last_outputs.0,
-            1 => last_outputs.1,
-            _ => 0.,
-        }
-    }
-
-    pub(crate) fn update_value_from_channel_nodes(&mut self) {
-        for node in self.nodes.iter_mut() {
-            if let Node::ValueFromChannelNode(value_from_channel_node) = node {
-                let channel = value_from_channel_node.get_channel();
-                let input_id = value_from_channel_node.get_input_id();
-                let value = self.get_value_from_module_node(input_id, channel);
-                value_from_channel_node.set_value(value);
-            }
         }
     }
 
