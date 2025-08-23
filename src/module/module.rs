@@ -1,6 +1,7 @@
 use crate::{declare_get_id, node::Node, node_trait::NodeTrait, set_note_trait::SetNoteTrait};
 use nohash_hasher::IntMap;
 use serde::Deserialize;
+use std::collections::HashMap;
 
 #[derive(Debug, Deserialize, Clone, Default)]
 pub struct Module {
@@ -39,9 +40,32 @@ impl Module {
     }
 
     pub(crate) fn process(&mut self) {
+        let mut module_node_outputs: HashMap<usize, (f32, f32)> = HashMap::new();
         for (index, node) in self.nodes.iter_mut().enumerate() {
+            if let Node::ValueFromChannelNode(value_from_channel_node) = node {
+                let input_id = value_from_channel_node.get_input_id();
+                let outputs = module_node_outputs.get(&input_id);
+                if let Some(outputs) = outputs {
+                    let channel = value_from_channel_node.get_channel();
+                    value_from_channel_node.set_value(match channel {
+                        0 => outputs.0,
+                        1 => outputs.1,
+                        _ => 0.,
+                    });
+                }
+            }
             let value = node.process(&self.node_values);
             self.node_values[index] = value;
+
+            match node {
+                Node::ModuleNode(node) => {
+                    module_node_outputs.insert(node.get_id(), node.get_last_outputs());
+                }
+                Node::ModuleVoicesNode(node) => {
+                    module_node_outputs.insert(node.get_id(), node.get_last_outputs());
+                }
+                _ => (),
+            };
         }
     }
 
