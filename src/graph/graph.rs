@@ -40,13 +40,6 @@ impl Graph {
         }
     }
 
-    pub fn process_block(&mut self, buffer: &mut [f32], length: usize) {
-        for value in buffer.iter_mut().take(length) {
-            self.process();
-            *value = self.get_output_values();
-        }
-    }
-
     pub fn set_note_on(&mut self, pitch: f32) {
         if let Some(main_module) = &mut self.main_module {
             main_module.set_note_on(pitch);

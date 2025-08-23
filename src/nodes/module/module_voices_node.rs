@@ -108,7 +108,8 @@ impl NodeTrait for ModuleVoicesNode {
         for voice in &mut self.voices {
             voice.set_input_node_values(node_values, &self.extras.input_target_ids);
             voice.process();
-            sum += voice.get_output_value()
+            // TODO check if this makes sense using just the first channel
+            sum += voice.get_output_values().0
         }
         sum
     }

@@ -86,8 +86,8 @@ impl NodeTrait for ModuleNode {
         if let Some(module) = &mut self.module {
             module.set_input_node_values(node_values, &self.extras.input_target_ids);
             module.process();
-            // TODO use all outputs
-            module.get_output_values()
+            // TODO check if this makes sense using just the first channel
+            module.get_output_values().0
         } else {
             0.
         }
