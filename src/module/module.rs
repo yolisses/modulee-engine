@@ -1,7 +1,6 @@
 use crate::{declare_get_id, node::Node, node_trait::NodeTrait, set_note_trait::SetNoteTrait};
 use nohash_hasher::IntMap;
 use serde::Deserialize;
-use std::collections::HashMap;
 
 #[derive(Debug, Deserialize, Clone, Default)]
 pub struct Module {
@@ -15,7 +14,7 @@ pub struct Module {
     #[serde(skip)]
     pub(crate) node_values: Vec<f32>,
     #[serde(skip)]
-    pub(crate) module_node_outputs: HashMap<usize, (f32, f32)>,
+    pub(crate) module_node_outputs: Vec<(usize, (f32, f32))>,
 }
 
 declare_get_id! {Module}
@@ -42,7 +41,7 @@ impl Module {
     }
 
     pub(crate) fn process(&mut self) {
-        self.module_node_outputs = HashMap::new();
+        self.module_node_outputs.clear(); // Clear Vec instead of creating new
         for (index, node) in self.nodes.iter_mut().enumerate() {
             Module::update_value_from_channel_node(node, &mut self.module_node_outputs);
 
@@ -55,11 +54,14 @@ impl Module {
 
     pub(crate) fn update_value_from_channel_node(
         node: &mut Node,
-        module_node_outputs: &mut HashMap<usize, (f32, f32)>,
+        module_node_outputs: &mut Vec<(usize, (f32, f32))>,
     ) {
         if let Node::ValueFromChannelNode(value_from_channel_node) = node {
             let input_id = value_from_channel_node.get_input_id();
-            let outputs = module_node_outputs.get(&input_id);
+            let outputs = module_node_outputs
+                .iter()
+                .find(|(id, _)| *id == input_id)
+                .map(|(_, v)| v);
             if let Some(outputs) = outputs {
                 let channel = value_from_channel_node.get_channel();
                 value_from_channel_node.set_value(match channel {
@@ -75,15 +77,15 @@ impl Module {
 
     pub(crate) fn update_module_nodes_output(
         node: &Node,
-        module_node_outputs: &mut HashMap<usize, (f32, f32)>,
+        module_node_outputs: &mut Vec<(usize, (f32, f32))>,
         index: usize,
     ) {
         match node {
             Node::ModuleNode(node) => {
-                module_node_outputs.insert(index, node.get_last_outputs());
+                module_node_outputs.push((index, node.get_last_outputs()));
             }
             Node::ModuleVoicesNode(node) => {
-                module_node_outputs.insert(index, node.get_last_outputs());
+                module_node_outputs.push((index, node.get_last_outputs()));
             }
             _ => (),
         };
@@ -101,8 +103,6 @@ impl Module {
         }
     }
 
-    // Passing node_values and input_target_ids may be a violation of the
-    // responsibility division, but improves performance
     pub(crate) fn set_input_node_values(
         &mut self,
         node_values: &[f32],

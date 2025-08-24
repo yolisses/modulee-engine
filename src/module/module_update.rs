@@ -34,9 +34,8 @@ impl Module {
     }
 
     fn reset_node_values(&mut self) {
-        // TODO find a better way to clear node_values while ensuring that []
-        // still works
         self.node_values = vec![0.; self.nodes.len()];
+        self.module_node_outputs = vec![];
     }
 
     pub(crate) fn prepare_nodes(&mut self) {
