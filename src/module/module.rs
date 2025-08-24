@@ -14,6 +14,8 @@ pub struct Module {
     /// Also by performance reasons, it's a vector instead of a hash map.
     #[serde(skip)]
     pub(crate) node_values: Vec<f32>,
+    #[serde(skip)]
+    pub(crate) module_node_outputs: HashMap<usize, (f32, f32)>,
 }
 
 declare_get_id! {Module}
@@ -40,14 +42,14 @@ impl Module {
     }
 
     pub(crate) fn process(&mut self) {
-        let mut module_node_outputs: HashMap<usize, (f32, f32)> = HashMap::new();
+        self.module_node_outputs = HashMap::new();
         for (index, node) in self.nodes.iter_mut().enumerate() {
-            Module::update_value_from_channel_node(node, &mut module_node_outputs);
+            Module::update_value_from_channel_node(node, &mut self.module_node_outputs);
 
             let value = node.process(&self.node_values);
             self.node_values[index] = value;
 
-            Module::update_module_nodes_output(node, &mut module_node_outputs);
+            Module::update_module_nodes_output(node, &mut self.module_node_outputs, index);
         }
     }
 
@@ -74,13 +76,14 @@ impl Module {
     pub(crate) fn update_module_nodes_output(
         node: &Node,
         module_node_outputs: &mut HashMap<usize, (f32, f32)>,
+        index: usize,
     ) {
         match node {
             Node::ModuleNode(node) => {
-                module_node_outputs.insert(node.get_id(), node.get_last_outputs());
+                module_node_outputs.insert(index, node.get_last_outputs());
             }
             Node::ModuleVoicesNode(node) => {
-                module_node_outputs.insert(node.get_id(), node.get_last_outputs());
+                module_node_outputs.insert(index, node.get_last_outputs());
             }
             _ => (),
         };
