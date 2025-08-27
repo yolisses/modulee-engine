@@ -1,6 +1,7 @@
 use crate::{
     declare_get_id, declare_get_input_ids_and_its_getter, envelope::envelope::Envelope,
     has_update::HasUpdate, node_trait::NodeTrait, set_note_trait::SetNoteTrait,
+    set_sample_rate_trait::SetSampleRateTrait,
 };
 use serde::Deserialize;
 
@@ -54,5 +55,11 @@ impl SetNoteTrait for EnvelopeNode {
 
     fn set_note_off(&mut self, _pitch: f32) {
         self.envelope.set_note_off();
+    }
+}
+
+impl SetSampleRateTrait for EnvelopeNode {
+    fn set_sample_rate(&mut self, sample_rate: f32) {
+        self.envelope.set_sample_rate(sample_rate);
     }
 }

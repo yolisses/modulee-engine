@@ -1,4 +1,6 @@
-use crate::{module::module::Module, set_note_trait::SetNoteTrait};
+use crate::{
+    module::module::Module, set_note_trait::SetNoteTrait, set_sample_rate_trait::SetSampleRateTrait,
+};
 
 // TODO consider storing only the main module, since the updates are data
 // complete.
@@ -49,6 +51,12 @@ impl Graph {
     pub fn set_note_off(&mut self, pitch: f32) {
         if let Some(main_module) = &mut self.main_module {
             main_module.set_note_off(pitch);
+        }
+    }
+
+    pub fn set_sample_rate(&mut self, sample_rate: f32) {
+        if let Some(main_module) = &mut self.main_module {
+            main_module.set_sample_rate(sample_rate);
         }
     }
 }

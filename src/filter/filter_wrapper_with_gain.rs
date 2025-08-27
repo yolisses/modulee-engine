@@ -1,4 +1,6 @@
-use crate::math::get_clamped_value::get_clamped_value;
+use crate::{
+    math::get_clamped_value::get_clamped_value, set_sample_rate_trait::SetSampleRateTrait,
+};
 use biquad::{Biquad, Coefficients, DirectForm1, ToHertz, Type};
 use core::f32;
 
@@ -47,5 +49,11 @@ impl FilterWrapperWithGain {
             self.filter = Some(filter);
             output
         }
+    }
+}
+
+impl SetSampleRateTrait for FilterWrapperWithGain {
+    fn set_sample_rate(&mut self, sample_rate: f32) {
+        self.sample_rate = sample_rate;
     }
 }

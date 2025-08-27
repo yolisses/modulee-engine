@@ -1,4 +1,7 @@
-use crate::{declare_get_id, node::Node, node_trait::NodeTrait, set_note_trait::SetNoteTrait};
+use crate::{
+    declare_get_id, node::Node, node_trait::NodeTrait, set_note_trait::SetNoteTrait,
+    set_sample_rate_trait::SetSampleRateTrait,
+};
 use nohash_hasher::IntMap;
 use serde::Deserialize;
 
@@ -150,6 +153,14 @@ impl SetNoteTrait for Module {
     fn set_note_off(&mut self, pitch: f32) {
         for node in &mut self.nodes {
             node.set_note_off(pitch);
+        }
+    }
+}
+
+impl SetSampleRateTrait for Module {
+    fn set_sample_rate(&mut self, sample_rate: f32) {
+        for node in &mut self.nodes {
+            node.set_sample_rate(sample_rate);
         }
     }
 }

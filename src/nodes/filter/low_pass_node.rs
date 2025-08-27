@@ -1,6 +1,7 @@
 use crate::{
     declare_get_id, declare_get_input_ids_and_its_getter, declare_update,
     filter::filter_wrapper::FilterWrapper, node_trait::NodeTrait,
+    set_sample_rate_trait::SetSampleRateTrait,
 };
 use serde::Deserialize;
 
@@ -27,5 +28,11 @@ impl NodeTrait for LowPassNode {
         let frequency = node_values[self.input_ids.frequency];
         let resonance = node_values[self.input_ids.resonance];
         self.filter_wrapper.process(input, frequency, resonance)
+    }
+}
+
+impl SetSampleRateTrait for LowPassNode {
+    fn set_sample_rate(&mut self, sample_rate: f32) {
+        self.filter_wrapper.set_sample_rate(sample_rate);
     }
 }

@@ -3,7 +3,7 @@ use crate::{
     control_update_data::ControlUpdateData, declare_get_id, get_inputs_trait::GetInputsTrait,
     has_update::HasUpdate, module::module::Module, node_trait::NodeTrait,
     set_input_indexes_trait::SetInputIndexesTrait, set_note_trait::SetNoteTrait,
-    sort::node_indexes::NodeIndexes,
+    set_sample_rate_trait::SetSampleRateTrait, sort::node_indexes::NodeIndexes,
 };
 use nohash_hasher::IntMap;
 use serde::Deserialize;
@@ -110,6 +110,14 @@ impl SetNoteTrait for ModuleNode {
     fn set_note_off(&mut self, pitch: f32) {
         if let Some(module) = &mut self.module {
             module.set_note_off(pitch);
+        }
+    }
+}
+
+impl SetSampleRateTrait for ModuleNode {
+    fn set_sample_rate(&mut self, sample_rate: f32) {
+        if let Some(module) = &mut self.module {
+            module.set_sample_rate(sample_rate);
         }
     }
 }

@@ -31,6 +31,7 @@ use crate::{
     },
     set_input_indexes_trait::SetInputIndexesTrait,
     set_note_trait::SetNoteTrait,
+    set_sample_rate_trait::SetSampleRateTrait,
     sort::{has_id::HasId, node_indexes::NodeIndexes},
 };
 use serde::Deserialize;
@@ -152,6 +153,25 @@ impl SetNoteTrait for Node {
             Node::ModuleNode(node) => node.set_note_off(pitch),
             Node::ModuleVoicesNode(node) => node.set_note_off(pitch),
             Node::PitchNode(node) => node.set_note_off(pitch),
+            _ => (),
+        }
+    }
+}
+
+impl SetSampleRateTrait for Node {
+    fn set_sample_rate(&mut self, sample_rate: f32) {
+        match self {
+            Node::AllPassNode(node) => node.set_sample_rate(sample_rate),
+            Node::ControlNode(node) => node.set_sample_rate(sample_rate),
+            Node::DelayNode(node) => node.set_sample_rate(sample_rate),
+            Node::EnvelopeNode(node) => node.set_sample_rate(sample_rate),
+            Node::HighPassNode(node) => node.set_sample_rate(sample_rate),
+            Node::LowPassNode(node) => node.set_sample_rate(sample_rate),
+            Node::ModuleNode(node) => node.set_sample_rate(sample_rate),
+            Node::ModuleVoicesNode(node) => node.set_sample_rate(sample_rate),
+            Node::PeakNode(node) => node.set_sample_rate(sample_rate),
+            Node::PhaseNode(node) => node.set_sample_rate(sample_rate),
+            Node::TimeNode(node) => node.set_sample_rate(sample_rate),
             _ => (),
         }
     }

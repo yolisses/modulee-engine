@@ -1,6 +1,6 @@
 use crate::{
     declare_get_id, declare_get_input_ids_and_its_getter, delay::delay::Delay,
-    has_update::HasUpdate, node_trait::NodeTrait,
+    has_update::HasUpdate, node_trait::NodeTrait, set_sample_rate_trait::SetSampleRateTrait,
 };
 use serde::Deserialize;
 
@@ -46,5 +46,11 @@ impl NodeTrait for DelayNode {
 
     fn get_is_pending(&self) -> bool {
         self.delay.get_is_pending()
+    }
+}
+
+impl SetSampleRateTrait for DelayNode {
+    fn set_sample_rate(&mut self, sample_rate: f32) {
+        self.delay.set_sample_rate(sample_rate);
     }
 }
