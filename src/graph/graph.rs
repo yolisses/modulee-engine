@@ -3,14 +3,22 @@ use crate::{
     set_sample_rate_trait::SetSampleRateTrait,
 };
 
-#[derive(Debug, Default, PartialEq)]
+#[derive(Debug, PartialEq)]
 pub struct Graph {
+    pub(crate) main_module: Option<Module>,
     pub(crate) sample_rate: f32,
     voices_cleaner: VoicesCleaner,
-    pub(crate) main_module: Option<Module>,
 }
 
 impl Graph {
+    pub fn new(sample_rate: f32) -> Self {
+        Self {
+            main_module: Default::default(),
+            sample_rate,
+            voices_cleaner: Default::default(),
+        }
+    }
+
     pub fn process(&mut self) {
         if let Some(main_module) = &mut self.main_module {
             main_module.process();
