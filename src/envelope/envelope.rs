@@ -1,3 +1,5 @@
+use crate::set_sample_rate_trait::SetSampleRateTrait;
+
 use super::curve::Curve;
 
 #[derive(Debug, Clone)]
@@ -18,6 +20,13 @@ pub(crate) struct Envelope {
     release: f32,
     sample_rate: f32,
     state: EnvelopeState,
+}
+
+// TODO create a macro to remove this code duplication
+impl SetSampleRateTrait for Envelope {
+    fn set_sample_rate(&mut self, sample_rate: f32) {
+        self.sample_rate = sample_rate;
+    }
 }
 
 impl Envelope {

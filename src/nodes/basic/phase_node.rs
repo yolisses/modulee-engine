@@ -1,6 +1,6 @@
 use crate::{
     declare_get_id, declare_get_input_ids_and_its_getter, declare_update, node_trait::NodeTrait,
-    sample_rate::SAMPLE_RATE,
+    set_sample_rate_trait::SetSampleRateTrait,
 };
 use serde::Deserialize;
 
@@ -10,21 +10,24 @@ pub(crate) struct PhaseNode {
     id: usize,
     input_ids: InputIds,
     #[serde(skip)]
+    last_frequency: f32,
+    #[serde(skip)]
     phase: f32,
     #[serde(skip)]
-    step: f32,
-    #[serde(skip)]
-    last_frequency: f32,
-    #[serde(default = "get_default_sample_rate")]
     sample_rate: f32,
+    #[serde(skip)]
+    step: f32,
 }
 
 declare_get_id! {PhaseNode}
 declare_update! {PhaseNode}
 declare_get_input_ids_and_its_getter! {PhaseNode, frequency}
 
-fn get_default_sample_rate() -> f32 {
-    SAMPLE_RATE
+// TODO create a macro to remove this code duplication
+impl SetSampleRateTrait for PhaseNode {
+    fn set_sample_rate(&mut self, sample_rate: f32) {
+        self.sample_rate = sample_rate;
+    }
 }
 
 impl NodeTrait for PhaseNode {

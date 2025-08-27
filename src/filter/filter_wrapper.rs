@@ -1,4 +1,4 @@
-use crate::{math::get_clamped_value::get_clamped_value, sample_rate::SAMPLE_RATE};
+use crate::math::get_clamped_value::get_clamped_value;
 use biquad::{Biquad, Coefficients, DirectForm1, ToHertz, Type};
 use core::f32;
 
@@ -12,12 +12,12 @@ pub(crate) struct FilterWrapper {
 }
 
 impl FilterWrapper {
-    pub(crate) fn new(filter_type: Type<f32>) -> Self {
+    pub(crate) fn new(filter_type: Type<f32>, sample_rate: f32) -> Self {
         Self {
             filter_type,
-            sample_rate: SAMPLE_RATE,
             filter: Default::default(),
-            nyquist_frequency: SAMPLE_RATE / 2.,
+            nyquist_frequency: sample_rate / 2.,
+            sample_rate,
         }
     }
 

@@ -1,4 +1,6 @@
-use crate::math::get_clamped_value::get_clamped_value;
+use crate::{
+    math::get_clamped_value::get_clamped_value, set_sample_rate_trait::SetSampleRateTrait,
+};
 use serde::Deserialize;
 use std::collections::VecDeque;
 
@@ -10,6 +12,12 @@ use std::collections::VecDeque;
 pub(crate) struct Delay {
     sample_rate: f32,
     buffer: VecDeque<f32>,
+}
+
+impl SetSampleRateTrait for Delay {
+    fn set_sample_rate(&mut self, sample_rate: f32) {
+        self.sample_rate = sample_rate;
+    }
 }
 
 impl Delay {

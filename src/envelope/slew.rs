@@ -7,7 +7,6 @@ pub(crate) struct Slew {
     start: f32,
     value: f32,
 }
-
 impl Slew {
     pub(crate) fn new(start: f32, end: f32, duration: f32, sample_rate: f32) -> Self {
         let step = (end - start) * sample_rate / duration;

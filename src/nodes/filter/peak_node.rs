@@ -15,7 +15,7 @@ pub(crate) struct PeakNode {
 }
 
 fn get_default_filter_wrapper() -> FilterWrapperWithGain {
-    FilterWrapperWithGain::new()
+    FilterWrapperWithGain::new(1.)
 }
 
 declare_get_id! {PeakNode}

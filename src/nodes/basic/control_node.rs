@@ -1,8 +1,8 @@
 use crate::control_update_data::ControlUpdateData;
 use crate::envelope::slew::Slew;
+use crate::set_sample_rate_trait::SetSampleRateTrait;
 use crate::{
     declare_empty_get_input_ids, declare_get_id, has_update::HasUpdate, node_trait::NodeTrait,
-    sample_rate::SAMPLE_RATE,
 };
 use serde::Deserialize;
 
@@ -19,10 +19,19 @@ pub(crate) struct ControlNode {
     extras: Extras,
     #[serde(skip)]
     slew: Option<Slew>,
+    #[serde(skip)]
+    sample_rate: f32,
 }
 
 declare_get_id! {ControlNode}
 declare_empty_get_input_ids! {ControlNode}
+
+// TODO create a macro to remove this code duplication
+impl SetSampleRateTrait for ControlNode {
+    fn set_sample_rate(&mut self, sample_rate: f32) {
+        self.sample_rate = sample_rate;
+    }
+}
 
 impl ControlNode {
     pub(crate) fn update_control(&mut self, control_update_data: &ControlUpdateData) {
@@ -38,7 +47,7 @@ impl ControlNode {
             } else {
                 self.extras.value
             };
-            self.slew = Some(Slew::new(start, new_value, SLEW_DURATION, SAMPLE_RATE));
+            self.slew = Some(Slew::new(start, new_value, SLEW_DURATION, self.sample_rate));
         }
     }
 }

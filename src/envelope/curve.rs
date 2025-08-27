@@ -1,4 +1,6 @@
-use crate::math::get_limited_value::get_limited_value;
+use crate::{
+    math::get_limited_value::get_limited_value, set_sample_rate_trait::SetSampleRateTrait,
+};
 
 #[derive(Debug, Clone)]
 pub(crate) struct Curve {
@@ -8,6 +10,12 @@ pub(crate) struct Curve {
     sample_rate: f32,
     last_duration: f32,
     current_value: f32,
+}
+
+impl SetSampleRateTrait for Curve {
+    fn set_sample_rate(&mut self, sample_rate: f32) {
+        self.sample_rate = sample_rate;
+    }
 }
 
 impl Curve {
