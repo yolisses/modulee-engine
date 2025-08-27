@@ -3,8 +3,6 @@ use crate::{
     set_sample_rate_trait::SetSampleRateTrait,
 };
 
-// TODO consider storing only the main module, since the updates are data
-// complete.
 #[derive(Debug, Default, PartialEq)]
 pub struct Graph {
     voices_cleaner: VoicesCleaner,
@@ -13,8 +11,6 @@ pub struct Graph {
 
 impl Graph {
     pub fn process(&mut self) {
-        // TODO try to find a most elegant solution than just returning if
-        // main_module_id is not present
         if let Some(main_module) = &mut self.main_module {
             main_module.process();
             self.voices_cleaner.process(main_module);
