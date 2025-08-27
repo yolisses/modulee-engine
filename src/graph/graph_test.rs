@@ -4,7 +4,7 @@ mod tests {
 
     #[test]
     fn test_update_modules() {
-        let mut graph = Graph::default();
+        let mut graph = Graph::new(1.);
 
         graph
             .update_from_json(r#"{"main_module_id": 10, "modules": [{"id": 10, "nodes": []}]}"#)

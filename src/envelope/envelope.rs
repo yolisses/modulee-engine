@@ -1,4 +1,4 @@
-use crate::set_sample_rate_trait::SetSampleRateTrait;
+use crate::{set_note_trait::SetNoteTrait, set_sample_rate_trait::SetSampleRateTrait};
 
 use super::curve::Curve;
 
@@ -20,13 +20,6 @@ pub(crate) struct Envelope {
     release: f32,
     sample_rate: f32,
     state: EnvelopeState,
-}
-
-// TODO create a macro to remove this code duplication
-impl SetSampleRateTrait for Envelope {
-    fn set_sample_rate(&mut self, sample_rate: f32) {
-        self.sample_rate = sample_rate;
-    }
 }
 
 impl Envelope {
@@ -108,27 +101,37 @@ impl Envelope {
             _ => self.curve.get_value(),
         }
     }
+    pub(crate) fn get_is_pending(&self) -> bool {
+        !matches!(self.state, EnvelopeState::Idle)
+    }
+}
 
-    pub(crate) fn set_note_on(&mut self) {
+impl SetNoteTrait for Envelope {
+    fn set_note_on(&mut self, _pitch: f32) {
         self.state = EnvelopeState::Attack;
         self.curve = Curve::new(0., 1., self.attack, self.sample_rate);
     }
 
-    pub(crate) fn set_note_off(&mut self) {
+    fn set_note_off(&mut self, _pitch: f32) {
         self.state = EnvelopeState::Release;
         let current_value = self.curve.get_value();
         self.curve = Curve::new(current_value, 0., self.release, self.sample_rate);
     }
+}
 
-    pub(crate) fn get_is_pending(&self) -> bool {
-        !matches!(self.state, EnvelopeState::Idle)
+impl SetSampleRateTrait for Envelope {
+    fn set_sample_rate(&mut self, sample_rate: f32) {
+        self.sample_rate = sample_rate;
+        self.curve.set_sample_rate(sample_rate);
     }
 }
 
 #[cfg(test)]
 mod tests {
     use super::Envelope;
-    use crate::tests::assert_array_approx_eq::assert_array_approx_eq;
+    use crate::{
+        set_note_trait::SetNoteTrait, tests::assert_array_approx_eq::assert_array_approx_eq,
+    };
 
     fn get_test_values(envelope: &mut Envelope, iterations: usize) -> Vec<f32> {
         let mut values = vec![];
@@ -147,7 +150,7 @@ mod tests {
         assert_array_approx_eq(&get_test_values(&mut envelope, 3), &vec![0., 0., 0.]);
         assert_eq!(envelope.get_is_pending(), false);
 
-        envelope.set_note_on();
+        envelope.set_note_on(42.);
 
         // Attack
         assert_array_approx_eq(
@@ -164,7 +167,7 @@ mod tests {
         assert_array_approx_eq(&get_test_values(&mut envelope, 7), &vec![0.4; 7]);
         assert_eq!(envelope.get_is_pending(), true);
 
-        envelope.set_note_off();
+        envelope.set_note_off(42.);
 
         // Release
         assert_array_approx_eq(&get_test_values(&mut envelope, 4), &vec![0.3, 0.2, 0.1, 0.]);

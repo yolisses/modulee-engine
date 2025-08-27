@@ -49,12 +49,12 @@ impl NodeTrait for EnvelopeNode {
 }
 
 impl SetNoteTrait for EnvelopeNode {
-    fn set_note_on(&mut self, _pitch: f32) {
-        self.envelope.set_note_on();
+    fn set_note_on(&mut self, pitch: f32) {
+        self.envelope.set_note_on(pitch);
     }
 
-    fn set_note_off(&mut self, _pitch: f32) {
-        self.envelope.set_note_off();
+    fn set_note_off(&mut self, pitch: f32) {
+        self.envelope.set_note_off(pitch);
     }
 }
 

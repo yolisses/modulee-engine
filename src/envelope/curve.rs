@@ -4,32 +4,26 @@ use crate::{
 
 #[derive(Debug, Clone)]
 pub(crate) struct Curve {
-    to: f32,
-    from: f32,
-    step: f32,
-    sample_rate: f32,
-    last_duration: f32,
     current_value: f32,
-}
-
-impl SetSampleRateTrait for Curve {
-    fn set_sample_rate(&mut self, sample_rate: f32) {
-        self.sample_rate = sample_rate;
-    }
+    duration: f32,
+    from: f32,
+    sample_rate: f32,
+    step: f32,
+    to: f32,
 }
 
 impl Curve {
     pub(crate) fn new(from: f32, to: f32, duration: f32, sample_rate: f32) -> Self {
-        let difference = to - from;
-        let step = difference / (duration * sample_rate);
-        Self {
+        let mut result = Self {
             to,
             from,
-            step,
+            step: 0.,
             sample_rate,
             current_value: from,
-            last_duration: duration,
-        }
+            duration,
+        };
+        result.update_step();
+        result
     }
 
     pub(crate) fn get_value(&self) -> f32 {
@@ -47,16 +41,26 @@ impl Curve {
 
     pub(crate) fn update_duration(&mut self, duration: f32) {
         // Prevents unnecessary updates
-        if duration == self.last_duration {
+        if duration == self.duration {
             return;
         }
-        self.last_duration = duration;
+        self.duration = duration;
+        self.update_step();
+    }
 
+    fn update_step(&mut self) {
         let current_value_ratio = (self.current_value - self.from) / (self.to - self.from);
-        let remaining_duration = duration * (1. - current_value_ratio);
+        let remaining_duration = self.duration * (1. - current_value_ratio);
         let difference = self.to - self.current_value;
         let step = difference / (remaining_duration * self.sample_rate);
         self.step = step;
+    }
+}
+
+impl SetSampleRateTrait for Curve {
+    fn set_sample_rate(&mut self, sample_rate: f32) {
+        self.sample_rate = sample_rate;
+        self.update_step();
     }
 }
 
