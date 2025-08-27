@@ -5,6 +5,7 @@ use crate::{
 
 #[derive(Debug, Default, PartialEq)]
 pub struct Graph {
+    pub(crate) sample_rate: f32,
     voices_cleaner: VoicesCleaner,
     pub(crate) main_module: Option<Module>,
 }
@@ -38,6 +39,7 @@ impl Graph {
     }
 
     pub fn set_sample_rate(&mut self, sample_rate: f32) {
+        self.sample_rate = sample_rate;
         if let Some(main_module) = &mut self.main_module {
             main_module.set_sample_rate(sample_rate);
         }

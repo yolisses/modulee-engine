@@ -3,6 +3,7 @@ use crate::{
     control_update_data::ControlUpdateData,
     has_update::HasUpdate,
     node::Node,
+    set_sample_rate_trait::SetSampleRateTrait,
     sort::{has_id::HasId, sort_nodes_topologically::sort_nodes_topologically},
 };
 
@@ -38,7 +39,10 @@ impl Module {
         self.module_node_outputs = vec![];
     }
 
-    pub(crate) fn prepare_nodes(&mut self) {
+    pub(crate) fn prepare_nodes(&mut self, sample_rate: f32) {
+        for node in &mut self.nodes {
+            node.set_sample_rate(sample_rate);
+        }
         // TODO use result instead of unwrap
         sort_nodes_topologically(&mut self.nodes).unwrap();
         self.reset_node_values();
