@@ -1,7 +1,7 @@
 use crate::{
-    declare_get_id, declare_get_input_ids_and_its_getter, envelope::envelope::Envelope,
-    has_update::HasUpdate, node_trait::NodeTrait, set_note_trait::SetNoteTrait,
-    set_sample_rate_trait::SetSampleRateTrait,
+    declare_get_id, declare_get_input_ids_and_its_getter, default_sample_rate::DEFAULT_SAMPLE_RATE,
+    envelope::envelope::Envelope, has_update::HasUpdate, node_trait::NodeTrait,
+    set_note_trait::SetNoteTrait, set_sample_rate_trait::SetSampleRateTrait,
 };
 use serde::Deserialize;
 
@@ -17,7 +17,7 @@ pub(crate) struct EnvelopeNode {
 }
 
 fn get_default_envelope() -> Envelope {
-    Envelope::new(1., 1., 1., 1., 1.)
+    Envelope::new(1., 1., 1., 1., DEFAULT_SAMPLE_RATE)
 }
 
 declare_get_id! {EnvelopeNode}

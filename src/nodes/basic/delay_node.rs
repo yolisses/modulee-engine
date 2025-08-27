@@ -1,6 +1,7 @@
 use crate::{
-    declare_get_id, declare_get_input_ids_and_its_getter, delay::delay::Delay,
-    has_update::HasUpdate, node_trait::NodeTrait, set_sample_rate_trait::SetSampleRateTrait,
+    declare_get_id, declare_get_input_ids_and_its_getter, default_sample_rate::DEFAULT_SAMPLE_RATE,
+    delay::delay::Delay, has_update::HasUpdate, node_trait::NodeTrait,
+    set_sample_rate_trait::SetSampleRateTrait,
 };
 use serde::Deserialize;
 
@@ -16,7 +17,7 @@ pub(crate) struct DelayNode {
 }
 
 fn get_default_delay() -> Delay {
-    Delay::new(0., 1.)
+    Delay::new(0., DEFAULT_SAMPLE_RATE)
 }
 
 declare_get_id! {DelayNode}

@@ -1,5 +1,6 @@
 use crate::{
     declare_get_id, declare_get_input_ids_and_its_getter, declare_update,
+    default_sample_rate::DEFAULT_SAMPLE_RATE,
     filter::filter_wrapper_with_gain::FilterWrapperWithGain, node_trait::NodeTrait,
     set_sample_rate_trait::SetSampleRateTrait,
 };
@@ -16,7 +17,7 @@ pub(crate) struct PeakNode {
 }
 
 fn get_default_filter_wrapper() -> FilterWrapperWithGain {
-    FilterWrapperWithGain::new(1.)
+    FilterWrapperWithGain::new(DEFAULT_SAMPLE_RATE)
 }
 
 declare_get_id! {PeakNode}

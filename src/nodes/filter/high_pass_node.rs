@@ -1,7 +1,7 @@
 use crate::{
     declare_get_id, declare_get_input_ids_and_its_getter, declare_update,
-    filter::filter_wrapper::FilterWrapper, node_trait::NodeTrait,
-    set_sample_rate_trait::SetSampleRateTrait,
+    default_sample_rate::DEFAULT_SAMPLE_RATE, filter::filter_wrapper::FilterWrapper,
+    node_trait::NodeTrait, set_sample_rate_trait::SetSampleRateTrait,
 };
 use serde::Deserialize;
 
@@ -15,7 +15,7 @@ pub(crate) struct HighPassNode {
 }
 
 fn get_default_filter_wrapper() -> FilterWrapper {
-    FilterWrapper::new(biquad::Type::HighPass, 1.)
+    FilterWrapper::new(biquad::Type::HighPass, DEFAULT_SAMPLE_RATE)
 }
 
 declare_get_id! {HighPassNode}

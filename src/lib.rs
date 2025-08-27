@@ -1,4 +1,5 @@
 mod control_update_data;
+pub(crate) mod default_sample_rate;
 mod delay;
 mod envelope;
 pub mod filter;
