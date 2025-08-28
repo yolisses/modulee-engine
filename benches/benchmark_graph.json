@@ -22,7 +22,9 @@
           "type": "ModuleVoicesNode"
         },
         {
-          "extras": {},
+          "extras": {
+            "channel": 0
+          },
           "id": 1625315538,
           "input_ids": {
             "input": 1035151459
@@ -73,7 +75,9 @@
           "type": "SineWaveNode"
         },
         {
-          "extras": {},
+          "extras": {
+            "channel": 0
+          },
           "id": 3787250034,
           "input_ids": {
             "input": 358963552
