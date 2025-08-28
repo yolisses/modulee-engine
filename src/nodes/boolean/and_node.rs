@@ -52,8 +52,7 @@ mod tests {
             let result = node.process(&node_values);
             assert_eq!(
                 result, expected,
-                "Failed for inputs: ({}, {})",
-                input1, input2
+                "Failed for inputs: ({input1}, {input2})"
             );
         }
     }

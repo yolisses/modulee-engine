@@ -148,7 +148,7 @@ mod tests {
 
         // Idle
         assert_array_approx_eq(&get_test_values(&mut envelope, 3), &vec![0., 0., 0.]);
-        assert_eq!(envelope.get_is_pending(), false);
+        assert!(!envelope.get_is_pending());
 
         envelope.set_note_on(42.);
 
@@ -157,24 +157,24 @@ mod tests {
             &get_test_values(&mut envelope, 4),
             &vec![0.25, 0.5, 0.75, 1.],
         );
-        assert_eq!(envelope.get_is_pending(), true);
+        assert!(envelope.get_is_pending());
 
         // Decay
         assert_array_approx_eq(&get_test_values(&mut envelope, 3), &vec![0.8, 0.6, 0.4]);
-        assert_eq!(envelope.get_is_pending(), true);
+        assert!(envelope.get_is_pending());
 
         // Sustain
         assert_array_approx_eq(&get_test_values(&mut envelope, 7), &vec![0.4; 7]);
-        assert_eq!(envelope.get_is_pending(), true);
+        assert!(envelope.get_is_pending());
 
         envelope.set_note_off(42.);
 
         // Release
         assert_array_approx_eq(&get_test_values(&mut envelope, 4), &vec![0.3, 0.2, 0.1, 0.]);
-        assert_eq!(envelope.get_is_pending(), true);
+        assert!(envelope.get_is_pending());
 
         // Idle
         assert_array_approx_eq(&get_test_values(&mut envelope, 7), &vec![0.; 7]);
-        assert_eq!(envelope.get_is_pending(), false);
+        assert!(!envelope.get_is_pending());
     }
 }

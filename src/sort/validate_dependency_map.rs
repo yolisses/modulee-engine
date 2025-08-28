@@ -15,8 +15,7 @@ pub(crate) fn validate_dependency_map(dependency_map: &DependencyMap) -> Result<
         Ok(())
     } else {
         Err(format!(
-            "Missing ids for inputs (node id, requested node id): {:?}",
-            missing_mappings
+            "Missing ids for inputs (node id, requested node id): {missing_mappings:?}"
         ))
     }
 }

@@ -65,13 +65,11 @@ mod tests {
 
     #[test]
     fn test_sort_topologically_2() {
-        let dependency_map = create_dependency_map(&vec![
-            (1, vec![2, 3]),
+        let dependency_map = create_dependency_map(&[(1, vec![2, 3]),
             (2, vec![5]),
             (3, vec![]),
             (4, vec![]),
-            (5, vec![]),
-        ]);
+            (5, vec![])]);
 
         let topologically_sorted_ids = sort_topologically(&dependency_map);
 
@@ -80,13 +78,11 @@ mod tests {
 
     #[test]
     fn test_sort_topologically_3() {
-        let dependency_map = create_dependency_map(&vec![
-            (1, vec![2, 3]),
+        let dependency_map = create_dependency_map(&[(1, vec![2, 3]),
             (2, vec![5]),
             (3, vec![5]),
             (4, vec![]),
-            (5, vec![]),
-        ]);
+            (5, vec![])]);
 
         let topologically_sorted_ids = sort_topologically(&dependency_map);
 
@@ -112,12 +108,10 @@ mod tests {
 
     #[test]
     fn test_sort_topologically_5() {
-        let dependency_map = create_dependency_map(&vec![
-            (0, vec![]),
+        let dependency_map = create_dependency_map(&[(0, vec![]),
             (7, vec![]),
             (8, vec![9]),
-            (9, vec![0, 0]),
-        ]);
+            (9, vec![0, 0])]);
 
         let topologically_sorted_ids = sort_topologically(&dependency_map);
 

@@ -52,24 +52,24 @@ mod tests {
             active_pitches: Default::default(),
         };
 
-        assert_eq!(gate_node.is_active, false);
+        assert!(!gate_node.is_active);
 
         gate_node.set_note_on(1.);
-        assert_eq!(gate_node.is_active, true);
+        assert!(gate_node.is_active);
 
         gate_node.set_note_off(1.);
-        assert_eq!(gate_node.is_active, false);
+        assert!(!gate_node.is_active);
 
         gate_node.set_note_on(2.);
-        assert_eq!(gate_node.is_active, true);
+        assert!(gate_node.is_active);
 
         gate_node.set_note_on(3.);
-        assert_eq!(gate_node.is_active, true);
+        assert!(gate_node.is_active);
 
         gate_node.set_note_off(2.);
-        assert_eq!(gate_node.is_active, true);
+        assert!(gate_node.is_active);
 
         gate_node.set_note_off(3.);
-        assert_eq!(gate_node.is_active, false);
+        assert!(!gate_node.is_active);
     }
 }
