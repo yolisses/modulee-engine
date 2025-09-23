@@ -10,11 +10,11 @@ pub(crate) struct RoundNode {
 
 declare_get_id! {RoundNode}
 declare_update! {RoundNode}
-declare_get_input_ids_and_its_getter! {RoundNode, input1}
+declare_get_input_ids_and_its_getter! {RoundNode, input}
 
 impl NodeTrait for RoundNode {
     fn process(&mut self, node_values: &[f32]) -> f32 {
-        let input1 = node_values[self.input_ids.input1];
-        input1.round()
+        let input = node_values[self.input_ids.input];
+        input.round()
     }
 }

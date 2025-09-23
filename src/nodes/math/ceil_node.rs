@@ -10,11 +10,11 @@ pub(crate) struct CeilNode {
 
 declare_get_id! {CeilNode}
 declare_update! {CeilNode}
-declare_get_input_ids_and_its_getter! {CeilNode, input1}
+declare_get_input_ids_and_its_getter! {CeilNode, input}
 
 impl NodeTrait for CeilNode {
     fn process(&mut self, node_values: &[f32]) -> f32 {
-        let input1 = node_values[self.input_ids.input1];
-        input1.ceil()
+        let input = node_values[self.input_ids.input];
+        input.ceil()
     }
 }

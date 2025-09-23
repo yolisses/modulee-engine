@@ -10,11 +10,11 @@ pub(crate) struct FloorNode {
 
 declare_get_id! {FloorNode}
 declare_update! {FloorNode}
-declare_get_input_ids_and_its_getter! {FloorNode, input1}
+declare_get_input_ids_and_its_getter! {FloorNode, input}
 
 impl NodeTrait for FloorNode {
     fn process(&mut self, node_values: &[f32]) -> f32 {
-        let input1 = node_values[self.input_ids.input1];
-        input1.floor()
+        let input = node_values[self.input_ids.input];
+        input.floor()
     }
 }
