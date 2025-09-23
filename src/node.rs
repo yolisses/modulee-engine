@@ -6,7 +6,8 @@ use crate::{
         basic::{
             constant_node::ConstantNode, control_node::ControlNode, delay_node::DelayNode,
             envelope_node::EnvelopeNode, frequency_node::FrequencyNode, gate_node::GateNode,
-            hold_node::HoldNode, phase_node::PhaseNode, pitch_node::PitchNode, time_node::TimeNode,
+            hold_node::HoldNode, phase_node::PhaseNode, pitch_node::PitchNode,
+            sample_rate_node::SampleRateNode, time_node::TimeNode,
         },
         boolean::{and_node::AndNode, if_node::IfNode, not_node::NotNode, or_node::OrNode},
         filter::{
@@ -130,6 +131,7 @@ define_node_enum! {
     RandomFromValueNode(RandomFromValueNode),
     RandomNode(RandomNode),
     RoundNode(RoundNode),
+    SampleRateNode(SampleRateNode),
     SawtoothWaveNode(SawtoothWaveNode),
     SineWaveNode(SineWaveNode),
     SubtractNode(SubtractNode),
@@ -175,6 +177,7 @@ impl SetSampleRateTrait for Node {
             Node::ModuleVoicesNode(node) => node.set_sample_rate(sample_rate),
             Node::PeakNode(node) => node.set_sample_rate(sample_rate),
             Node::PhaseNode(node) => node.set_sample_rate(sample_rate),
+            Node::SampleRateNode(node) => node.set_sample_rate(sample_rate),
             Node::TimeNode(node) => node.set_sample_rate(sample_rate),
             _ => (),
         }

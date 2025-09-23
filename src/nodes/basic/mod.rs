@@ -7,4 +7,5 @@ pub(crate) mod gate_node;
 pub(crate) mod hold_node;
 pub(crate) mod phase_node;
 pub(crate) mod pitch_node;
+pub(crate) mod sample_rate_node;
 pub(crate) mod time_node;
