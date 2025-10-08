@@ -46,35 +46,14 @@ impl Module {
     pub(crate) fn process(&mut self) {
         self.module_node_outputs.clear(); // Clear Vec instead of creating new
         for (index, node) in self.nodes.iter_mut().enumerate() {
-            Module::update_value_from_channel_node(node, &mut self.module_node_outputs);
+            if let Node::ValueFromChannelNode(value_from_channel_node) = node {
+                value_from_channel_node.update_from_module_node_outputs(&self.module_node_outputs);
+            }
 
             let value = node.process(&self.node_values);
             self.node_values[index] = value;
 
             Module::update_module_nodes_output(node, &mut self.module_node_outputs, index);
-        }
-    }
-
-    pub(crate) fn update_value_from_channel_node(
-        node: &mut Node,
-        module_node_outputs: &mut Vec<(usize, (f32, f32))>,
-    ) {
-        if let Node::ValueFromChannelNode(value_from_channel_node) = node {
-            let input_id = value_from_channel_node.get_input_id();
-            let outputs = module_node_outputs
-                .iter()
-                .find(|(id, _)| *id == input_id)
-                .map(|(_, v)| v);
-            if let Some(outputs) = outputs {
-                let channel = value_from_channel_node.get_channel();
-                value_from_channel_node.set_value(match channel {
-                    0 => outputs.0,
-                    1 => outputs.1,
-                    _ => 0.,
-                });
-            } else {
-                value_from_channel_node.set_value(0.);
-            }
         }
     }
 

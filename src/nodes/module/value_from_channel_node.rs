@@ -30,8 +30,29 @@ impl ValueFromChannelNode {
         self.input_ids.input
     }
 
-    pub(crate) fn set_value(&mut self, value: f32) {
+    fn set_value(&mut self, value: f32) {
         self.value = value;
+    }
+
+    pub(crate) fn update_from_module_node_outputs(
+        &mut self,
+        module_node_outputs: &Vec<(usize, (f32, f32))>,
+    ) {
+        let input_id = self.get_input_id();
+        let outputs = module_node_outputs
+            .iter()
+            .find(|(id, _)| *id == input_id)
+            .map(|(_, v)| v);
+        if let Some(outputs) = outputs {
+            let channel = self.get_channel();
+            self.set_value(match channel {
+                0 => outputs.0,
+                1 => outputs.1,
+                _ => 0.,
+            });
+        } else {
+            self.set_value(0.);
+        }
     }
 }
 
