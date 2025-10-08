@@ -4,7 +4,6 @@ mod delay;
 mod envelope;
 pub mod filter;
 mod get_inputs_trait;
-mod get_u64_seed_from_f32;
 mod graph;
 mod has_update;
 mod math;

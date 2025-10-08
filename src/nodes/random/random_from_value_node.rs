@@ -1,9 +1,6 @@
 use crate::{
-    declare_get_id, declare_get_input_ids_and_its_getter, declare_update,
-    get_u64_seed_from_f32::get_u64_seed_from_f32, node_trait::NodeTrait,
+    declare_get_id, declare_get_input_ids_and_its_getter, declare_update, node_trait::NodeTrait,
 };
-use rand::{Rng, SeedableRng};
-use rand_xoshiro::Xoshiro256PlusPlus;
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize, Clone)]
@@ -19,11 +16,12 @@ declare_get_input_ids_and_its_getter! {RandomFromValueNode, value}
 impl NodeTrait for RandomFromValueNode {
     fn process(&mut self, node_values: &[f32]) -> f32 {
         let value = node_values[self.input_ids.value];
-
-        let seed = get_u64_seed_from_f32(value);
-
-        let mut generator = Xoshiro256PlusPlus::seed_from_u64(seed);
-        generator.random()
+        let bits = value.to_bits();
+        let mut seed = bits as u64;
+        seed = seed.wrapping_mul(0x517cc1b727220a95);
+        seed ^= seed >> 30;
+        seed = seed.wrapping_mul(0x517cc1b727220a95);
+        ((seed as u32) as f32) / u32::MAX as f32
     }
 }
 
@@ -45,18 +43,18 @@ mod tests {
         let mut node_values: Vec<f32> = vec![0.];
 
         node_values[0] = 0.;
-        assert_approx_eq!(node.process(&node_values), 0.32457525);
+        assert_approx_eq!(node.process(&node_values), 0.);
 
         node_values[0] = 1.;
-        assert_approx_eq!(node.process(&node_values), 0.3364141);
+        assert_approx_eq!(node.process(&node_values), 0.98976886);
 
         node_values[0] = 2.;
-        assert_approx_eq!(node.process(&node_values), 0.9303049);
+        assert_approx_eq!(node.process(&node_values), 0.4609982);
 
         node_values[0] = 3.;
-        assert_approx_eq!(node.process(&node_values), 0.8127602);
+        assert_approx_eq!(node.process(&node_values), 0.8679685);
 
         node_values[0] = 4.;
-        assert_approx_eq!(node.process(&node_values), 0.6547286);
+        assert_approx_eq!(node.process(&node_values), 0.32233316);
     }
 }
