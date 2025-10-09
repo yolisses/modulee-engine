@@ -6,7 +6,6 @@ use crate::{
     set_sample_rate_trait::SetSampleRateTrait, sort::node_indexes::NodeIndexes, voice::Voice,
 };
 use serde::Deserialize;
-use std::ops::Index;
 use vector_map::VecMap;
 
 #[derive(Debug, Deserialize, Clone)]
@@ -64,16 +63,26 @@ impl ModuleVoicesNode {
         }
     }
 
+    // Replace `input_target_ids` keys and values from ids to indexes
     pub(crate) fn prepare_input_target_ids(&mut self, external_node_ids: &Vec<usize>) {
         let mut new_map: VecMap<usize, usize> = VecMap::new();
 
         if let Some(descendant_module) = &mut self.module {
             let internal_node_ids = descendant_module.get_node_ids();
-            for (input_node_id, target_node_id) in &self.extras.input_target_ids {
-                new_map.insert(
-                    *internal_node_ids.index(*input_node_id),
-                    *external_node_ids.index(*target_node_id),
-                );
+            for (internal_node_id, external_node_id) in &self.extras.input_target_ids {
+                let internal_node_index = internal_node_ids
+                    .iter()
+                    .position(|&x| x == *internal_node_id);
+                let external_node_index = external_node_ids
+                    .iter()
+                    .position(|&x| x == *external_node_id);
+
+                match (internal_node_index, external_node_index) {
+                    (Some(internal_node_index), Some(external_node_index)) => {
+                        new_map.insert(internal_node_index, external_node_index);
+                    }
+                    _ => (),
+                }
             }
 
             descendant_module.prepare_input_target_ids()
