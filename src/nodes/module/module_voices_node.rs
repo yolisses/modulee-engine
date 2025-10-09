@@ -67,8 +67,8 @@ impl ModuleVoicesNode {
     pub(crate) fn prepare_input_target_ids(&mut self, external_node_ids: &Vec<usize>) {
         let mut new_map: VecMap<usize, usize> = VecMap::new();
 
-        if let Some(descendant_module) = &mut self.module {
-            let internal_node_ids = descendant_module.get_node_ids();
+        if let Some(internal_module) = &mut self.module {
+            let internal_node_ids = internal_module.get_node_ids();
             for (internal_node_id, external_node_id) in &self.extras.input_target_ids {
                 let internal_node_index = internal_node_ids
                     .iter()
@@ -85,7 +85,7 @@ impl ModuleVoicesNode {
                 }
             }
 
-            descendant_module.prepare_input_target_ids()
+            internal_module.prepare_input_target_ids()
         }
 
         self.extras.input_target_ids = new_map;
