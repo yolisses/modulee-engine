@@ -11,6 +11,7 @@ rand = "0.9.0"
 rand_xoshiro = "0.7.0"
 serde = { version = "1.0.217", features = ["derive"] }
 serde_json = "1.0.135"
+vector-map = "1.0.2"
 
 [dev-dependencies]
 criterion = { version = "0.5", features = ["html_reports"] }

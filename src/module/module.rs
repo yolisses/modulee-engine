@@ -4,6 +4,7 @@ use crate::{
 };
 use nohash_hasher::IntMap;
 use serde::Deserialize;
+use vector_map::VecMap;
 
 #[derive(Debug, Deserialize, Clone, Default)]
 pub struct Module {
@@ -88,7 +89,7 @@ impl Module {
     pub(crate) fn set_input_node_values(
         &mut self,
         node_values: &[f32],
-        input_target_ids: &IntMap<usize, usize>,
+        input_target_ids: &VecMap<usize, usize>,
     ) {
         for node in &mut self.nodes {
             if let Node::InputNode(input_node) = node {

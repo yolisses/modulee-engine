@@ -2,6 +2,7 @@ use crate::{
     control_update_data::ControlUpdateData, module::module::Module, set_note_trait::SetNoteTrait,
 };
 use nohash_hasher::IntMap;
+use vector_map::VecMap;
 
 // TODO check if all these derives make sense to be used here
 #[derive(Debug, Clone)]
@@ -46,7 +47,7 @@ impl Voice {
     pub(crate) fn set_input_node_values(
         &mut self,
         node_values: &[f32],
-        input_target_ids: &IntMap<usize, usize>,
+        input_target_ids: &VecMap<usize, usize>,
     ) {
         self.module
             .set_input_node_values(node_values, input_target_ids);

@@ -1,18 +1,18 @@
-use super::deserialize_int_map::deserialize_int_map;
+use super::deserialize_vec_map::deserialize_vec_map;
 use crate::{
     control_update_data::ControlUpdateData, declare_get_id, get_inputs_trait::GetInputsTrait,
     has_update::HasUpdate, module::module::Module, node_trait::NodeTrait,
     set_input_indexes_trait::SetInputIndexesTrait, set_note_trait::SetNoteTrait,
     set_sample_rate_trait::SetSampleRateTrait, sort::node_indexes::NodeIndexes,
 };
-use nohash_hasher::IntMap;
 use serde::Deserialize;
+use vector_map::VecMap;
 
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct Extras {
     target_module_id: Option<usize>,
-    #[serde(deserialize_with = "deserialize_int_map")]
-    input_target_ids: IntMap<usize, usize>,
+    #[serde(deserialize_with = "deserialize_vec_map")]
+    input_target_ids: VecMap<usize, usize>,
 }
 
 /// Returns the phase value between 0 and 1 given a time and a frequency
