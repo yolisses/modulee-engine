@@ -34,7 +34,7 @@ impl Module {
         self.reset_node_values();
     }
 
-    fn reset_node_values(&mut self) {
+    pub(crate) fn reset_node_values(&mut self) {
         self.node_values = vec![0.; self.nodes.len()];
         self.module_node_outputs = vec![];
     }
@@ -45,7 +45,6 @@ impl Module {
         }
         // TODO use result instead of unwrap
         sort_nodes_topologically(&mut self.nodes).unwrap();
-        self.reset_node_values();
     }
 
     pub(crate) fn prepare_modules_in_nodes(&mut self, possible_modules: &[Module]) {

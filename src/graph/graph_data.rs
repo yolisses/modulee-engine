@@ -11,6 +11,7 @@ impl GraphData {
     pub(crate) fn prepare(&mut self, sample_rate: f32) -> Result<(), Box<dyn std::error::Error>> {
         for module in &mut self.modules {
             module.prepare_nodes(sample_rate);
+            module.reset_node_values();
         }
 
         sort_modules_topologically(&mut self.modules)?;
