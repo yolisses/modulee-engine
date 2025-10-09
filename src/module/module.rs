@@ -1,3 +1,5 @@
+use std::usize;
+
 use crate::{
     declare_get_id, node::Node, node_trait::NodeTrait, set_note_trait::SetNoteTrait,
     set_sample_rate_trait::SetSampleRateTrait,
@@ -90,11 +92,13 @@ impl Module {
         node_values: &[f32],
         input_target_ids: &VecMap<usize, usize>,
     ) {
-        for node in &mut self.nodes {
+        for (input_node_index, target_node_index) in input_target_ids {
+            let node = &mut self.nodes[*input_node_index];
             if let Node::InputNode(input_node) = node {
-                let target_id = input_target_ids[&input_node.get_id()];
-                let value = node_values[target_id];
+                let value = node_values[*target_node_index];
                 input_node.set_value(value);
+            } else {
+                panic!("Invalid node input node index");
             }
         }
     }
