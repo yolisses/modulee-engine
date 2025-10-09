@@ -2,7 +2,6 @@ use crate::{
     declare_get_id, node::Node, node_trait::NodeTrait, set_note_trait::SetNoteTrait,
     set_sample_rate_trait::SetSampleRateTrait,
 };
-use nohash_hasher::IntMap;
 use serde::Deserialize;
 use vector_map::VecMap;
 

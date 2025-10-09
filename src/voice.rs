@@ -1,7 +1,6 @@
 use crate::{
     control_update_data::ControlUpdateData, module::module::Module, set_note_trait::SetNoteTrait,
 };
-use nohash_hasher::IntMap;
 use vector_map::VecMap;
 
 // TODO check if all these derives make sense to be used here

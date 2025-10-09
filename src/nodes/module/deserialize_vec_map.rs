@@ -1,7 +1,5 @@
-use nohash_hasher::BuildNoHashHasher;
 use serde::de::{self, Visitor};
 use serde::Deserializer;
-use std::collections::HashMap;
 use std::fmt;
 use vector_map::VecMap;
 
