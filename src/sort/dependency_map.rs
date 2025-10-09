@@ -1,3 +1,3 @@
-use nohash_hasher::IntMap;
+use vector_map::VecMap;
 
-pub(crate) type DependencyMap = IntMap<usize, Vec<usize>>;
+pub(crate) type DependencyMap = VecMap<usize, Vec<usize>>;

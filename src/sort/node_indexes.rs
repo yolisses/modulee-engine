@@ -1,4 +1,4 @@
-use nohash_hasher::IntMap;
+use vector_map::VecMap;
 
 /// Map where the key is the node id and the value is its index
-pub(crate) type NodeIndexes = IntMap<usize, usize>;
+pub(crate) type NodeIndexes = VecMap<usize, usize>;

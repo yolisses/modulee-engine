@@ -2,8 +2,8 @@ use crate::{
     declare_empty_get_input_ids, declare_empty_update, declare_get_id, node_trait::NodeTrait,
     set_note_trait::SetNoteTrait,
 };
-use nohash_hasher::IntSet;
 use serde::Deserialize;
+use vector_map::set::VecSet;
 
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct GateNode {
@@ -11,7 +11,7 @@ pub(crate) struct GateNode {
     #[serde(skip)]
     is_active: bool,
     #[serde(skip)]
-    active_pitches: IntSet<i32>,
+    active_pitches: VecSet<i32>,
 }
 
 declare_get_id! {GateNode}
