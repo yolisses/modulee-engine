@@ -1,3 +1,5 @@
+use std::ops::Index;
+
 use super::deserialize_vec_map::deserialize_vec_map;
 use crate::{
     control_update_data::ControlUpdateData, declare_get_id, get_inputs_trait::GetInputsTrait,
@@ -54,6 +56,24 @@ impl ModuleNode {
         if let Some(module) = &mut self.module {
             module.update_control(control_update_data)
         }
+    }
+
+    pub(crate) fn prepare_input_target_ids(&mut self, external_node_ids: &Vec<usize>) {
+        let mut new_map: VecMap<usize, usize> = VecMap::new();
+
+        if let Some(descendant_module) = &mut self.module {
+            let internal_node_ids = descendant_module.get_node_ids();
+            for (input_node_id, target_node_id) in &self.extras.input_target_ids {
+                new_map.insert(
+                    *internal_node_ids.index(*input_node_id),
+                    *external_node_ids.index(*target_node_id),
+                );
+            }
+
+            descendant_module.prepare_input_target_ids()
+        }
+
+        self.extras.input_target_ids = new_map;
     }
 }
 

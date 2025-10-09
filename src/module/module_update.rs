@@ -66,4 +66,19 @@ impl Module {
             }
         }
     }
+
+    pub(crate) fn get_node_ids(&self) -> Vec<usize> {
+        self.nodes.iter().map(|node| node.get_id()).collect()
+    }
+
+    pub(crate) fn prepare_input_target_ids(&mut self) {
+        let node_ids = self.get_node_ids();
+        for node in &mut self.nodes {
+            match node {
+                Node::ModuleNode(node) => node.prepare_input_target_ids(&node_ids),
+                Node::ModuleVoicesNode(node) => node.prepare_input_target_ids(&node_ids),
+                _ => (),
+            }
+        }
+    }
 }

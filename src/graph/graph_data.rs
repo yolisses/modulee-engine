@@ -22,6 +22,11 @@ impl GraphData {
             let module = &mut self.modules[i];
             module.prepare_modules_in_nodes(&modules);
         }
+
+        for module in &mut self.modules {
+            module.prepare_input_target_ids();
+        }
+
         Ok(())
     }
 }

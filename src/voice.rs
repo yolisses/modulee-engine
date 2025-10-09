@@ -55,6 +55,10 @@ impl Voice {
     pub(crate) fn update_control(&mut self, control_update_data: &ControlUpdateData) {
         self.module.update_control(control_update_data)
     }
+
+    pub(crate) fn prepare_input_target_ids(&mut self) {
+        self.module.prepare_input_target_ids()
+    }
 }
 
 impl SetNoteTrait for Voice {

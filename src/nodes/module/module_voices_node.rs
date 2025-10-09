@@ -6,6 +6,7 @@ use crate::{
     set_sample_rate_trait::SetSampleRateTrait, sort::node_indexes::NodeIndexes, voice::Voice,
 };
 use serde::Deserialize;
+use std::ops::Index;
 use vector_map::VecMap;
 
 #[derive(Debug, Deserialize, Clone)]
@@ -60,6 +61,28 @@ impl ModuleVoicesNode {
         }
         for voice in &mut self.voices {
             voice.update_control(control_update_data);
+        }
+    }
+
+    pub(crate) fn prepare_input_target_ids(&mut self, external_node_ids: &Vec<usize>) {
+        let mut new_map: VecMap<usize, usize> = VecMap::new();
+
+        if let Some(descendant_module) = &mut self.module {
+            let internal_node_ids = descendant_module.get_node_ids();
+            for (input_node_id, target_node_id) in &self.extras.input_target_ids {
+                new_map.insert(
+                    *internal_node_ids.index(*input_node_id),
+                    *external_node_ids.index(*target_node_id),
+                );
+            }
+
+            descendant_module.prepare_input_target_ids()
+        }
+
+        self.extras.input_target_ids = new_map;
+
+        for voice in &mut self.voices {
+            voice.prepare_input_target_ids()
         }
     }
 }
