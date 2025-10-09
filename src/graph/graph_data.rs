@@ -8,9 +8,9 @@ pub(crate) struct GraphData {
 }
 
 impl GraphData {
-    pub(crate) fn prepare(&mut self, sample_rate: f32) -> Result<(), Box<dyn std::error::Error>> {
+    pub(crate) fn prepare(&mut self, sample_rate: f32) -> Result<(), String> {
         for module in &mut self.modules {
-            module.prepare_nodes(sample_rate);
+            module.prepare_nodes(sample_rate)?;
             module.reset_node_values();
         }
 

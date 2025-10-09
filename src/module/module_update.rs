@@ -39,12 +39,11 @@ impl Module {
         self.module_node_outputs = vec![];
     }
 
-    pub(crate) fn prepare_nodes(&mut self, sample_rate: f32) {
+    pub(crate) fn prepare_nodes(&mut self, sample_rate: f32) -> Result<(), String> {
         for node in &mut self.nodes {
             node.set_sample_rate(sample_rate);
         }
-        // TODO use result instead of unwrap
-        sort_nodes_topologically(&mut self.nodes).unwrap();
+        sort_nodes_topologically(&mut self.nodes)
     }
 
     pub(crate) fn prepare_modules_in_nodes(&mut self, possible_modules: &[Module]) {
