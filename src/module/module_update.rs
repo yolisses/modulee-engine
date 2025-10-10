@@ -5,7 +5,10 @@ use crate::{
     node::Node,
     set_input_indexes_trait::SetInputIndexesTrait,
     set_sample_rate_trait::SetSampleRateTrait,
-    sort::{get_indexes_map::get_indexes_map, has_id::HasId},
+    sort::{
+        get_indexes_map::get_indexes_map, has_id::HasId,
+        sort_nodes_topologically::sort_nodes_topologically,
+    },
 };
 
 impl Module {
@@ -32,6 +35,7 @@ impl Module {
         }
 
         sort_by_other_vec_order(&mut self.nodes, new_nodes);
+        self.set_node_ids_to_indexes();
         self.reset_node_values();
     }
 
@@ -40,10 +44,14 @@ impl Module {
         self.module_node_outputs = vec![];
     }
 
-    pub(crate) fn prepare_nodes(&mut self, sample_rate: f32) {
+    pub(crate) fn set_sample_rate(&mut self, sample_rate: f32) {
         for node in &mut self.nodes {
             node.set_sample_rate(sample_rate);
         }
+    }
+
+    pub(crate) fn sort_nodes_topologically(&mut self) -> Result<(), String> {
+        sort_nodes_topologically(&mut self.nodes)
     }
 
     pub(crate) fn set_node_ids_to_indexes(&mut self) {

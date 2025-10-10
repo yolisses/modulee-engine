@@ -10,7 +10,8 @@ pub(crate) struct GraphData {
 impl GraphData {
     pub(crate) fn prepare(&mut self, sample_rate: f32) -> Result<(), String> {
         for module in &mut self.modules {
-            module.prepare_nodes(sample_rate);
+            module.set_sample_rate(sample_rate);
+            module.sort_nodes_topologically()?;
         }
 
         sort_modules_topologically(&mut self.modules)?;
