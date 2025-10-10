@@ -12,6 +12,7 @@ impl GraphData {
         for module in &mut self.modules {
             module.set_sample_rate(sample_rate);
             module.sort_nodes_topologically()?;
+            module.reset_node_values();
         }
 
         sort_modules_topologically(&mut self.modules)?;

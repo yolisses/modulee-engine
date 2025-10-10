@@ -39,7 +39,7 @@ impl Module {
         self.reset_node_values();
     }
 
-    fn reset_node_values(&mut self) {
+    pub(crate) fn reset_node_values(&mut self) {
         self.node_values = vec![0.; self.nodes.len()];
         self.module_node_outputs = vec![];
     }
