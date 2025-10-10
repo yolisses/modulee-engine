@@ -1,6 +1,5 @@
 use crate::{
     graph::voices_cleaner::VoicesCleaner, module::module::Module, set_note_trait::SetNoteTrait,
-    set_sample_rate_trait::SetSampleRateTrait,
 };
 
 #[derive(Debug, PartialEq)]
@@ -8,11 +7,13 @@ pub struct Graph {
     pub(crate) main_module: Option<Module>,
     pub(crate) sample_rate: f32,
     voices_cleaner: VoicesCleaner,
+    empty_vector: Vec<f32>,
 }
 
 impl Graph {
     pub fn new(sample_rate: f32) -> Self {
         Self {
+            empty_vector: Default::default(),
             main_module: Default::default(),
             sample_rate,
             voices_cleaner: Default::default(),
@@ -21,7 +22,7 @@ impl Graph {
 
     pub fn process(&mut self) {
         if let Some(main_module) = &mut self.main_module {
-            main_module.process();
+            main_module.process(&self.empty_vector);
             self.voices_cleaner.process(main_module);
         }
     }

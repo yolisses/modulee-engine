@@ -35,8 +35,8 @@ impl Voice {
     }
 
     // TODO consider making module public
-    pub(crate) fn process(&mut self) {
-        self.module.process();
+    pub(crate) fn process(&mut self, external_node_values: &[f32]) {
+        self.module.process(external_node_values);
     }
 
     pub(crate) fn update_module(&mut self, new_module: &Module) {

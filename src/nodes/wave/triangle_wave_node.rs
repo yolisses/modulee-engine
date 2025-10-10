@@ -13,7 +13,7 @@ declare_update! {TriangleWaveNode}
 declare_get_input_ids_and_its_getter! {TriangleWaveNode, phase}
 
 impl NodeTrait for TriangleWaveNode {
-    fn process(&mut self, node_values: &[f32]) -> f32 {
+    fn process(&mut self, node_values: &[f32], _external_node_values: &[f32]) -> f32 {
         let phase = node_values[self.input_ids.phase];
         let t = phase % 1.0;
         if t < 0.5 {

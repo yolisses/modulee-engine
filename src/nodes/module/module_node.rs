@@ -100,10 +100,10 @@ impl GetInputsTrait for ModuleNode {
 }
 
 impl NodeTrait for ModuleNode {
-    fn process(&mut self, node_values: &[f32]) -> f32 {
+    fn process(&mut self, node_values: &[f32], external_node_values: &[f32]) -> f32 {
         if let Some(module) = &mut self.module {
             module.set_input_node_values(node_values, &self.extras.input_target_ids);
-            module.process();
+            module.process(external_node_values);
             self.last_outputs = module.get_output_values();
             self.last_outputs.0
         } else {

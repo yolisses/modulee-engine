@@ -26,7 +26,7 @@ impl SetSampleRateTrait for TimeNode {
 }
 
 impl NodeTrait for TimeNode {
-    fn process(&mut self, _node_values: &[f32]) -> f32 {
+    fn process(&mut self, _node_values: &[f32], _external_node_values: &[f32]) -> f32 {
         self.value += 1. / self.sample_rate;
         self.value
     }

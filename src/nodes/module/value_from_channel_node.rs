@@ -57,7 +57,7 @@ impl ValueFromChannelNode {
 }
 
 impl NodeTrait for ValueFromChannelNode {
-    fn process(&mut self, _node_values: &[f32]) -> f32 {
+    fn process(&mut self, _node_values: &[f32], _external_node_values: &[f32]) -> f32 {
         self.value
     }
 }

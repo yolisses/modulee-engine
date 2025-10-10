@@ -23,7 +23,7 @@ declare_update! {AllPassNode}
 declare_get_input_ids_and_its_getter! {AllPassNode, input, frequency, resonance}
 
 impl NodeTrait for AllPassNode {
-    fn process(&mut self, node_values: &[f32]) -> f32 {
+    fn process(&mut self, node_values: &[f32], _external_node_values: &[f32]) -> f32 {
         let input = node_values[self.input_ids.input];
         let frequency = node_values[self.input_ids.frequency];
         let resonance = node_values[self.input_ids.resonance];

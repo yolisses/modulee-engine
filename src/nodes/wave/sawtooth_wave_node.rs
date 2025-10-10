@@ -13,7 +13,7 @@ declare_update! {SawtoothWaveNode}
 declare_get_input_ids_and_its_getter! {SawtoothWaveNode, phase}
 
 impl NodeTrait for SawtoothWaveNode {
-    fn process(&mut self, node_values: &[f32]) -> f32 {
+    fn process(&mut self, node_values: &[f32], _external_node_values: &[f32]) -> f32 {
         let phase = node_values[self.input_ids.phase];
         2. * phase - 1.
     }

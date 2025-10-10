@@ -14,7 +14,7 @@ declare_update! {NotNode}
 declare_get_input_ids_and_its_getter! {NotNode, input}
 
 impl NodeTrait for NotNode {
-    fn process(&mut self, node_values: &[f32]) -> f32 {
+    fn process(&mut self, node_values: &[f32], _external_node_values: &[f32]) -> f32 {
         let input = node_values[self.input_ids.input];
         if get_bool_value(input) {
             0.

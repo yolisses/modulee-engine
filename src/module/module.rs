@@ -45,14 +45,14 @@ impl Module {
         values
     }
 
-    pub(crate) fn process(&mut self) {
+    pub(crate) fn process(&mut self, external_node_values: &[f32]) {
         self.module_node_outputs.clear(); // Clear Vec instead of creating new
         for (index, node) in self.nodes.iter_mut().enumerate() {
             if let Node::ValueFromChannelNode(value_from_channel_node) = node {
                 value_from_channel_node.update_from_module_node_outputs(&self.module_node_outputs);
             }
 
-            let value = node.process(&self.node_values);
+            let value = node.process(&self.node_values, external_node_values);
             self.node_values[index] = value;
 
             Module::update_module_nodes_output(node, &mut self.module_node_outputs, index);
