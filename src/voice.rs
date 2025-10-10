@@ -56,8 +56,8 @@ impl Voice {
         self.module.update_control(control_update_data)
     }
 
-    pub(crate) fn prepare_input_target_ids(&mut self) {
-        self.module.prepare_input_target_ids()
+    pub(crate) fn set_node_ids_to_indexes(&mut self) {
+        self.module.set_node_ids_to_indexes()
     }
 }
 

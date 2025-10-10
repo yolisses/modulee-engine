@@ -15,7 +15,6 @@ pub(crate) struct Extras {
     input_target_ids: VecMap<usize, usize>,
 }
 
-/// Returns the phase value between 0 and 1 given a time and a frequency
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct ModuleNode {
     extras: Extras,
@@ -25,6 +24,8 @@ pub(crate) struct ModuleNode {
     #[serde(skip)]
     module: Option<Module>,
 }
+
+declare_get_id! {ModuleNode}
 
 impl ModuleNode {
     pub(crate) fn get_last_outputs(&self) -> (f32, f32) {
@@ -55,37 +56,35 @@ impl ModuleNode {
             module.update_control(control_update_data)
         }
     }
+}
 
-    // Replace `input_target_ids` keys and values from ids to indexes
-    pub(crate) fn prepare_input_target_ids(&mut self, external_node_ids: &Vec<usize>) {
+impl SetInputIndexesTrait for ModuleNode {
+    fn set_input_indexes(&mut self, external_node_indexes: &NodeIndexes) {
         let mut new_map: VecMap<usize, usize> = VecMap::new();
 
-        if let Some(descendant_module) = &mut self.module {
-            let internal_node_ids = descendant_module.get_node_ids();
+        if let Some(internal_module) = &mut self.module {
+            // TODO consider replacing get_node_ids by get_node_indexes
+            let internal_node_ids = internal_module.get_node_ids();
             for (internal_node_id, external_node_id) in &self.extras.input_target_ids {
                 let internal_node_index = internal_node_ids
                     .iter()
                     .position(|&x| x == *internal_node_id);
-                let external_node_index = external_node_ids
-                    .iter()
-                    .position(|&x| x == *external_node_id);
+                let external_node_index = external_node_indexes.get(external_node_id);
 
                 match (internal_node_index, external_node_index) {
                     (Some(internal_node_index), Some(external_node_index)) => {
-                        new_map.insert(internal_node_index, external_node_index);
+                        new_map.insert(internal_node_index, *external_node_index);
                     }
                     _ => (),
                 }
             }
 
-            descendant_module.prepare_input_target_ids()
+            internal_module.set_node_ids_to_indexes()
         }
 
         self.extras.input_target_ids = new_map;
     }
 }
-
-declare_get_id! {ModuleNode}
 
 impl HasUpdate for ModuleNode {
     fn update(&mut self, new_module: &Self) {
@@ -97,21 +96,6 @@ impl HasUpdate for ModuleNode {
 impl GetInputsTrait for ModuleNode {
     fn get_input_ids(&self) -> Vec<usize> {
         self.extras.input_target_ids.values().cloned().collect()
-    }
-}
-
-impl SetInputIndexesTrait for ModuleNode {
-    fn set_input_indexes(&mut self, node_indexes: &NodeIndexes) {
-        let updates: Vec<(usize, usize)> = self
-            .extras
-            .input_target_ids
-            .iter()
-            .map(|(input_id, target_id)| (*input_id, node_indexes[target_id]))
-            .collect();
-
-        for (input_id, index) in updates {
-            self.extras.input_target_ids.insert(input_id, index);
-        }
     }
 }
 

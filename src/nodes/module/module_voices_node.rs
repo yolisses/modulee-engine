@@ -15,7 +15,6 @@ pub(crate) struct Extras {
     input_target_ids: VecMap<usize, usize>,
 }
 
-/// Returns the phase value between 0 and 1 given a time and a frequency
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct ModuleVoicesNode {
     extras: Extras,
@@ -27,8 +26,8 @@ pub(crate) struct ModuleVoicesNode {
     #[serde(skip)]
     voices: Vec<Voice>,
 }
-// TODO fix module instantiation. Currently it only creates an empty module. It
-// should clone a module from graph.
+
+declare_get_id! {ModuleVoicesNode}
 
 impl ModuleVoicesNode {
     pub(crate) fn get_last_outputs(&self) -> (f32, f32) {
@@ -62,36 +61,36 @@ impl ModuleVoicesNode {
             voice.update_control(control_update_data);
         }
     }
+}
 
-    // Replace `input_target_ids` keys and values from ids to indexes
-    pub(crate) fn prepare_input_target_ids(&mut self, external_node_ids: &Vec<usize>) {
+impl SetInputIndexesTrait for ModuleVoicesNode {
+    fn set_input_indexes(&mut self, external_node_indexes: &NodeIndexes) {
         let mut new_map: VecMap<usize, usize> = VecMap::new();
 
         if let Some(internal_module) = &mut self.module {
+            // TODO consider replacing get_node_ids by get_node_indexes
             let internal_node_ids = internal_module.get_node_ids();
             for (internal_node_id, external_node_id) in &self.extras.input_target_ids {
                 let internal_node_index = internal_node_ids
                     .iter()
                     .position(|&x| x == *internal_node_id);
-                let external_node_index = external_node_ids
-                    .iter()
-                    .position(|&x| x == *external_node_id);
+                let external_node_index = external_node_indexes.get(external_node_id);
 
                 match (internal_node_index, external_node_index) {
                     (Some(internal_node_index), Some(external_node_index)) => {
-                        new_map.insert(internal_node_index, external_node_index);
+                        new_map.insert(internal_node_index, *external_node_index);
                     }
                     _ => (),
                 }
             }
 
-            internal_module.prepare_input_target_ids()
+            internal_module.set_node_ids_to_indexes()
         }
 
         self.extras.input_target_ids = new_map;
 
         for voice in &mut self.voices {
-            voice.prepare_input_target_ids()
+            voice.set_node_ids_to_indexes()
         }
     }
 }
@@ -101,9 +100,6 @@ impl ModuleVoicesNode {
         self.voices.retain(|voice| voice.get_is_pending());
     }
 }
-
-declare_get_id! {ModuleVoicesNode}
-
 impl HasUpdate for ModuleVoicesNode {
     fn update(&mut self, new_module: &Self) {
         self.extras = new_module.extras.clone();
@@ -122,21 +118,6 @@ impl HasUpdate for ModuleVoicesNode {
 impl GetInputsTrait for ModuleVoicesNode {
     fn get_input_ids(&self) -> Vec<usize> {
         self.extras.input_target_ids.values().cloned().collect()
-    }
-}
-
-impl SetInputIndexesTrait for ModuleVoicesNode {
-    fn set_input_indexes(&mut self, node_indexes: &NodeIndexes) {
-        let updates: Vec<(usize, usize)> = self
-            .extras
-            .input_target_ids
-            .iter()
-            .map(|(input_id, target_id)| (*input_id, node_indexes[target_id]))
-            .collect();
-
-        for (input_id, index) in updates {
-            self.extras.input_target_ids.insert(input_id, index);
-        }
     }
 }
 

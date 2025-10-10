@@ -5,10 +5,7 @@ use crate::{
     node::Node,
     set_input_indexes_trait::SetInputIndexesTrait,
     set_sample_rate_trait::SetSampleRateTrait,
-    sort::{
-        get_indexes_map::get_indexes_map, has_id::HasId,
-        sort_nodes_topologically::sort_nodes_topologically,
-    },
+    sort::{get_indexes_map::get_indexes_map, has_id::HasId},
 };
 
 impl Module {
@@ -35,20 +32,18 @@ impl Module {
         }
 
         sort_by_other_vec_order(&mut self.nodes, new_nodes);
-        self.set_node_ids_to_indexes();
         self.reset_node_values();
     }
 
-    pub(crate) fn reset_node_values(&mut self) {
+    fn reset_node_values(&mut self) {
         self.node_values = vec![0.; self.nodes.len()];
         self.module_node_outputs = vec![];
     }
 
-    pub(crate) fn prepare_nodes(&mut self, sample_rate: f32) -> Result<(), String> {
+    pub(crate) fn prepare_nodes(&mut self, sample_rate: f32) {
         for node in &mut self.nodes {
             node.set_sample_rate(sample_rate);
         }
-        sort_nodes_topologically(&mut self.nodes)
     }
 
     pub(crate) fn set_node_ids_to_indexes(&mut self) {
@@ -82,16 +77,5 @@ impl Module {
 
     pub(crate) fn get_node_ids(&self) -> Vec<usize> {
         self.nodes.iter().map(|node| node.get_id()).collect()
-    }
-
-    pub(crate) fn prepare_input_target_ids(&mut self) {
-        let node_ids = self.get_node_ids();
-        for node in &mut self.nodes {
-            match node {
-                Node::ModuleNode(node) => node.prepare_input_target_ids(&node_ids),
-                Node::ModuleVoicesNode(node) => node.prepare_input_target_ids(&node_ids),
-                _ => (),
-            }
-        }
     }
 }
