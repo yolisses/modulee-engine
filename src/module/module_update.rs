@@ -3,8 +3,12 @@ use crate::{
     control_update_data::ControlUpdateData,
     has_update::HasUpdate,
     node::Node,
+    set_input_indexes_trait::SetInputIndexesTrait,
     set_sample_rate_trait::SetSampleRateTrait,
-    sort::{has_id::HasId, sort_nodes_topologically::sort_nodes_topologically},
+    sort::{
+        get_indexes_map::get_indexes_map, has_id::HasId,
+        sort_nodes_topologically::sort_nodes_topologically,
+    },
 };
 
 impl Module {
@@ -31,6 +35,7 @@ impl Module {
         }
 
         sort_by_other_vec_order(&mut self.nodes, new_nodes);
+        self.set_node_ids_to_indexes();
         self.reset_node_values();
     }
 
@@ -44,6 +49,14 @@ impl Module {
             node.set_sample_rate(sample_rate);
         }
         sort_nodes_topologically(&mut self.nodes)
+    }
+
+    pub(crate) fn set_node_ids_to_indexes(&mut self) {
+        let node_ids = self.get_node_ids();
+        let node_indexes = get_indexes_map(node_ids);
+        self.nodes
+            .iter_mut()
+            .for_each(|node| node.set_input_indexes(&node_indexes));
     }
 
     pub(crate) fn prepare_modules_in_nodes(&mut self, possible_modules: &[Module]) {
