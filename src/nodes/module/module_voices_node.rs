@@ -122,10 +122,9 @@ impl GetInputsTrait for ModuleVoicesNode {
 }
 
 impl NodeTrait for ModuleVoicesNode {
-    fn process(&mut self, node_values: &[f32], external_node_values: &[f32]) -> f32 {
+    fn process(&mut self, _node_values: &[f32], external_node_values: &[f32]) -> f32 {
         let mut sum = (0., 0.);
         for voice in &mut self.voices {
-            voice.set_input_node_values(node_values, &self.extras.input_target_ids);
             voice.process(external_node_values);
             // TODO check if this makes sense using just the first channel
             let outputs = voice.get_output_values();

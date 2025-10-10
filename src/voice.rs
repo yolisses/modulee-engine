@@ -43,15 +43,6 @@ impl Voice {
         self.module.update(new_module);
     }
 
-    pub(crate) fn set_input_node_values(
-        &mut self,
-        node_values: &[f32],
-        input_target_ids: &VecMap<usize, usize>,
-    ) {
-        self.module
-            .set_input_node_values(node_values, input_target_ids);
-    }
-
     pub(crate) fn update_control(&mut self, control_update_data: &ControlUpdateData) {
         self.module.update_control(control_update_data)
     }

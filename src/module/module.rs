@@ -87,22 +87,6 @@ impl Module {
         }
     }
 
-    pub(crate) fn set_input_node_values(
-        &mut self,
-        node_values: &[f32],
-        input_target_ids: &VecMap<usize, usize>,
-    ) {
-        for (input_node_index, target_node_index) in input_target_ids {
-            let node = &mut self.nodes[*input_node_index];
-            if let Node::InputNode(input_node) = node {
-                let value = node_values[*target_node_index];
-                input_node.set_value(value);
-            } else {
-                panic!("Invalid node input node index");
-            }
-        }
-    }
-
     pub(crate) fn get_child_module_ids(&self) -> Vec<usize> {
         let mut child_module_ids = vec![];
 
