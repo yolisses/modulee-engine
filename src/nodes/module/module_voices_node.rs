@@ -105,10 +105,10 @@ impl GetInputsTrait for ModuleVoicesNode {
 }
 
 impl NodeTrait for ModuleVoicesNode {
-    fn process(&mut self, _node_values: &[f32], external_node_values: &[f32]) -> f32 {
+    fn process(&mut self, node_values: &[f32], _external_node_values: &[f32]) -> f32 {
         let mut sum = (0., 0.);
         for voice in &mut self.voices {
-            voice.process(external_node_values);
+            voice.process(node_values);
             // TODO check if this makes sense using just the first channel
             let outputs = voice.get_output_values();
             sum.0 += outputs.0;

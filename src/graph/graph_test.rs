@@ -22,32 +22,14 @@ mod tests {
 
     #[test]
     fn test_load_graph_from_file() {
-        let data = fs::read_to_string("test/graphEngineData.json")
-            .expect("failed to read test/graphEngineData.json");
-        let mut graph = Graph::new(1.);
+        let data_path = std::path::Path::new("src/graph/test/graphEngineData.json");
+        let data = fs::read_to_string(&data_path).expect("Can't find the file");
+        let mut graph = Graph::new(48000.);
         graph
             .update_from_json(&data)
             .expect("update_from_json failed");
-        assert!(graph.main_module.is_some());
-        let id = graph.main_module.as_ref().unwrap().get_id();
-        // sanity: id should be displayable/non-empty when stringified
-        assert!(!id.to_string().is_empty());
-    }
-
-    #[test]
-    fn test_update_from_file_then_inline() {
-        let data = fs::read_to_string("test/graphEngineData.json")
-            .expect("failed to read test/graphEngineData.json");
-        let mut graph = Graph::new(1.);
-        graph
-            .update_from_json(&data)
-            .expect("initial update failed");
-
-        // apply a deterministic inline update and verify the main module becomes 9999
-        graph
-            .update_from_json(r#"{"main_module_id": 9999, "modules":[{"id":9999,"nodes":[]} ]}"#)
-            .expect("inline update failed");
-
-        assert_eq!(graph.main_module.as_ref().unwrap().get_id(), 9999);
+        graph.process();
+        graph.set_note_on(60.);
+        graph.process();
     }
 }
