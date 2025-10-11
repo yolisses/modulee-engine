@@ -6,10 +6,11 @@ use crate::{
     set_input_indexes_trait::SetInputIndexesTrait,
     set_sample_rate_trait::SetSampleRateTrait,
     sort::{
-        get_indexes_map::get_indexes_map, has_id::HasId,
+        get_indexes_map::get_indexes_map, has_id::HasId, node_indexes::NodeIndexes,
         sort_nodes_topologically::sort_nodes_topologically,
     },
 };
+use vector_map::VecMap;
 
 impl Module {
     pub(crate) fn update(&mut self, new_module: &Module) {
@@ -35,7 +36,6 @@ impl Module {
         }
 
         sort_by_other_vec_order(&mut self.nodes, new_nodes);
-        self.set_node_ids_to_indexes();
         self.reset_node_values();
     }
 
@@ -54,12 +54,26 @@ impl Module {
         sort_nodes_topologically(&mut self.nodes)
     }
 
-    pub(crate) fn set_node_ids_to_indexes(&mut self) {
+    pub(crate) fn set_node_ids_to_indexes(
+        &mut self,
+        external_node_indexes: &NodeIndexes,
+        input_target_ids: &VecMap<usize, usize>,
+    ) {
         let node_ids = self.get_node_ids();
         let node_indexes = get_indexes_map(node_ids);
-        self.nodes
-            .iter_mut()
-            .for_each(|node| node.set_input_indexes(&node_indexes));
+        for node in &mut self.nodes {
+            node.set_input_indexes(&node_indexes);
+
+            if let Node::InputNode(input_node) = node {
+                let target_id = input_target_ids.get(&input_node.get_id());
+                if let Some(target_id) = target_id {
+                    let target_index = external_node_indexes.get(target_id);
+                    if let Some(target_index) = target_index {
+                        input_node.set_target(*target_index);
+                    }
+                }
+            }
+        }
     }
 
     pub(crate) fn prepare_modules_in_nodes(&mut self, possible_modules: &[Module]) {

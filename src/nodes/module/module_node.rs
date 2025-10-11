@@ -11,6 +11,8 @@ use vector_map::VecMap;
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct Extras {
     target_module_id: Option<usize>,
+    /// Map where the key is the input node id and the value is the target input
+    /// from an outer module.
     #[serde(deserialize_with = "deserialize_vec_map")]
     input_target_ids: VecMap<usize, usize>,
 }
@@ -60,29 +62,10 @@ impl ModuleNode {
 
 impl SetInputIndexesTrait for ModuleNode {
     fn set_input_indexes(&mut self, external_node_indexes: &NodeIndexes) {
-        let mut new_map: VecMap<usize, usize> = VecMap::new();
-
-        if let Some(internal_module) = &mut self.module {
-            // TODO consider replacing get_node_ids by get_node_indexes
-            let internal_node_ids = internal_module.get_node_ids();
-            for (internal_node_id, external_node_id) in &self.extras.input_target_ids {
-                let internal_node_index = internal_node_ids
-                    .iter()
-                    .position(|&x| x == *internal_node_id);
-                let external_node_index = external_node_indexes.get(external_node_id);
-
-                match (internal_node_index, external_node_index) {
-                    (Some(internal_node_index), Some(external_node_index)) => {
-                        new_map.insert(internal_node_index, *external_node_index);
-                    }
-                    _ => (),
-                }
-            }
-
-            internal_module.set_node_ids_to_indexes()
+        let input_target_ids = &self.extras.input_target_ids;
+        if let Some(module) = &mut self.module {
+            module.set_node_ids_to_indexes(external_node_indexes, input_target_ids);
         }
-
-        self.extras.input_target_ids = new_map;
     }
 }
 
@@ -100,7 +83,7 @@ impl GetInputsTrait for ModuleNode {
 }
 
 impl NodeTrait for ModuleNode {
-    fn process(&mut self, node_values: &[f32], external_node_values: &[f32]) -> f32 {
+    fn process(&mut self, _node_values: &[f32], external_node_values: &[f32]) -> f32 {
         if let Some(module) = &mut self.module {
             module.process(external_node_values);
             self.last_outputs = module.get_output_values();

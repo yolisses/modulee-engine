@@ -5,7 +5,6 @@ use crate::{
     set_sample_rate_trait::SetSampleRateTrait,
 };
 use serde::Deserialize;
-use vector_map::VecMap;
 
 #[derive(Debug, Deserialize, Clone, Default)]
 pub struct Module {
@@ -34,6 +33,7 @@ impl Module {
     pub(crate) fn get_output_values(&self) -> (f32, f32) {
         let mut values = (0., 0.);
         for node in &self.nodes {
+            // TODO move this to module.process
             if let Node::OutputNode(output_node) = node {
                 match output_node.get_channel() {
                     0 => values.0 = output_node.get_value(),

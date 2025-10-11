@@ -1,5 +1,6 @@
 use crate::{
     control_update_data::ControlUpdateData, module::module::Module, set_note_trait::SetNoteTrait,
+    sort::node_indexes::NodeIndexes,
 };
 use vector_map::VecMap;
 
@@ -47,8 +48,13 @@ impl Voice {
         self.module.update_control(control_update_data)
     }
 
-    pub(crate) fn set_node_ids_to_indexes(&mut self) {
-        self.module.set_node_ids_to_indexes()
+    pub(crate) fn set_node_ids_to_indexes(
+        &mut self,
+        external_node_indexes: &NodeIndexes,
+        input_target_ids: &VecMap<usize, usize>,
+    ) {
+        self.module
+            .set_node_ids_to_indexes(external_node_indexes, input_target_ids)
     }
 }
 

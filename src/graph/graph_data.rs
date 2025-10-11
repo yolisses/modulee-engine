@@ -25,7 +25,7 @@ impl GraphData {
         }
 
         for module in &mut self.modules {
-            module.set_node_ids_to_indexes();
+            module.set_node_ids_to_indexes(&Default::default(), &Default::default());
         }
 
         Ok(())
