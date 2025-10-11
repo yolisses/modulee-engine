@@ -39,7 +39,7 @@ mod tests {
         let mut node = ModuloNode { id: 1, input_ids };
 
         let node_values = vec![10., 3.];
-        let result = node.process(&node_values);
+        let result = node.process(&node_values, &Vec::default());
         assert_eq!(result, 1.);
     }
 
@@ -52,7 +52,7 @@ mod tests {
         let mut node = ModuloNode { id: 1, input_ids };
 
         let node_values = vec![10., 0.];
-        let result = node.process(&node_values);
+        let result = node.process(&node_values, &Vec::default());
         assert_eq!(result, 0.);
     }
 
@@ -65,7 +65,7 @@ mod tests {
         let mut node = ModuloNode { id: 1, input_ids };
 
         let node_values = vec![-10., 3.];
-        let result = node.process(&node_values);
+        let result = node.process(&node_values, &Vec::default());
         assert_eq!(result, -1.);
     }
 
@@ -78,7 +78,7 @@ mod tests {
         let mut node = ModuloNode { id: 1, input_ids };
 
         let node_values = vec![10.5, 3.2];
-        let result = node.process(&node_values);
+        let result = node.process(&node_values, &Vec::default());
         assert_approx_eq!(result, 0.9);
     }
 }

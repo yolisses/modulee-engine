@@ -33,7 +33,7 @@ mod tests {
         let mut add_node = AddNode { id: 1, input_ids };
 
         let node_values = vec![2., 3.];
-        let result = add_node.process(&node_values);
+        let result = add_node.process(&node_values, &Vec::default());
 
         assert_eq!(result, 5.);
     }
@@ -47,7 +47,7 @@ mod tests {
         let mut add_node = AddNode { id: 2, input_ids };
 
         let node_values = vec![-4., -6.];
-        let result = add_node.process(&node_values);
+        let result = add_node.process(&node_values, &Vec::default());
 
         assert_eq!(result, -10.);
     }
@@ -61,7 +61,7 @@ mod tests {
         let mut add_node = AddNode { id: 3, input_ids };
 
         let node_values = vec![7.5, -2.5];
-        let result = add_node.process(&node_values);
+        let result = add_node.process(&node_values, &Vec::default());
 
         assert_eq!(result, 5.);
     }
@@ -75,7 +75,7 @@ mod tests {
         let mut add_node = AddNode { id: 4, input_ids };
 
         let node_values = vec![0., 0.];
-        let result = add_node.process(&node_values);
+        let result = add_node.process(&node_values, &Vec::default());
 
         assert_eq!(result, 0.);
     }

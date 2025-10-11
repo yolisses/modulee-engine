@@ -42,7 +42,7 @@ mod tests {
         };
 
         let node_values = vec![1.0, 42.0, 63.0];
-        let result = node.process(&node_values);
+        let result = node.process(&node_values, &Vec::default());
         assert_eq!(result, 42.0);
     }
 
@@ -58,7 +58,7 @@ mod tests {
         };
 
         let node_values = vec![0.0, 42.0, 63.0];
-        let result = node.process(&node_values);
+        let result = node.process(&node_values, &Vec::default());
         assert_eq!(result, 63.0);
     }
 }

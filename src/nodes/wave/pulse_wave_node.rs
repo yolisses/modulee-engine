@@ -43,12 +43,12 @@ mod tests {
         };
 
         let node_values = [0.3, 0.5]; // phase < duty_cycle
-        assert_eq!(node.process(&node_values), 1.0);
+        assert_eq!(node.process(&node_values, &Vec::default()), 1.0);
 
         let node_values = [0.7, 0.5]; // phase > duty_cycle
-        assert_eq!(node.process(&node_values), -1.0);
+        assert_eq!(node.process(&node_values, &Vec::default()), -1.0);
 
         let node_values = [0.5, 0.5]; // phase == duty_cycle
-        assert_eq!(node.process(&node_values), -1.0);
+        assert_eq!(node.process(&node_values, &Vec::default()), -1.0);
     }
 }

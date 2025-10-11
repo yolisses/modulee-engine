@@ -42,12 +42,12 @@ mod tests {
         };
 
         let node_values = [10., 20.];
-        assert_eq!(greater_node.process(&node_values), 0.);
+        assert_eq!(greater_node.process(&node_values, &Vec::default()), 0.);
 
         let node_values = [20., 10.];
-        assert_eq!(greater_node.process(&node_values), 1.);
+        assert_eq!(greater_node.process(&node_values, &Vec::default()), 1.);
 
         let node_values = [10., 10.];
-        assert_eq!(greater_node.process(&node_values), 0.);
+        assert_eq!(greater_node.process(&node_values, &Vec::default()), 0.);
     }
 }
