@@ -55,24 +55,18 @@ impl Module {
             let value = node.process(&self.node_values, external_node_values);
             self.node_values[index] = value;
 
-            Module::update_module_nodes_output(node, &mut self.module_node_outputs, index);
+            match node {
+                Node::ModuleNode(node) => {
+                    self.module_node_outputs
+                        .push((index, node.get_last_outputs()));
+                }
+                Node::ModuleVoicesNode(node) => {
+                    self.module_node_outputs
+                        .push((index, node.get_last_outputs()));
+                }
+                _ => (),
+            };
         }
-    }
-
-    pub(crate) fn update_module_nodes_output(
-        node: &Node,
-        module_node_outputs: &mut Vec<(usize, (f32, f32))>,
-        index: usize,
-    ) {
-        match node {
-            Node::ModuleNode(node) => {
-                module_node_outputs.push((index, node.get_last_outputs()));
-            }
-            Node::ModuleVoicesNode(node) => {
-                module_node_outputs.push((index, node.get_last_outputs()));
-            }
-            _ => (),
-        };
     }
 
     pub(crate) fn get_is_pending(&self) -> bool {
