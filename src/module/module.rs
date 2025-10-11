@@ -52,13 +52,6 @@ impl Module {
                 value_from_channel_node.update_from_module_node_outputs(&self.module_node_outputs);
             }
 
-            println!(
-                "{:?} {:?} {:?} {:?}",
-                self.id,
-                node.get_id(),
-                self.node_values,
-                external_node_values
-            );
             let value = node.process(&self.node_values, external_node_values);
             self.node_values[index] = value;
 
