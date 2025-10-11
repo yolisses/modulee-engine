@@ -19,6 +19,8 @@ pub struct Module {
     pub(crate) node_values: Vec<f32>,
     #[serde(skip)]
     pub(crate) module_node_outputs: Vec<(usize, (f32, f32))>,
+    #[serde(skip)]
+    pub(crate) output_values: (f32, f32),
 }
 
 declare_get_id! {Module}
@@ -31,18 +33,7 @@ impl PartialEq for Module {
 
 impl Module {
     pub(crate) fn get_output_values(&self) -> (f32, f32) {
-        let mut values = (0., 0.);
-        for node in &self.nodes {
-            // TODO move this to module.process
-            if let Node::OutputNode(output_node) = node {
-                match output_node.get_channel() {
-                    0 => values.0 = output_node.get_value(),
-                    1 => values.1 = output_node.get_value(),
-                    _ => (),
-                }
-            }
-        }
-        values
+        self.output_values
     }
 
     pub(crate) fn process(&mut self, external_node_values: &[f32]) {
@@ -64,6 +55,11 @@ impl Module {
                     self.module_node_outputs
                         .push((index, node.get_last_outputs()));
                 }
+                Node::OutputNode(node) => match node.get_channel() {
+                    0 => self.output_values.0 = node.get_value(),
+                    1 => self.output_values.1 = node.get_value(),
+                    _ => (),
+                },
                 _ => (),
             };
         }
