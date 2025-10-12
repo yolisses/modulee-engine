@@ -5,6 +5,7 @@ use crate::{
     set_sample_rate_trait::SetSampleRateTrait,
 };
 use serde::Deserialize;
+use vector_map::VecMap;
 
 #[derive(Debug, Deserialize, Clone, Default)]
 pub struct Module {
@@ -17,8 +18,6 @@ pub struct Module {
     /// Also by performance reasons, it's a vector instead of a hash map.
     #[serde(skip)]
     pub(crate) node_values: Vec<f32>,
-    #[serde(skip)]
-    pub(crate) module_node_outputs: Vec<(usize, (f32, f32))>,
     #[serde(skip)]
     pub(crate) output_values: (f32, f32),
 }
@@ -37,23 +36,20 @@ impl Module {
     }
 
     pub(crate) fn process(&mut self, external_node_values: &[f32]) {
-        self.module_node_outputs.clear(); // Clear Vec instead of creating new
-        for (index, node) in self.nodes.iter_mut().enumerate() {
-            if let Node::ValueFromChannelNode(value_from_channel_node) = node {
-                value_from_channel_node.update_from_module_node_outputs(&self.module_node_outputs);
-            }
-
+        let mut index: usize = 0;
+        for node in &mut self.nodes {
             let value = node.process(&self.node_values, external_node_values);
             self.node_values[index] = value;
+            index += 1;
 
             match node {
                 Node::ModuleNode(node) => {
-                    self.module_node_outputs
-                        .push((index, node.get_last_outputs()));
+                    index += 1;
+                    self.node_values[index] = node.get_last_outputs().1;
                 }
                 Node::ModuleVoicesNode(node) => {
-                    self.module_node_outputs
-                        .push((index, node.get_last_outputs()));
+                    index += 1;
+                    self.node_values[index] = node.get_last_outputs().1;
                 }
                 Node::OutputNode(node) => match node.get_channel() {
                     0 => self.output_values.0 = node.get_value(),

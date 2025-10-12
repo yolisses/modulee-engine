@@ -1,4 +1,9 @@
-use crate::module::{module::Module, sort_modules_topologically::sort_modules_topologically};
+use std::any::Any;
+
+use crate::{
+    module::{module::Module, sort_modules_topologically::sort_modules_topologically},
+    sort::has_id::HasId,
+};
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]

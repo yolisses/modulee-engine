@@ -40,8 +40,19 @@ impl Module {
     }
 
     pub(crate) fn reset_node_values(&mut self) {
-        self.node_values = vec![0.; self.nodes.len()];
-        self.module_node_outputs = vec![];
+        self.node_values = vec![
+            0.;
+            self.nodes
+                .iter()
+                .map(|node| -> usize {
+                    if let Node::ModuleNode(_) | Node::ModuleVoicesNode(_) = node {
+                        2
+                    } else {
+                        1
+                    }
+                })
+                .sum()
+        ];
     }
 
     pub(crate) fn set_sample_rate(&mut self, sample_rate: f32) {
@@ -59,8 +70,7 @@ impl Module {
         external_node_indexes: &NodeIndexes,
         input_target_ids: &VecMap<usize, usize>,
     ) {
-        let node_ids = self.get_node_ids();
-        let node_indexes = get_indexes_map(node_ids);
+        let node_indexes = get_indexes_map(&self.nodes);
         for node in &mut self.nodes {
             node.set_input_indexes(&node_indexes);
 
@@ -95,9 +105,5 @@ impl Module {
                 _ => (),
             }
         }
-    }
-
-    pub(crate) fn get_node_ids(&self) -> Vec<usize> {
-        self.nodes.iter().map(|node| node.get_id()).collect()
     }
 }
