@@ -62,6 +62,9 @@ impl Module {
     }
 
     pub(crate) fn sort_nodes_topologically(&mut self) -> Result<(), String> {
+        // Put the output nodes first to leverage locality
+        self.nodes
+            .sort_by_key(|node| if let Node::OutputNode(_) = node { 0 } else { 1 });
         sort_nodes_topologically(&mut self.nodes)
     }
 
