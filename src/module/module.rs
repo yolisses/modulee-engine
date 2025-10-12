@@ -1,11 +1,8 @@
-use std::usize;
-
 use crate::{
     declare_get_id, node::Node, node_trait::NodeTrait, set_note_trait::SetNoteTrait,
     set_sample_rate_trait::SetSampleRateTrait,
 };
 use serde::Deserialize;
-use vector_map::VecMap;
 
 #[derive(Debug, Deserialize, Clone, Default)]
 pub struct Module {
