@@ -41,12 +41,12 @@ impl Module {
 
             match node {
                 Node::ModuleNode(node) => {
-                    index += 1;
                     self.node_values[index] = node.get_last_outputs().1;
+                    index += 1;
                 }
                 Node::ModuleVoicesNode(node) => {
-                    index += 1;
                     self.node_values[index] = node.get_last_outputs().1;
+                    index += 1;
                 }
                 Node::OutputNode(node) => match node.get_channel() {
                     0 => self.output_values.0 = node.get_value(),
