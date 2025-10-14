@@ -27,11 +27,13 @@ impl Graph {
         }
     }
 
-    pub fn get_output_values(&self) -> f32 {
+    pub fn get_output_values(&self) -> (f32, f32) {
         if let Some(main_module) = &self.main_module {
-            main_module.get_output_value()
+            // FIXME it should return two values from different output nodes.
+            let output = main_module.get_output_value();
+            (output, output)
         } else {
-            0.
+            (0., 0.)
         }
     }
 
