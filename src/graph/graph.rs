@@ -27,11 +27,11 @@ impl Graph {
         }
     }
 
-    pub fn get_output_values(&self) -> (f32, f32) {
+    pub fn get_output_values(&self) -> f32 {
         if let Some(main_module) = &self.main_module {
-            main_module.get_output_values()
+            main_module.get_output_value()
         } else {
-            (0., 0.)
+            0.
         }
     }
 

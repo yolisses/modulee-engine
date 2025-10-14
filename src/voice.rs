@@ -28,11 +28,11 @@ impl Voice {
         self.module.get_is_pending()
     }
 
-    pub(crate) fn get_output_values(&self) -> (f32, f32) {
+    pub(crate) fn get_output_value(&self) -> f32 {
         if self.get_is_pending() {
-            return self.module.get_output_values();
+            return self.module.get_output_value();
         }
-        (0., 0.)
+        0.
     }
 
     // TODO consider making module public
