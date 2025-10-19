@@ -2,8 +2,9 @@ use criterion::{criterion_group, criterion_main, Criterion};
 use modulee_engine::Graph;
 
 pub fn criterion_benchmark(c: &mut Criterion) {
+    let graph_json = include_str!("sine_benchmark.json");
+
     c.bench_function("process 10 notes with sine", |b| {
-        let graph_json = include_str!("sine_benchmark.json");
         b.iter(|| {
             let mut graph = Graph::new(48000.);
             graph
