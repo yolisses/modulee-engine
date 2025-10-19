@@ -22,7 +22,7 @@ pub(crate) struct ModuleVoicesNode {
     extras: Extras,
     id: usize,
     #[serde(skip)]
-    last_outputs: (f32, f32),
+    last_output: f32,
     #[serde(skip)]
     module: Option<Module>,
     #[serde(skip)]
@@ -32,10 +32,6 @@ pub(crate) struct ModuleVoicesNode {
 declare_get_id! {ModuleVoicesNode}
 
 impl ModuleVoicesNode {
-    pub(crate) fn get_last_outputs(&self) -> (f32, f32) {
-        self.last_outputs
-    }
-
     pub(crate) fn prepare_module(&mut self, possible_modules: &[Module]) {
         if let Some(target_module_id) = self.extras.target_module_id {
             let module = possible_modules
@@ -106,16 +102,15 @@ impl GetInputsTrait for ModuleVoicesNode {
 
 impl NodeTrait for ModuleVoicesNode {
     fn process(&mut self, node_values: &[f32], _external_node_values: &[f32]) -> f32 {
-        let mut sum = (0., 0.);
+        let mut sum = 0.;
         for voice in &mut self.voices {
             voice.process(node_values);
             // TODO check if this makes sense using just the first channel
-            let outputs = voice.get_output_values();
-            sum.0 += outputs.0;
-            sum.1 += outputs.1;
+            let output = voice.get_output_value();
+            sum += output;
         }
-        self.last_outputs = sum;
-        self.last_outputs.0
+        self.last_output = sum;
+        self.last_output
     }
 
     fn get_is_pending(&self) -> bool {

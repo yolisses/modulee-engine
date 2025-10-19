@@ -11,13 +11,13 @@ mod tests {
             .update_from_json(r#"{"main_module_id": 10, "modules": [{"id": 10, "nodes": []}]}"#)
             .unwrap();
 
-        assert_eq!(graph.main_module.as_ref().unwrap().get_id(), 10);
+        assert_eq!(graph.main_module_instances.as_ref().unwrap().get_id(), 10);
 
         graph
             .update_from_json(r#"{"main_module_id": 20, "modules": [{"id": 10, "nodes": []}, {"id": 20, "nodes": []}]}"#)
             .unwrap();
 
-        assert_eq!(graph.main_module.as_ref().unwrap().get_id(), 20);
+        assert_eq!(graph.main_module_instances.as_ref().unwrap().get_id(), 20);
     }
 
     #[test]

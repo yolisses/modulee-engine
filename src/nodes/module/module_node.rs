@@ -22,7 +22,7 @@ pub(crate) struct ModuleNode {
     extras: Extras,
     id: usize,
     #[serde(skip)]
-    last_outputs: (f32, f32),
+    last_output: f32,
     #[serde(skip)]
     module: Option<Module>,
 }
@@ -30,10 +30,6 @@ pub(crate) struct ModuleNode {
 declare_get_id! {ModuleNode}
 
 impl ModuleNode {
-    pub(crate) fn get_last_outputs(&self) -> (f32, f32) {
-        self.last_outputs
-    }
-
     pub(crate) fn prepare_module(&mut self, possible_modules: &[Module]) {
         if let Some(target_module_id) = self.extras.target_module_id {
             let module = possible_modules
@@ -86,8 +82,8 @@ impl NodeTrait for ModuleNode {
     fn process(&mut self, node_values: &[f32], _external_node_values: &[f32]) -> f32 {
         if let Some(module) = &mut self.module {
             module.process(node_values);
-            self.last_outputs = module.get_output_values();
-            self.last_outputs.0
+            self.last_output = module.get_output_value();
+            self.last_output
         } else {
             0.
         }

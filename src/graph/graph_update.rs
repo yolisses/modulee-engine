@@ -13,20 +13,24 @@ impl Graph {
                 .find(|module| module.get_id() == main_module_id);
 
             if let Some(new_main_module) = new_main_module {
-                if let Some(main_module) = &mut self.main_module {
-                    if main_module.get_id() == main_module_id {
-                        main_module.update(new_main_module);
+                if let Some(main_module_instances) = &mut self.main_module_instances {
+                    if main_module_instances[0].get_id() == main_module_id {
+                        for main_module_instance in main_module_instances {
+                            main_module_instance.update(new_main_module);
+                        }
                     } else {
-                        self.main_module = Some(new_main_module.clone());
+                        self.main_module_instances =
+                            Some([new_main_module.clone(), new_main_module.clone()]);
                     }
                 } else {
-                    self.main_module = Some(new_main_module.clone());
+                    self.main_module_instances =
+                        Some([new_main_module.clone(), new_main_module.clone()]);
                 }
             } else {
-                self.main_module = None;
+                self.main_module_instances = None;
             }
         } else {
-            self.main_module = None;
+            self.main_module_instances = None;
         }
     }
 
@@ -38,8 +42,9 @@ impl Graph {
     }
 
     pub fn update_control(&mut self, control_update_data: &ControlUpdateData) {
-        if let Some(main_module) = &mut self.main_module {
-            main_module.update_control(control_update_data);
+        if let Some(main_module_instances) = &mut self.main_module_instances {
+            main_module_instances[0].update_control(control_update_data);
+            main_module_instances[1].update_control(control_update_data);
         }
     }
 }
