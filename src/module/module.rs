@@ -1,6 +1,6 @@
 use crate::{
-    declare_get_id, node::Node, node_trait::NodeTrait, set_note_trait::SetNoteTrait,
-    set_sample_rate_trait::SetSampleRateTrait,
+    declare_get_id, node::Node, node_trait::NodeTrait, nodes::module::output_node::OutputNode,
+    set_note_trait::SetNoteTrait, set_sample_rate_trait::SetSampleRateTrait,
 };
 use serde::Deserialize;
 
@@ -15,6 +15,9 @@ pub struct Module {
     /// Also by performance reasons, it's a vector instead of a hash map.
     #[serde(skip)]
     pub(crate) node_values: Vec<f32>,
+
+    #[serde(skip)]
+    pub(crate) output_node_index: Option<usize>,
 }
 
 declare_get_id! {Module}
@@ -27,12 +30,16 @@ impl PartialEq for Module {
 
 impl Module {
     pub(crate) fn get_output_value(&self) -> f32 {
-        for node in self.nodes.iter() {
+        if let Some(output_node_index) = self.output_node_index {
+            let node = &self.nodes[output_node_index];
             if let Node::OutputNode(node) = node {
-                return node.get_value();
-            };
+                node.get_value()
+            } else {
+                0.
+            }
+        } else {
+            0.
         }
-        0.
     }
 
     pub(crate) fn process(&mut self, external_node_values: &[f32]) {
