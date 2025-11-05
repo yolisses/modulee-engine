@@ -40,21 +40,8 @@ impl Module {
         self.reset_node_values();
     }
 
-    // TODO check if it still makes sense.
     pub(crate) fn reset_node_values(&mut self) {
-        self.node_values = vec![
-            0.;
-            self.nodes
-                .iter()
-                .map(|node| -> usize {
-                    if let Node::ModuleNode(_) | Node::ModuleVoicesNode(_) = node {
-                        2
-                    } else {
-                        1
-                    }
-                })
-                .sum()
-        ];
+        self.node_values = vec![0.; self.nodes.len()];
     }
 
     pub(crate) fn set_sample_rate(&mut self, sample_rate: f32) {
