@@ -1,5 +1,5 @@
 use crate::{
-    declare_get_id, node::Node, node_trait::NodeTrait, nodes::module::output_node::OutputNode,
+    declare_get_id, node::Node, node_trait::NodeTrait,
     set_note_trait::SetNoteTrait, set_sample_rate_trait::SetSampleRateTrait,
 };
 use serde::Deserialize;
