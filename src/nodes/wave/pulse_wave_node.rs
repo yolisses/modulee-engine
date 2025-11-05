@@ -13,7 +13,7 @@ declare_update! {PulseWaveNode}
 declare_get_input_ids_and_its_getter! {PulseWaveNode, phase, duty_cycle}
 
 impl NodeTrait for PulseWaveNode {
-    fn process(&mut self, node_values: &[f32], _external_node_values: &[f32]) -> f32 {
+    fn process(&mut self, node_values: &[f32]) -> f32 {
         let phase = node_values[self.input_ids.phase];
         let duty_cycle = node_values[self.input_ids.duty_cycle];
 

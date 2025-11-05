@@ -13,7 +13,7 @@ declare_update! {GreaterNode}
 declare_get_input_ids_and_its_getter! {GreaterNode, input1, input2}
 
 impl NodeTrait for GreaterNode {
-    fn process(&mut self, node_values: &[f32], _external_node_values: &[f32]) -> f32 {
+    fn process(&mut self, node_values: &[f32]) -> f32 {
         let input1 = node_values[self.input_ids.input1];
         let input2 = node_values[self.input_ids.input2];
         if input1 > input2 {

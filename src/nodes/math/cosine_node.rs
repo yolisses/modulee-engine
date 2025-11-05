@@ -13,7 +13,7 @@ declare_update! {CosineNode}
 declare_get_input_ids_and_its_getter! {CosineNode, input}
 
 impl NodeTrait for CosineNode {
-    fn process(&mut self, node_values: &[f32], _external_node_values: &[f32]) -> f32 {
+    fn process(&mut self, node_values: &[f32]) -> f32 {
         let input = node_values[self.input_ids.input];
         input.cos()
     }

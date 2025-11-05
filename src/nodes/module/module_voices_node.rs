@@ -101,7 +101,7 @@ impl GetInputsTrait for ModuleVoicesNode {
 }
 
 impl NodeTrait for ModuleVoicesNode {
-    fn process(&mut self, node_values: &[f32], _external_node_values: &[f32]) -> f32 {
+    fn process(&mut self, node_values: &[f32]) -> f32 {
         let mut sum = 0.;
         for voice in &mut self.voices {
             voice.process(node_values);

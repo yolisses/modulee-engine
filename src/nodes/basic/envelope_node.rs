@@ -31,7 +31,7 @@ impl HasUpdate for EnvelopeNode {
 }
 
 impl NodeTrait for EnvelopeNode {
-    fn process(&mut self, node_values: &[f32], _external_node_values: &[f32]) -> f32 {
+    fn process(&mut self, node_values: &[f32]) -> f32 {
         let attack = node_values[self.input_ids.attack];
         let decay = node_values[self.input_ids.decay];
         let sustain = node_values[self.input_ids.sustain];

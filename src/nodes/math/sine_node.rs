@@ -13,7 +13,7 @@ declare_update! {SineNode}
 declare_get_input_ids_and_its_getter! {SineNode, input}
 
 impl NodeTrait for SineNode {
-    fn process(&mut self, node_values: &[f32], _external_node_values: &[f32]) -> f32 {
+    fn process(&mut self, node_values: &[f32]) -> f32 {
         let input = node_values[self.input_ids.input];
         input.sin()
     }

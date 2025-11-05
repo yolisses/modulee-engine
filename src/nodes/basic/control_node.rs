@@ -60,7 +60,7 @@ impl HasUpdate for ControlNode {
 }
 
 impl NodeTrait for ControlNode {
-    fn process(&mut self, _node_values: &[f32], _external_node_values: &[f32]) -> f32 {
+    fn process(&mut self, _node_values: &[f32]) -> f32 {
         if let Some(slew) = &mut self.slew {
             if !slew.get_is_finished() {
                 slew.process();

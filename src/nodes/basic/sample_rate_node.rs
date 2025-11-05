@@ -24,7 +24,7 @@ declare_empty_update! {SampleRateNode}
 declare_empty_get_input_ids! {SampleRateNode}
 
 impl NodeTrait for SampleRateNode {
-    fn process(&mut self, _node_values: &[f32], _external_node_values: &[f32]) -> f32 {
+    fn process(&mut self, _node_values: &[f32]) -> f32 {
         self.sample_rate
     }
 }
