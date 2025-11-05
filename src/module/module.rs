@@ -3,18 +3,26 @@ use crate::{
     set_sample_rate_trait::SetSampleRateTrait,
 };
 use serde::Deserialize;
+use vector_map::VecMap;
 
 #[derive(Debug, Deserialize, Clone, Default)]
 pub struct Module {
     id: usize,
     pub(crate) nodes: Vec<Node>,
+
     /// The output values of the nodes of the module. It's used only in the
     /// process method, but is declared in the struct to prevent costly
     /// allocations in each iteration.
     ///
-    /// Also by performance reasons, it's a vector instead of a hash map.
+    /// Also by performance reasons, it's a vector instead of a hash map, which
+    /// makes required using indexes instead of ids in node inputs.
     #[serde(skip)]
     pub(crate) node_values: Vec<f32>,
+
+    /// Map where the key is the input node index and the value is the target
+    /// node from an outer module index.
+    #[serde(skip)]
+    input_map: VecMap<usize, usize>,
 }
 
 declare_get_id! {Module}
@@ -35,8 +43,14 @@ impl Module {
         0.
     }
 
-    pub(crate) fn update_input_nodes_values(&mut self, _node_values: &[f32]) {
-        todo!()
+    pub(crate) fn update_input_nodes_values(&mut self, node_values: &[f32]) {
+        for (input_index, target_index) in &self.input_map {
+            let node = &mut self.nodes[*input_index];
+            if let Node::InputNode(input_node) = node {
+                let value = node_values[*target_index];
+                input_node.set_value(value);
+            }
+        }
     }
 
     pub(crate) fn process(&mut self) {
