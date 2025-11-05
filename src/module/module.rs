@@ -35,9 +35,13 @@ impl Module {
         0.
     }
 
-    pub(crate) fn process(&mut self, external_node_values: &[f32]) {
+    pub(crate) fn update_input_nodes_values(&mut self, _node_values: &[f32]) {
+        todo!()
+    }
+
+    pub(crate) fn process(&mut self) {
         for (index, node) in self.nodes.iter_mut().enumerate() {
-            let value = node.process(&self.node_values, external_node_values);
+            let value = node.process(&self.node_values);
             self.node_values[index] = value;
         }
     }

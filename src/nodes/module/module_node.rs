@@ -81,7 +81,8 @@ impl GetInputsTrait for ModuleNode {
 impl NodeTrait for ModuleNode {
     fn process(&mut self, node_values: &[f32]) -> f32 {
         if let Some(module) = &mut self.module {
-            module.process(node_values);
+            module.update_input_nodes_values(node_values);
+            module.process();
             self.last_output = module.get_output_value();
             self.last_output
         } else {

@@ -22,8 +22,8 @@ impl Graph {
 
     pub fn process(&mut self) {
         if let Some(main_module_instances) = &mut self.main_module_instances {
-            main_module_instances[0].process(&self.empty_vector);
-            main_module_instances[1].process(&self.empty_vector);
+            main_module_instances[0].process();
+            main_module_instances[1].process();
             self.voices_cleaner.process(&mut main_module_instances[0]);
             self.voices_cleaner.process(&mut main_module_instances[1]);
         }

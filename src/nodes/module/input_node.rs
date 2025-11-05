@@ -7,7 +7,7 @@ use serde::Deserialize;
 pub(crate) struct InputNode {
     id: usize,
     #[serde(skip)]
-    target: usize,
+    value: f32,
 }
 
 declare_get_id! {InputNode}
@@ -15,13 +15,13 @@ declare_empty_update! {InputNode}
 declare_empty_get_input_ids! {InputNode}
 
 impl InputNode {
-    pub(crate) fn set_target(&mut self, target: usize) {
-        self.target = target;
+    pub(crate) fn set_value(&mut self, value: f32) {
+        self.value = value;
     }
 }
 
 impl NodeTrait for InputNode {
-    fn process(&mut self, _node_values: &[f32], external_node_values: &[f32]) -> f32 {
-        external_node_values[self.target]
+    fn process(&mut self, _node_values: &[f32]) -> f32 {
+        self.value
     }
 }

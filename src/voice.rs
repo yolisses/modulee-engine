@@ -1,13 +1,9 @@
-use crate::{
-    control_update_data::ControlUpdateData, module::module::Module, set_note_trait::SetNoteTrait,
-    sort::node_indexes::NodeIndexes,
-};
-use vector_map::VecMap;
+use crate::{module::module::Module, set_note_trait::SetNoteTrait};
 
 // TODO check if all these derives make sense to be used here
 #[derive(Debug, Clone)]
 pub(crate) struct Voice {
-    module: Module,
+    pub(crate) module: Module,
     pub(crate) pitch: f32,
     pub(crate) is_waiting_note_off: bool,
 }
@@ -33,28 +29,6 @@ impl Voice {
             return self.module.get_output_value();
         }
         0.
-    }
-
-    // TODO consider making module public
-    pub(crate) fn process(&mut self, external_node_values: &[f32]) {
-        self.module.process(external_node_values);
-    }
-
-    pub(crate) fn update_module(&mut self, new_module: &Module) {
-        self.module.update(new_module);
-    }
-
-    pub(crate) fn update_control(&mut self, control_update_data: &ControlUpdateData) {
-        self.module.update_control(control_update_data)
-    }
-
-    pub(crate) fn set_node_ids_to_indexes(
-        &mut self,
-        external_node_indexes: &NodeIndexes,
-        input_target_ids: &VecMap<usize, usize>,
-    ) {
-        self.module
-            .set_node_ids_to_indexes(external_node_indexes, input_target_ids)
     }
 }
 

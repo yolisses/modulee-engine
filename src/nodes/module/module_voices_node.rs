@@ -56,7 +56,7 @@ impl ModuleVoicesNode {
             module.update_control(control_update_data)
         }
         for voice in &mut self.voices {
-            voice.update_control(control_update_data);
+            voice.module.update_control(control_update_data);
         }
     }
 }
@@ -69,7 +69,9 @@ impl SetInputIndexesTrait for ModuleVoicesNode {
         }
 
         for voice in &mut self.voices {
-            voice.set_node_ids_to_indexes(external_node_indexes, input_target_ids);
+            voice
+                .module
+                .set_node_ids_to_indexes(external_node_indexes, input_target_ids);
         }
     }
 }
@@ -86,7 +88,7 @@ impl HasUpdate for ModuleVoicesNode {
 
         if let Some(module) = &self.module {
             for voice in &mut self.voices {
-                voice.update_module(module);
+                voice.module.update(module);
             }
         } else {
             self.voices = vec![];
@@ -104,7 +106,8 @@ impl NodeTrait for ModuleVoicesNode {
     fn process(&mut self, node_values: &[f32]) -> f32 {
         let mut sum = 0.;
         for voice in &mut self.voices {
-            voice.process(node_values);
+            voice.module.update_input_nodes_values(node_values);
+            voice.module.process();
             // TODO check if this makes sense using just the first channel
             let output = voice.get_output_value();
             sum += output;

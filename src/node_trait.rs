@@ -6,7 +6,7 @@ use crate::{
 pub(crate) trait NodeTrait:
     HasId + HasUpdate + GetInputsTrait + SetInputIndexesTrait
 {
-    fn process(&mut self, node_values: &[f32], external_node_values: &[f32]) -> f32;
+    fn process(&mut self, node_values: &[f32]) -> f32;
 
     fn get_is_pending(&self) -> bool {
         false

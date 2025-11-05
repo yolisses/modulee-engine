@@ -76,16 +76,6 @@ impl Module {
         let node_indexes = get_indexes_map(&self.nodes);
         for node in &mut self.nodes {
             node.set_input_indexes(&node_indexes);
-
-            if let Node::InputNode(input_node) = node {
-                let target_id = input_target_ids.get(&input_node.get_id());
-                if let Some(target_id) = target_id {
-                    let target_index = external_node_indexes.get(target_id);
-                    if let Some(target_index) = target_index {
-                        input_node.set_target(*target_index);
-                    }
-                }
-            }
         }
     }
 
