@@ -46,19 +46,19 @@ mod tests {
 
         let mut node_values = vec![42., 1.];
 
-        let result = hold_node.process(&node_values, &Vec::default());
+        let result = hold_node.process(&node_values);
         assert_eq!(result, 42.);
         assert_eq!(hold_node.value, 42.);
 
         node_values = vec![81., 0.];
 
-        let result = hold_node.process(&node_values, &Vec::default());
+        let result = hold_node.process(&node_values);
         assert_eq!(result, 42.);
         assert_eq!(hold_node.value, 42.);
 
         node_values = vec![84., 1.];
 
-        let result = hold_node.process(&node_values, &Vec::default());
+        let result = hold_node.process(&node_values);
         assert_eq!(result, 84.);
         assert_eq!(hold_node.value, 84.);
     }

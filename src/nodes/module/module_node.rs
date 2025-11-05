@@ -11,7 +11,7 @@ use vector_map::VecMap;
 #[derive(Debug, Deserialize, Clone)]
 pub(crate) struct Extras {
     target_module_id: Option<usize>,
-    /// Map where the key is the input node id and the value is the target input
+    /// Map where the key is the input node id and the value is the target node
     /// from an outer module.
     #[serde(deserialize_with = "deserialize_vec_map")]
     input_target_ids: VecMap<usize, usize>,

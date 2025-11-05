@@ -43,18 +43,18 @@ mod tests {
         let mut node_values: Vec<f32> = vec![0.];
 
         node_values[0] = 0.;
-        assert_approx_eq!(node.process(&node_values, &Vec::default()), 0.);
+        assert_approx_eq!(node.process(&node_values), 0.);
 
         node_values[0] = 1.;
-        assert_approx_eq!(node.process(&node_values, &Vec::default()), 0.98976886);
+        assert_approx_eq!(node.process(&node_values), 0.98976886);
 
         node_values[0] = 2.;
-        assert_approx_eq!(node.process(&node_values, &Vec::default()), 0.4609982);
+        assert_approx_eq!(node.process(&node_values), 0.4609982);
 
         node_values[0] = 3.;
-        assert_approx_eq!(node.process(&node_values, &Vec::default()), 0.8679685);
+        assert_approx_eq!(node.process(&node_values), 0.8679685);
 
         node_values[0] = 4.;
-        assert_approx_eq!(node.process(&node_values, &Vec::default()), 0.32233316);
+        assert_approx_eq!(node.process(&node_values), 0.32233316);
     }
 }

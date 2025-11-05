@@ -43,7 +43,7 @@ mod tests {
 
         for (input, expected) in test_cases {
             let node_values = vec![input];
-            let result = node.process(&node_values, &Vec::default());
+            let result = node.process(&node_values);
             assert_eq!(result, expected, "Failed for inputs: ({input})");
         }
     }

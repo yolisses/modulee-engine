@@ -59,7 +59,7 @@ mod tests {
     ) -> Vec<f32> {
         let mut values = vec![];
         for _ in 0..iterations {
-            phase_node.process(node_values, &Vec::default());
+            phase_node.process(node_values);
             values.push(phase_node.phase);
         }
         values
