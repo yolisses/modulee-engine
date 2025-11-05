@@ -1,3 +1,5 @@
+use vector_map::VecMap;
+
 use super::{module::Module, sort_by_other_vec_order::sort_by_other_vec_order};
 use crate::{
     control_update_data::ControlUpdateData,
@@ -6,7 +8,7 @@ use crate::{
     set_input_indexes_trait::SetInputIndexesTrait,
     set_sample_rate_trait::SetSampleRateTrait,
     sort::{
-        get_indexes_map::get_indexes_map, has_id::HasId,
+        get_indexes_map::get_indexes_map, has_id::HasId, node_indexes::NodeIndexes,
         sort_nodes_topologically::sort_nodes_topologically,
     },
 };
@@ -38,6 +40,7 @@ impl Module {
         self.reset_node_values();
     }
 
+    // TODO check if it still makes sense.
     pub(crate) fn reset_node_values(&mut self) {
         self.node_values = vec![
             0.;
@@ -67,10 +70,32 @@ impl Module {
         sort_nodes_topologically(&mut self.nodes)
     }
 
-    pub(crate) fn set_node_ids_to_indexes(&mut self) {
-        let node_indexes = get_indexes_map(&self.nodes);
+    pub(crate) fn set_node_ids_to_indexes(
+        &mut self,
+        outer_node_indexes: &NodeIndexes,
+        input_target_ids: &VecMap<usize, usize>,
+    ) {
+        let inner_node_indexes = get_indexes_map(&self.nodes);
+        self.update_input_map(outer_node_indexes, input_target_ids, &inner_node_indexes);
+
         for node in &mut self.nodes {
-            node.set_input_indexes(&node_indexes);
+            node.set_input_indexes(&inner_node_indexes);
+        }
+    }
+
+    fn update_input_map(
+        &mut self,
+        outer_node_indexes: &VecMap<usize, usize>,
+        input_target_ids: &VecMap<usize, usize>,
+        inner_node_indexes: &VecMap<usize, usize>,
+    ) {
+        self.input_map = Default::default();
+        for (input_id, target_id) in input_target_ids {
+            let input_index = inner_node_indexes.get(input_id);
+            let target_index = outer_node_indexes.get(target_id);
+            if let (Some(input_index), Some(target_index)) = (input_index, target_index) {
+                self.input_map.insert(*input_index, *target_index);
+            };
         }
     }
 

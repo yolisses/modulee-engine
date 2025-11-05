@@ -22,7 +22,7 @@ pub struct Module {
     /// Map where the key is the input node index and the value is the target
     /// node from an outer module index.
     #[serde(skip)]
-    input_map: VecMap<usize, usize>,
+    pub(crate) input_map: VecMap<usize, usize>,
 }
 
 declare_get_id! {Module}
