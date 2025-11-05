@@ -6,11 +6,10 @@ use crate::{
     set_input_indexes_trait::SetInputIndexesTrait,
     set_sample_rate_trait::SetSampleRateTrait,
     sort::{
-        get_indexes_map::get_indexes_map, has_id::HasId, node_indexes::NodeIndexes,
+        get_indexes_map::get_indexes_map, has_id::HasId,
         sort_nodes_topologically::sort_nodes_topologically,
     },
 };
-use vector_map::VecMap;
 
 impl Module {
     pub(crate) fn update(&mut self, new_module: &Module) {
@@ -68,11 +67,7 @@ impl Module {
         sort_nodes_topologically(&mut self.nodes)
     }
 
-    pub(crate) fn set_node_ids_to_indexes(
-        &mut self,
-        external_node_indexes: &NodeIndexes,
-        input_target_ids: &VecMap<usize, usize>,
-    ) {
+    pub(crate) fn set_node_ids_to_indexes(&mut self) {
         let node_indexes = get_indexes_map(&self.nodes);
         for node in &mut self.nodes {
             node.set_input_indexes(&node_indexes);

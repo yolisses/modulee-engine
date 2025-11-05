@@ -62,16 +62,13 @@ impl ModuleVoicesNode {
 }
 
 impl SetInputIndexesTrait for ModuleVoicesNode {
-    fn set_input_indexes(&mut self, external_node_indexes: &NodeIndexes) {
-        let input_target_ids = &self.extras.input_target_ids;
+    fn set_input_indexes(&mut self, _node_indexes: &NodeIndexes) {
         if let Some(module) = &mut self.module {
-            module.set_node_ids_to_indexes(external_node_indexes, input_target_ids);
+            module.set_node_ids_to_indexes();
         }
 
         for voice in &mut self.voices {
-            voice
-                .module
-                .set_node_ids_to_indexes(external_node_indexes, input_target_ids);
+            voice.module.set_node_ids_to_indexes();
         }
     }
 }
