@@ -22,6 +22,6 @@ impl InputNode {
 
 impl NodeTrait for InputNode {
     fn process(&mut self, _node_values: &[f32], external_node_values: &[f32]) -> f32 {
-        external_node_values[self.target]
+        unsafe { *external_node_values.get_unchecked(self.target) }
     }
 }

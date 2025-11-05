@@ -14,8 +14,8 @@ declare_get_input_ids_and_its_getter! {PulseWaveNode, phase, duty_cycle}
 
 impl NodeTrait for PulseWaveNode {
     fn process(&mut self, node_values: &[f32], _external_node_values: &[f32]) -> f32 {
-        let phase = node_values[self.input_ids.phase];
-        let duty_cycle = node_values[self.input_ids.duty_cycle];
+        let phase = unsafe { *node_values.get_unchecked(self.input_ids.phase) };
+        let duty_cycle = unsafe { *node_values.get_unchecked(self.input_ids.duty_cycle) };
 
         if phase < duty_cycle {
             1.0

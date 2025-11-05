@@ -32,7 +32,7 @@ impl SetSampleRateTrait for PhaseNode {
 
 impl NodeTrait for PhaseNode {
     fn process(&mut self, node_values: &[f32], _external_node_values: &[f32]) -> f32 {
-        let frequency = node_values[self.input_ids.frequency];
+        let frequency = unsafe { *node_values.get_unchecked(self.input_ids.frequency) };
 
         if frequency != self.last_frequency {
             self.last_frequency = frequency;

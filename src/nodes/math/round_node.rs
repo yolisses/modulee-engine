@@ -14,7 +14,7 @@ declare_get_input_ids_and_its_getter! {RoundNode, input}
 
 impl NodeTrait for RoundNode {
     fn process(&mut self, node_values: &[f32], _external_node_values: &[f32]) -> f32 {
-        let input = node_values[self.input_ids.input];
+        let input = unsafe { *node_values.get_unchecked(self.input_ids.input) };
         input.round()
     }
 }

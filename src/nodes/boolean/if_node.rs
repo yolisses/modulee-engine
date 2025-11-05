@@ -15,9 +15,9 @@ declare_get_input_ids_and_its_getter! {IfNode, condition, input1, input2}
 
 impl NodeTrait for IfNode {
     fn process(&mut self, node_values: &[f32], _external_node_values: &[f32]) -> f32 {
-        let input1 = node_values[self.input_ids.input1];
-        let input2 = node_values[self.input_ids.input2];
-        let condition = node_values[self.input_ids.condition];
+        let input1 = unsafe { *node_values.get_unchecked(self.input_ids.input1) };
+        let input2 = unsafe { *node_values.get_unchecked(self.input_ids.input2) };
+        let condition = unsafe { *node_values.get_unchecked(self.input_ids.condition) };
         if get_bool_value(condition) {
             input1
         } else {
