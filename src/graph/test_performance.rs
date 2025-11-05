@@ -5,7 +5,7 @@ mod tests {
 
     #[test]
     fn test_performance() {
-        let data_path = std::path::Path::new("src/graph/test/graphEngineData.json");
+        let data_path = std::path::Path::new("benches/piano_benchmark.json");
         let data = fs::read_to_string(&data_path).expect("Can't find the file");
         let mut graph = Graph::new(48000.);
         graph
