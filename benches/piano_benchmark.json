@@ -6,6 +6,17 @@
       "nodes": [
         {
           "extras": {
+            "channel": 0
+          },
+          "id": 3868896372,
+          "input_ids": {
+            "input": 3271096338
+          },
+          "originalId": "16c5637d-1f78-4a56-8fcc-db534420ddb9",
+          "type": "OutputNode"
+        },
+        {
+          "extras": {
             "input_target_ids": {
               "3227062056": 535880848
             },
@@ -13,24 +24,16 @@
           },
           "id": 3271096338,
           "input_ids": {},
+          "originalId": "946acf34-6be3-4ab5-b9a2-4325167c04c6",
           "type": "ModuleVoicesNode"
         },
         {
           "extras": {
-            "channel": 0
-          },
-          "id": 3868896372,
-          "input_ids": {
-            "input": 3271096338
-          },
-          "type": "OutputNode"
-        },
-        {
-          "extras": {
-            "value": 0.4166666666666676
+            "value": 1.666666666666669
           },
           "id": 535880848,
           "input_ids": {},
+          "originalId": "946acf34-6be3-4ab5-b9a2-4325167c04c6/9184e83d-6c59-445d-b3a2-78a52752e107.control",
           "type": "ControlNode"
         }
       ]
@@ -46,121 +49,78 @@
           "input_ids": {
             "input": 1752477440
           },
+          "originalId": "5a8d536e-14dc-4446-8758-5925e856f95d",
           "type": "OutputNode"
-        },
-        {
-          "extras": {
-            "input_target_ids": {
-              "3025106600": 1583236568,
-              "3080815384": 1092683028
-            },
-            "target_module_id": 2225394580
-          },
-          "id": 3470179156,
-          "input_ids": {},
-          "type": "ModuleNode"
-        },
-        {
-          "extras": {},
-          "id": 2090280908,
-          "input_ids": {
-            "frequency": 2534759079
-          },
-          "type": "PhaseNode"
-        },
-        {
-          "extras": {},
-          "id": 2225688824,
-          "input_ids": {
-            "input1": 1191569241,
-            "input2": 369413796
-          },
-          "type": "MultiplyNode"
-        },
-        {
-          "extras": {},
-          "id": 1583236568,
-          "input_ids": {
-            "input1": 339836223,
-            "input2": 2006728692
-          },
-          "type": "MultiplyNode"
-        },
-        {
-          "extras": {},
-          "id": 339836223,
-          "input_ids": {
-            "input": 638754590
-          },
-          "type": "SineNode"
-        },
-        {
-          "extras": {},
-          "id": 940281172,
-          "input_ids": {
-            "input1": 2090280908,
-            "input2": 3072781352
-          },
-          "type": "MultiplyNode"
-        },
-        {
-          "extras": {
-            "value": 6.28318530718
-          },
-          "id": 3072781352,
-          "input_ids": {},
-          "type": "ConstantNode"
-        },
-        {
-          "extras": {},
-          "id": 1191569241,
-          "input_ids": {
-            "input": 638754590
-          },
-          "type": "CosineNode"
         },
         {
           "extras": {},
           "id": 1752477440,
           "input_ids": {
-            "input1": 3470179156,
+            "input1": 1506068408,
             "input2": 2817724076
           },
+          "originalId": "74f56c06-848e-443d-8a3f-eb8e6151f904",
           "type": "MultiplyNode"
         },
         {
           "extras": {},
-          "id": 2817724076,
+          "id": 1506068408,
           "input_ids": {
-            "attack": 3760328932,
-            "decay": 3545028256,
-            "release": 2333356600,
-            "sustain": 3248532816
+            "input1": 2586441108,
+            "input2": 1521395905
           },
-          "type": "EnvelopeNode"
-        },
-        {
-          "extras": {},
-          "id": 638754590,
-          "input_ids": {
-            "input1": 940281172,
-            "input2": 4229535184
-          },
+          "originalId": "630ab321-66ae-4e19-b520-753e61d3041b_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
           "type": "MultiplyNode"
         },
         {
           "extras": {},
-          "id": 4139211417,
-          "input_ids": {},
-          "type": "PitchNode"
+          "id": 2586441108,
+          "input_ids": {
+            "input1": 3150297612,
+            "input2": 787366412
+          },
+          "originalId": "065b609a-cbcd-4ae6-ae1d-e39fa130f92a_for_1ecec564-62dc-4f8a-b56c-a17e1ac827bb_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "AddNode"
         },
         {
           "extras": {},
-          "id": 4217161064,
+          "id": 3150297612,
           "input_ids": {
-            "value": 4139211417
+            "input1": 2012055236,
+            "input2": 305922228
           },
-          "type": "RandomFromValueNode"
+          "originalId": "065b609a-cbcd-4ae6-ae1d-e39fa130f92a_for_1bfcd602-08d8-4836-a906-5f4adc97758a_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "AddNode"
+        },
+        {
+          "extras": {},
+          "id": 2012055236,
+          "input_ids": {
+            "input1": 1861642040,
+            "input2": 255253428
+          },
+          "originalId": "e8506730-798b-4467-84e8-6da2310799fb_for_39ce8831-a58b-4a9f-8426-d47a7cd2c922_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "AddNode"
+        },
+        {
+          "extras": {},
+          "id": 1861642040,
+          "input_ids": {
+            "input1": 1924986065,
+            "input2": 977377909
+          },
+          "originalId": "aa153eb4-2f84-4c6c-b8e1-cd51d1e861f9_for_39ce8831-a58b-4a9f-8426-d47a7cd2c922_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "MultiplyNode"
+        },
+        {
+          "extras": {},
+          "id": 1924986065,
+          "input_ids": {
+            "input1": 1092683028,
+            "input2": 2507874820
+          },
+          "originalId": "6a01158f-4b4d-47c3-977d-e4a6f986b5ef_for_39ce8831-a58b-4a9f-8426-d47a7cd2c922_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "SubtractNode"
         },
         {
           "extras": {},
@@ -169,7 +129,99 @@
             "input1": 2225688824,
             "input2": 3016206076
           },
+          "originalId": "151e4bbc-15c8-44de-9720-853e9f60b233",
           "type": "AddNode"
+        },
+        {
+          "extras": {},
+          "id": 2225688824,
+          "input_ids": {
+            "input1": 1191569241,
+            "input2": 369413796
+          },
+          "originalId": "53d5232b-7c4b-47c2-a075-892c91505732",
+          "type": "MultiplyNode"
+        },
+        {
+          "extras": {},
+          "id": 1191569241,
+          "input_ids": {
+            "input": 638754590
+          },
+          "originalId": "dca818f6-8735-4b07-9eec-8520e304e92c",
+          "type": "CosineNode"
+        },
+        {
+          "extras": {},
+          "id": 638754590,
+          "input_ids": {
+            "input1": 940281172,
+            "input2": 4229535184
+          },
+          "originalId": "c90cdfbc-266a-4255-b773-911b7788498b",
+          "type": "MultiplyNode"
+        },
+        {
+          "extras": {},
+          "id": 940281172,
+          "input_ids": {
+            "input1": 2090280908,
+            "input2": 3072781352
+          },
+          "originalId": "24a98009-e556-4ed0-80a5-39eaeac99415",
+          "type": "MultiplyNode"
+        },
+        {
+          "extras": {},
+          "id": 2090280908,
+          "input_ids": {
+            "frequency": 2534759079
+          },
+          "originalId": "58624045-ccdb-48ac-ac3b-e6cd25c5498d",
+          "type": "PhaseNode"
+        },
+        {
+          "extras": {},
+          "id": 2534759079,
+          "input_ids": {
+            "pitch": 3077228184
+          },
+          "originalId": "auto_node_for_input_path_58624045-ccdb-48ac-ac3b-e6cd25c5498d/frequency",
+          "type": "FrequencyNode"
+        },
+        {
+          "extras": {},
+          "id": 3077228184,
+          "input_ids": {},
+          "originalId": "auto_node_for_input_path_auto_node_for_input_path_58624045-ccdb-48ac-ac3b-e6cd25c5498d/frequency/pitch",
+          "type": "PitchNode"
+        },
+        {
+          "extras": {
+            "value": 6.28318530718
+          },
+          "id": 3072781352,
+          "input_ids": {},
+          "originalId": "39545ef1-fd15-4459-9c35-b6fe63e4d6f2",
+          "type": "ConstantNode"
+        },
+        {
+          "extras": {
+            "value": 2
+          },
+          "id": 4229535184,
+          "input_ids": {},
+          "originalId": "c90cdfbc-266a-4255-b773-911b7788498b/input2.control",
+          "type": "ControlNode"
+        },
+        {
+          "extras": {
+            "value": 0.2666666666666666
+          },
+          "id": 369413796,
+          "input_ids": {},
+          "originalId": "53d5232b-7c4b-47c2-a075-892c91505732/input2.control",
+          "type": "ControlNode"
         },
         {
           "extras": {},
@@ -178,12 +230,40 @@
             "input1": 4217161064,
             "input2": 2966481488
           },
+          "originalId": "f30bb390-d17a-4c5c-a746-3e3a3743b882",
           "type": "AddNode"
+        },
+        {
+          "extras": {},
+          "id": 4217161064,
+          "input_ids": {
+            "value": 4139211417
+          },
+          "originalId": "ead79251-8a52-41c3-8cb6-f4a5dcfd599a",
+          "type": "RandomFromValueNode"
+        },
+        {
+          "extras": {},
+          "id": 4139211417,
+          "input_ids": {},
+          "originalId": "7e46d9f4-e120-48eb-bc13-0a1acd031947",
+          "type": "PitchNode"
+        },
+        {
+          "extras": {},
+          "id": 2966481488,
+          "input_ids": {
+            "input1": 4124359819,
+            "input2": 3227062056
+          },
+          "originalId": "df43be5c-44ba-4af9-97b9-de42259cb9e2",
+          "type": "MultiplyNode"
         },
         {
           "extras": {},
           "id": 4124359819,
           "input_ids": {},
+          "originalId": "1e1d68b6-6177-4759-ba73-32c34c849c95",
           "type": "TimeNode"
         },
         {
@@ -195,38 +275,103 @@
           },
           "id": 3227062056,
           "input_ids": {},
+          "originalId": "9184e83d-6c59-445d-b3a2-78a52752e107",
           "type": "InputNode"
         },
         {
           "extras": {},
-          "id": 2966481488,
+          "id": 2507874820,
           "input_ids": {
-            "input1": 4124359819,
-            "input2": 3227062056
+            "input": 1092683028
           },
+          "originalId": "61fdb493-e0b2-4eaa-855d-8ca55a33f3e2_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "FloorNode"
+        },
+        {
+          "extras": {},
+          "id": 977377909,
+          "input_ids": {
+            "input": 1160815044
+          },
+          "originalId": "8e0bdd62-ec7c-47d9-addc-8e1c61a2574a_for_39ce8831-a58b-4a9f-8426-d47a7cd2c922_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "CosineNode"
+        },
+        {
+          "extras": {},
+          "id": 1160815044,
+          "input_ids": {
+            "input1": 3912799300,
+            "input2": 1005687684
+          },
+          "originalId": "69355e8f-9f2a-426e-b1cf-ec9fa890b536_for_1e7a5bec-4eb7-4c87-98dd-856e4006a191_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "SubtractNode"
+        },
+        {
+          "extras": {},
+          "id": 3912799300,
+          "input_ids": {
+            "input1": 175965348,
+            "input2": 3721485040
+          },
+          "originalId": "e8356493-bffc-4bd5-aca3-dcb35ac2c732_for_1e7a5bec-4eb7-4c87-98dd-856e4006a191_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
           "type": "MultiplyNode"
         },
         {
           "extras": {},
-          "id": 2534759079,
+          "id": 175965348,
           "input_ids": {
-            "pitch": 3077228184
+            "value": 1760070076
           },
-          "type": "FrequencyNode"
+          "originalId": "33ff3ebc-4e7d-40cf-a826-d523b23eebef_for_1e7a5bec-4eb7-4c87-98dd-856e4006a191_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "RandomFromValueNode"
         },
         {
           "extras": {},
-          "id": 3077228184,
-          "input_ids": {},
-          "type": "PitchNode"
+          "id": 1760070076,
+          "input_ids": {
+            "input1": 2507874820,
+            "input2": 883442741
+          },
+          "originalId": "271c4bae-a07a-4d3c-9d6c-6607701bdf34_for_1e7a5bec-4eb7-4c87-98dd-856e4006a191_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "AddNode"
         },
         {
-          "extras": {
-            "value": 0.2666666666666666
+          "extras": {},
+          "id": 883442741,
+          "input_ids": {
+            "input1": 3737150899,
+            "input2": 689381336
           },
-          "id": 369413796,
-          "input_ids": {},
-          "type": "ControlNode"
+          "originalId": "1a7849f5-7fae-4faa-9a4d-cb31dfec35c8_for_1e7a5bec-4eb7-4c87-98dd-856e4006a191_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "MultiplyNode"
+        },
+        {
+          "extras": {},
+          "id": 3737150899,
+          "input_ids": {
+            "input": 1583236568
+          },
+          "originalId": "51484071-d5f1-40d4-8089-623d7f7a7a67_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "FloorNode"
+        },
+        {
+          "extras": {},
+          "id": 1583236568,
+          "input_ids": {
+            "input1": 339836223,
+            "input2": 2006728692
+          },
+          "originalId": "f21992b2-3e8f-4155-af32-8f9ff80af080",
+          "type": "MultiplyNode"
+        },
+        {
+          "extras": {},
+          "id": 339836223,
+          "input_ids": {
+            "input": 638754590
+          },
+          "originalId": "5799415f-f179-4c62-b414-bf71a0f9eb89",
+          "type": "SineNode"
         },
         {
           "extras": {
@@ -234,7 +379,839 @@
           },
           "id": 2006728692,
           "input_ids": {},
+          "originalId": "f21992b2-3e8f-4155-af32-8f9ff80af080/input2.control",
           "type": "ControlNode"
+        },
+        {
+          "extras": {
+            "value": 2
+          },
+          "id": 689381336,
+          "input_ids": {},
+          "originalId": "bbb9fb2f-835e-4e64-be62-c01d25d049a3_for_1e7a5bec-4eb7-4c87-98dd-856e4006a191_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "ConstantNode"
+        },
+        {
+          "extras": {
+            "value": 2
+          },
+          "id": 3721485040,
+          "input_ids": {},
+          "originalId": "e8356493-bffc-4bd5-aca3-dcb35ac2c732/input2.control_for_1e7a5bec-4eb7-4c87-98dd-856e4006a191_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "ControlNode"
+        },
+        {
+          "extras": {
+            "value": 1
+          },
+          "id": 1005687684,
+          "input_ids": {},
+          "originalId": "69355e8f-9f2a-426e-b1cf-ec9fa890b536/input2.control_for_1e7a5bec-4eb7-4c87-98dd-856e4006a191_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "ControlNode"
+        },
+        {
+          "extras": {},
+          "id": 255253428,
+          "input_ids": {
+            "input1": 695771424,
+            "input2": 3724592436
+          },
+          "originalId": "6740b4a3-b0ac-44d3-ba58-bb1976573f51_for_39ce8831-a58b-4a9f-8426-d47a7cd2c922_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "MultiplyNode"
+        },
+        {
+          "extras": {},
+          "id": 695771424,
+          "input_ids": {
+            "input1": 1583236568,
+            "input2": 3737150899
+          },
+          "originalId": "2087be16-8f4f-452c-af47-77b8b5f0eb14_for_39ce8831-a58b-4a9f-8426-d47a7cd2c922_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "SubtractNode"
+        },
+        {
+          "extras": {},
+          "id": 3724592436,
+          "input_ids": {
+            "input": 1160815044
+          },
+          "originalId": "5ecc4a43-b6e7-48d5-8f4f-262854b4a2c2_for_39ce8831-a58b-4a9f-8426-d47a7cd2c922_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "SineNode"
+        },
+        {
+          "extras": {},
+          "id": 305922228,
+          "input_ids": {
+            "input1": 2220862700,
+            "input2": 3181340016
+          },
+          "originalId": "847f814a-5a7b-4e56-9eac-576951b6a75a_for_1bfcd602-08d8-4836-a906-5f4adc97758a_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "MultiplyNode"
+        },
+        {
+          "extras": {},
+          "id": 2220862700,
+          "input_ids": {
+            "input1": 431600403,
+            "input2": 2012055236
+          },
+          "originalId": "aea1c5c0-eca2-43d0-89cb-f0b23b35224e_for_1bfcd602-08d8-4836-a906-5f4adc97758a_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "SubtractNode"
+        },
+        {
+          "extras": {},
+          "id": 431600403,
+          "input_ids": {
+            "input1": 1796321176,
+            "input2": 3662229672
+          },
+          "originalId": "e8506730-798b-4467-84e8-6da2310799fb_for_47be1dc9-4b20-4109-bb4e-cb7c4b3cec84_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "AddNode"
+        },
+        {
+          "extras": {},
+          "id": 1796321176,
+          "input_ids": {
+            "input1": 811700188,
+            "input2": 916805763
+          },
+          "originalId": "aa153eb4-2f84-4c6c-b8e1-cd51d1e861f9_for_47be1dc9-4b20-4109-bb4e-cb7c4b3cec84_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "MultiplyNode"
+        },
+        {
+          "extras": {},
+          "id": 811700188,
+          "input_ids": {
+            "input1": 1092683028,
+            "input2": 1062958919
+          },
+          "originalId": "6a01158f-4b4d-47c3-977d-e4a6f986b5ef_for_47be1dc9-4b20-4109-bb4e-cb7c4b3cec84_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "SubtractNode"
+        },
+        {
+          "extras": {},
+          "id": 1062958919,
+          "input_ids": {
+            "input1": 2507874820,
+            "input2": 617277672
+          },
+          "originalId": "d25f3f32-7b29-49b5-9d08-284c30a0e857_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "AddNode"
+        },
+        {
+          "extras": {
+            "value": 1
+          },
+          "id": 617277672,
+          "input_ids": {},
+          "originalId": "d25f3f32-7b29-49b5-9d08-284c30a0e857/input2.control_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "ControlNode"
+        },
+        {
+          "extras": {},
+          "id": 916805763,
+          "input_ids": {
+            "input": 2864998752
+          },
+          "originalId": "8e0bdd62-ec7c-47d9-addc-8e1c61a2574a_for_47be1dc9-4b20-4109-bb4e-cb7c4b3cec84_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "CosineNode"
+        },
+        {
+          "extras": {},
+          "id": 2864998752,
+          "input_ids": {
+            "input1": 2680529313,
+            "input2": 425846840
+          },
+          "originalId": "69355e8f-9f2a-426e-b1cf-ec9fa890b536_for_9fb5e8fc-05ce-48f5-a4ac-675e70de9674_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "SubtractNode"
+        },
+        {
+          "extras": {},
+          "id": 2680529313,
+          "input_ids": {
+            "input1": 1353250196,
+            "input2": 2113274308
+          },
+          "originalId": "e8356493-bffc-4bd5-aca3-dcb35ac2c732_for_9fb5e8fc-05ce-48f5-a4ac-675e70de9674_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "MultiplyNode"
+        },
+        {
+          "extras": {},
+          "id": 1353250196,
+          "input_ids": {
+            "value": 1957903812
+          },
+          "originalId": "33ff3ebc-4e7d-40cf-a826-d523b23eebef_for_9fb5e8fc-05ce-48f5-a4ac-675e70de9674_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "RandomFromValueNode"
+        },
+        {
+          "extras": {},
+          "id": 1957903812,
+          "input_ids": {
+            "input1": 1062958919,
+            "input2": 4258768068
+          },
+          "originalId": "271c4bae-a07a-4d3c-9d6c-6607701bdf34_for_9fb5e8fc-05ce-48f5-a4ac-675e70de9674_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "AddNode"
+        },
+        {
+          "extras": {},
+          "id": 4258768068,
+          "input_ids": {
+            "input1": 3737150899,
+            "input2": 3877768610
+          },
+          "originalId": "1a7849f5-7fae-4faa-9a4d-cb31dfec35c8_for_9fb5e8fc-05ce-48f5-a4ac-675e70de9674_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "MultiplyNode"
+        },
+        {
+          "extras": {
+            "value": 2
+          },
+          "id": 3877768610,
+          "input_ids": {},
+          "originalId": "bbb9fb2f-835e-4e64-be62-c01d25d049a3_for_9fb5e8fc-05ce-48f5-a4ac-675e70de9674_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "ConstantNode"
+        },
+        {
+          "extras": {
+            "value": 2
+          },
+          "id": 2113274308,
+          "input_ids": {},
+          "originalId": "e8356493-bffc-4bd5-aca3-dcb35ac2c732/input2.control_for_9fb5e8fc-05ce-48f5-a4ac-675e70de9674_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "ControlNode"
+        },
+        {
+          "extras": {
+            "value": 1
+          },
+          "id": 425846840,
+          "input_ids": {},
+          "originalId": "69355e8f-9f2a-426e-b1cf-ec9fa890b536/input2.control_for_9fb5e8fc-05ce-48f5-a4ac-675e70de9674_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "ControlNode"
+        },
+        {
+          "extras": {},
+          "id": 3662229672,
+          "input_ids": {
+            "input1": 3059524556,
+            "input2": 3044853421
+          },
+          "originalId": "6740b4a3-b0ac-44d3-ba58-bb1976573f51_for_47be1dc9-4b20-4109-bb4e-cb7c4b3cec84_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "MultiplyNode"
+        },
+        {
+          "extras": {},
+          "id": 3059524556,
+          "input_ids": {
+            "input1": 1583236568,
+            "input2": 3737150899
+          },
+          "originalId": "2087be16-8f4f-452c-af47-77b8b5f0eb14_for_47be1dc9-4b20-4109-bb4e-cb7c4b3cec84_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "SubtractNode"
+        },
+        {
+          "extras": {},
+          "id": 3044853421,
+          "input_ids": {
+            "input": 2864998752
+          },
+          "originalId": "5ecc4a43-b6e7-48d5-8f4f-262854b4a2c2_for_47be1dc9-4b20-4109-bb4e-cb7c4b3cec84_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "SineNode"
+        },
+        {
+          "extras": {},
+          "id": 3181340016,
+          "input_ids": {
+            "input1": 3840601318,
+            "input2": 3670797892
+          },
+          "originalId": "38a9b7da-18ce-434b-96b4-a8dbf045ee30_for_e828e552-4dbf-4e86-a47b-e6d57d230072_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "MultiplyNode"
+        },
+        {
+          "extras": {},
+          "id": 3840601318,
+          "input_ids": {
+            "input1": 3535476812,
+            "input2": 2496103076
+          },
+          "originalId": "ea255720-5e13-4324-8f4d-cc8a7db37cd5_for_e828e552-4dbf-4e86-a47b-e6d57d230072_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "MultiplyNode"
+        },
+        {
+          "extras": {},
+          "id": 3535476812,
+          "input_ids": {
+            "input1": 2496103076,
+            "input2": 2496103076
+          },
+          "originalId": "7e19039f-9888-4549-abf6-91d56e047f19_for_e828e552-4dbf-4e86-a47b-e6d57d230072_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "MultiplyNode"
+        },
+        {
+          "extras": {},
+          "id": 2496103076,
+          "input_ids": {
+            "input1": 1092683028,
+            "input2": 2507874820
+          },
+          "originalId": "30786b36-061f-4c15-8197-8be6ca9b104b_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "SubtractNode"
+        },
+        {
+          "extras": {},
+          "id": 3670797892,
+          "input_ids": {
+            "input1": 2198743392,
+            "input2": 1214654236
+          },
+          "originalId": "ac059d54-0bd0-4c28-b023-2e4979cd4f9b_for_e828e552-4dbf-4e86-a47b-e6d57d230072_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "AddNode"
+        },
+        {
+          "extras": {},
+          "id": 2198743392,
+          "input_ids": {
+            "input1": 2150754796,
+            "input2": 2496103076
+          },
+          "originalId": "da2d6d75-e15d-4bf7-9827-954d7bd5d52b_for_e828e552-4dbf-4e86-a47b-e6d57d230072_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "MultiplyNode"
+        },
+        {
+          "extras": {},
+          "id": 2150754796,
+          "input_ids": {
+            "input1": 4234265795,
+            "input2": 740215212
+          },
+          "originalId": "34da7915-c9a8-415a-be21-82ea631569f8_for_e828e552-4dbf-4e86-a47b-e6d57d230072_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "SubtractNode"
+        },
+        {
+          "extras": {},
+          "id": 4234265795,
+          "input_ids": {
+            "input1": 2496103076,
+            "input2": 1633474411
+          },
+          "originalId": "329fae48-3bbb-45ee-8220-335f6647a9bc_for_e828e552-4dbf-4e86-a47b-e6d57d230072_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "MultiplyNode"
+        },
+        {
+          "extras": {
+            "value": 6
+          },
+          "id": 1633474411,
+          "input_ids": {},
+          "originalId": "99abaf0d-f9d1-4dd1-9c08-317ecf839fe9_for_e828e552-4dbf-4e86-a47b-e6d57d230072_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "ConstantNode"
+        },
+        {
+          "extras": {
+            "value": 15
+          },
+          "id": 740215212,
+          "input_ids": {},
+          "originalId": "b616acce-4a25-42d8-ae4d-f0f672217e59_for_e828e552-4dbf-4e86-a47b-e6d57d230072_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "ConstantNode"
+        },
+        {
+          "extras": {
+            "value": 10
+          },
+          "id": 1214654236,
+          "input_ids": {},
+          "originalId": "94dfdbd8-efeb-4a70-a071-b366d2d4007a_for_e828e552-4dbf-4e86-a47b-e6d57d230072_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "ConstantNode"
+        },
+        {
+          "extras": {},
+          "id": 787366412,
+          "input_ids": {
+            "input1": 1634845404,
+            "input2": 2505857327
+          },
+          "originalId": "847f814a-5a7b-4e56-9eac-576951b6a75a_for_1ecec564-62dc-4f8a-b56c-a17e1ac827bb_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "MultiplyNode"
+        },
+        {
+          "extras": {},
+          "id": 1634845404,
+          "input_ids": {
+            "input1": 155478492,
+            "input2": 3150297612
+          },
+          "originalId": "aea1c5c0-eca2-43d0-89cb-f0b23b35224e_for_1ecec564-62dc-4f8a-b56c-a17e1ac827bb_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "SubtractNode"
+        },
+        {
+          "extras": {},
+          "id": 155478492,
+          "input_ids": {
+            "input1": 4144167968,
+            "input2": 917396648
+          },
+          "originalId": "065b609a-cbcd-4ae6-ae1d-e39fa130f92a_for_2d16bdf2-f6fd-4ccc-a54d-7e67083f89b9_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "AddNode"
+        },
+        {
+          "extras": {},
+          "id": 4144167968,
+          "input_ids": {
+            "input1": 4067750476,
+            "input2": 3511764516
+          },
+          "originalId": "e8506730-798b-4467-84e8-6da2310799fb_for_c0b45f63-5906-4cb3-8dfc-a6e189616886_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "AddNode"
+        },
+        {
+          "extras": {},
+          "id": 4067750476,
+          "input_ids": {
+            "input1": 1369618212,
+            "input2": 182535540
+          },
+          "originalId": "aa153eb4-2f84-4c6c-b8e1-cd51d1e861f9_for_c0b45f63-5906-4cb3-8dfc-a6e189616886_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "MultiplyNode"
+        },
+        {
+          "extras": {},
+          "id": 1369618212,
+          "input_ids": {
+            "input1": 1092683028,
+            "input2": 2507874820
+          },
+          "originalId": "6a01158f-4b4d-47c3-977d-e4a6f986b5ef_for_c0b45f63-5906-4cb3-8dfc-a6e189616886_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "SubtractNode"
+        },
+        {
+          "extras": {},
+          "id": 182535540,
+          "input_ids": {
+            "input": 4201409859
+          },
+          "originalId": "8e0bdd62-ec7c-47d9-addc-8e1c61a2574a_for_c0b45f63-5906-4cb3-8dfc-a6e189616886_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "CosineNode"
+        },
+        {
+          "extras": {},
+          "id": 4201409859,
+          "input_ids": {
+            "input1": 2159314220,
+            "input2": 337304468
+          },
+          "originalId": "69355e8f-9f2a-426e-b1cf-ec9fa890b536_for_bccd0472-474e-4baa-96ea-8cc6cd8620cc_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "SubtractNode"
+        },
+        {
+          "extras": {},
+          "id": 2159314220,
+          "input_ids": {
+            "input1": 4016344816,
+            "input2": 1359563447
+          },
+          "originalId": "e8356493-bffc-4bd5-aca3-dcb35ac2c732_for_bccd0472-474e-4baa-96ea-8cc6cd8620cc_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "MultiplyNode"
+        },
+        {
+          "extras": {},
+          "id": 4016344816,
+          "input_ids": {
+            "value": 320355012
+          },
+          "originalId": "33ff3ebc-4e7d-40cf-a826-d523b23eebef_for_bccd0472-474e-4baa-96ea-8cc6cd8620cc_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "RandomFromValueNode"
+        },
+        {
+          "extras": {},
+          "id": 320355012,
+          "input_ids": {
+            "input1": 2507874820,
+            "input2": 4278823108
+          },
+          "originalId": "271c4bae-a07a-4d3c-9d6c-6607701bdf34_for_bccd0472-474e-4baa-96ea-8cc6cd8620cc_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "AddNode"
+        },
+        {
+          "extras": {},
+          "id": 4278823108,
+          "input_ids": {
+            "input1": 559693140,
+            "input2": 4165102704
+          },
+          "originalId": "1a7849f5-7fae-4faa-9a4d-cb31dfec35c8_for_bccd0472-474e-4baa-96ea-8cc6cd8620cc_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "MultiplyNode"
+        },
+        {
+          "extras": {},
+          "id": 559693140,
+          "input_ids": {
+            "input1": 3737150899,
+            "input2": 271255322
+          },
+          "originalId": "0f2896ed-36e9-4555-88ed-64272ded813f_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "AddNode"
+        },
+        {
+          "extras": {
+            "value": 1
+          },
+          "id": 271255322,
+          "input_ids": {},
+          "originalId": "0f2896ed-36e9-4555-88ed-64272ded813f/input2.control_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "ControlNode"
+        },
+        {
+          "extras": {
+            "value": 2
+          },
+          "id": 4165102704,
+          "input_ids": {},
+          "originalId": "bbb9fb2f-835e-4e64-be62-c01d25d049a3_for_bccd0472-474e-4baa-96ea-8cc6cd8620cc_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "ConstantNode"
+        },
+        {
+          "extras": {
+            "value": 2
+          },
+          "id": 1359563447,
+          "input_ids": {},
+          "originalId": "e8356493-bffc-4bd5-aca3-dcb35ac2c732/input2.control_for_bccd0472-474e-4baa-96ea-8cc6cd8620cc_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "ControlNode"
+        },
+        {
+          "extras": {
+            "value": 1
+          },
+          "id": 337304468,
+          "input_ids": {},
+          "originalId": "69355e8f-9f2a-426e-b1cf-ec9fa890b536/input2.control_for_bccd0472-474e-4baa-96ea-8cc6cd8620cc_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "ControlNode"
+        },
+        {
+          "extras": {},
+          "id": 3511764516,
+          "input_ids": {
+            "input1": 1074405340,
+            "input2": 861563420
+          },
+          "originalId": "6740b4a3-b0ac-44d3-ba58-bb1976573f51_for_c0b45f63-5906-4cb3-8dfc-a6e189616886_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "MultiplyNode"
+        },
+        {
+          "extras": {},
+          "id": 1074405340,
+          "input_ids": {
+            "input1": 1583236568,
+            "input2": 559693140
+          },
+          "originalId": "2087be16-8f4f-452c-af47-77b8b5f0eb14_for_c0b45f63-5906-4cb3-8dfc-a6e189616886_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "SubtractNode"
+        },
+        {
+          "extras": {},
+          "id": 861563420,
+          "input_ids": {
+            "input": 4201409859
+          },
+          "originalId": "5ecc4a43-b6e7-48d5-8f4f-262854b4a2c2_for_c0b45f63-5906-4cb3-8dfc-a6e189616886_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "SineNode"
+        },
+        {
+          "extras": {},
+          "id": 917396648,
+          "input_ids": {
+            "input1": 134256176,
+            "input2": 3181340016
+          },
+          "originalId": "847f814a-5a7b-4e56-9eac-576951b6a75a_for_2d16bdf2-f6fd-4ccc-a54d-7e67083f89b9_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "MultiplyNode"
+        },
+        {
+          "extras": {},
+          "id": 134256176,
+          "input_ids": {
+            "input1": 2500864852,
+            "input2": 4144167968
+          },
+          "originalId": "aea1c5c0-eca2-43d0-89cb-f0b23b35224e_for_2d16bdf2-f6fd-4ccc-a54d-7e67083f89b9_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "SubtractNode"
+        },
+        {
+          "extras": {},
+          "id": 2500864852,
+          "input_ids": {
+            "input1": 3492586792,
+            "input2": 3374878004
+          },
+          "originalId": "e8506730-798b-4467-84e8-6da2310799fb_for_c1958069-63e9-47df-aa1c-cbc1d7aa0d48_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "AddNode"
+        },
+        {
+          "extras": {},
+          "id": 3492586792,
+          "input_ids": {
+            "input1": 639516748,
+            "input2": 1531013588
+          },
+          "originalId": "aa153eb4-2f84-4c6c-b8e1-cd51d1e861f9_for_c1958069-63e9-47df-aa1c-cbc1d7aa0d48_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "MultiplyNode"
+        },
+        {
+          "extras": {},
+          "id": 639516748,
+          "input_ids": {
+            "input1": 1092683028,
+            "input2": 1062958919
+          },
+          "originalId": "6a01158f-4b4d-47c3-977d-e4a6f986b5ef_for_c1958069-63e9-47df-aa1c-cbc1d7aa0d48_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "SubtractNode"
+        },
+        {
+          "extras": {},
+          "id": 1531013588,
+          "input_ids": {
+            "input": 1346522108
+          },
+          "originalId": "8e0bdd62-ec7c-47d9-addc-8e1c61a2574a_for_c1958069-63e9-47df-aa1c-cbc1d7aa0d48_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "CosineNode"
+        },
+        {
+          "extras": {},
+          "id": 1346522108,
+          "input_ids": {
+            "input1": 3403223875,
+            "input2": 599008420
+          },
+          "originalId": "69355e8f-9f2a-426e-b1cf-ec9fa890b536_for_082d0afd-632c-47af-bda9-1444f69215ce_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "SubtractNode"
+        },
+        {
+          "extras": {},
+          "id": 3403223875,
+          "input_ids": {
+            "input1": 1345347723,
+            "input2": 2335999724
+          },
+          "originalId": "e8356493-bffc-4bd5-aca3-dcb35ac2c732_for_082d0afd-632c-47af-bda9-1444f69215ce_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "MultiplyNode"
+        },
+        {
+          "extras": {},
+          "id": 1345347723,
+          "input_ids": {
+            "value": 3637958828
+          },
+          "originalId": "33ff3ebc-4e7d-40cf-a826-d523b23eebef_for_082d0afd-632c-47af-bda9-1444f69215ce_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "RandomFromValueNode"
+        },
+        {
+          "extras": {},
+          "id": 3637958828,
+          "input_ids": {
+            "input1": 1062958919,
+            "input2": 56675605
+          },
+          "originalId": "271c4bae-a07a-4d3c-9d6c-6607701bdf34_for_082d0afd-632c-47af-bda9-1444f69215ce_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "AddNode"
+        },
+        {
+          "extras": {},
+          "id": 56675605,
+          "input_ids": {
+            "input1": 559693140,
+            "input2": 2006994176
+          },
+          "originalId": "1a7849f5-7fae-4faa-9a4d-cb31dfec35c8_for_082d0afd-632c-47af-bda9-1444f69215ce_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "MultiplyNode"
+        },
+        {
+          "extras": {
+            "value": 2
+          },
+          "id": 2006994176,
+          "input_ids": {},
+          "originalId": "bbb9fb2f-835e-4e64-be62-c01d25d049a3_for_082d0afd-632c-47af-bda9-1444f69215ce_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "ConstantNode"
+        },
+        {
+          "extras": {
+            "value": 2
+          },
+          "id": 2335999724,
+          "input_ids": {},
+          "originalId": "e8356493-bffc-4bd5-aca3-dcb35ac2c732/input2.control_for_082d0afd-632c-47af-bda9-1444f69215ce_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "ControlNode"
+        },
+        {
+          "extras": {
+            "value": 1
+          },
+          "id": 599008420,
+          "input_ids": {},
+          "originalId": "69355e8f-9f2a-426e-b1cf-ec9fa890b536/input2.control_for_082d0afd-632c-47af-bda9-1444f69215ce_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "ControlNode"
+        },
+        {
+          "extras": {},
+          "id": 3374878004,
+          "input_ids": {
+            "input1": 3422413884,
+            "input2": 1956776028
+          },
+          "originalId": "6740b4a3-b0ac-44d3-ba58-bb1976573f51_for_c1958069-63e9-47df-aa1c-cbc1d7aa0d48_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "MultiplyNode"
+        },
+        {
+          "extras": {},
+          "id": 3422413884,
+          "input_ids": {
+            "input1": 1583236568,
+            "input2": 559693140
+          },
+          "originalId": "2087be16-8f4f-452c-af47-77b8b5f0eb14_for_c1958069-63e9-47df-aa1c-cbc1d7aa0d48_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "SubtractNode"
+        },
+        {
+          "extras": {},
+          "id": 1956776028,
+          "input_ids": {
+            "input": 1346522108
+          },
+          "originalId": "5ecc4a43-b6e7-48d5-8f4f-262854b4a2c2_for_c1958069-63e9-47df-aa1c-cbc1d7aa0d48_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "SineNode"
+        },
+        {
+          "extras": {},
+          "id": 2505857327,
+          "input_ids": {
+            "input1": 819771835,
+            "input2": 2181705013
+          },
+          "originalId": "38a9b7da-18ce-434b-96b4-a8dbf045ee30_for_3a714fac-7dd7-4196-b926-c3277ac22a45_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "MultiplyNode"
+        },
+        {
+          "extras": {},
+          "id": 819771835,
+          "input_ids": {
+            "input1": 1030139460,
+            "input2": 2679872236
+          },
+          "originalId": "ea255720-5e13-4324-8f4d-cc8a7db37cd5_for_3a714fac-7dd7-4196-b926-c3277ac22a45_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "MultiplyNode"
+        },
+        {
+          "extras": {},
+          "id": 1030139460,
+          "input_ids": {
+            "input1": 2679872236,
+            "input2": 2679872236
+          },
+          "originalId": "7e19039f-9888-4549-abf6-91d56e047f19_for_3a714fac-7dd7-4196-b926-c3277ac22a45_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "MultiplyNode"
+        },
+        {
+          "extras": {},
+          "id": 2679872236,
+          "input_ids": {
+            "input1": 1583236568,
+            "input2": 3737150899
+          },
+          "originalId": "550725e6-5ed1-4fda-bb70-73790a84b923_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "SubtractNode"
+        },
+        {
+          "extras": {},
+          "id": 2181705013,
+          "input_ids": {
+            "input1": 710999785,
+            "input2": 619546152
+          },
+          "originalId": "ac059d54-0bd0-4c28-b023-2e4979cd4f9b_for_3a714fac-7dd7-4196-b926-c3277ac22a45_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "AddNode"
+        },
+        {
+          "extras": {},
+          "id": 710999785,
+          "input_ids": {
+            "input1": 557086516,
+            "input2": 2679872236
+          },
+          "originalId": "da2d6d75-e15d-4bf7-9827-954d7bd5d52b_for_3a714fac-7dd7-4196-b926-c3277ac22a45_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "MultiplyNode"
+        },
+        {
+          "extras": {},
+          "id": 557086516,
+          "input_ids": {
+            "input1": 2506171400,
+            "input2": 1837670123
+          },
+          "originalId": "34da7915-c9a8-415a-be21-82ea631569f8_for_3a714fac-7dd7-4196-b926-c3277ac22a45_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "SubtractNode"
+        },
+        {
+          "extras": {},
+          "id": 2506171400,
+          "input_ids": {
+            "input1": 2679872236,
+            "input2": 1425165324
+          },
+          "originalId": "329fae48-3bbb-45ee-8220-335f6647a9bc_for_3a714fac-7dd7-4196-b926-c3277ac22a45_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "MultiplyNode"
+        },
+        {
+          "extras": {
+            "value": 6
+          },
+          "id": 1425165324,
+          "input_ids": {},
+          "originalId": "99abaf0d-f9d1-4dd1-9c08-317ecf839fe9_for_3a714fac-7dd7-4196-b926-c3277ac22a45_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "ConstantNode"
+        },
+        {
+          "extras": {
+            "value": 15
+          },
+          "id": 1837670123,
+          "input_ids": {},
+          "originalId": "b616acce-4a25-42d8-ae4d-f0f672217e59_for_3a714fac-7dd7-4196-b926-c3277ac22a45_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "ConstantNode"
+        },
+        {
+          "extras": {
+            "value": 10
+          },
+          "id": 619546152,
+          "input_ids": {},
+          "originalId": "94dfdbd8-efeb-4a70-a071-b366d2d4007a_for_3a714fac-7dd7-4196-b926-c3277ac22a45_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "ConstantNode"
+        },
+        {
+          "extras": {
+            "value": 2
+          },
+          "id": 1521395905,
+          "input_ids": {},
+          "originalId": "630ab321-66ae-4e19-b520-753e61d3041b/input2.control_for_67a907ac-340b-435d-85d2-4526bbe1baf9",
+          "type": "ControlNode"
+        },
+        {
+          "extras": {},
+          "id": 2817724076,
+          "input_ids": {
+            "attack": 3760328932,
+            "decay": 3545028256,
+            "release": 2333356600,
+            "sustain": 3248532816
+          },
+          "originalId": "1ed4a635-d8cf-40b6-a23a-55e53cb63609",
+          "type": "EnvelopeNode"
         },
         {
           "extras": {
@@ -242,6 +1219,7 @@
           },
           "id": 3760328932,
           "input_ids": {},
+          "originalId": "1ed4a635-d8cf-40b6-a23a-55e53cb63609/attack.control",
           "type": "ControlNode"
         },
         {
@@ -250,6 +1228,7 @@
           },
           "id": 3545028256,
           "input_ids": {},
+          "originalId": "1ed4a635-d8cf-40b6-a23a-55e53cb63609/decay.control",
           "type": "ControlNode"
         },
         {
@@ -258,6 +1237,7 @@
           },
           "id": 3248532816,
           "input_ids": {},
+          "originalId": "1ed4a635-d8cf-40b6-a23a-55e53cb63609/sustain.control",
           "type": "ControlNode"
         },
         {
@@ -266,740 +1246,30 @@
           },
           "id": 2333356600,
           "input_ids": {},
-          "type": "ControlNode"
-        },
-        {
-          "extras": {
-            "value": 2
-          },
-          "id": 4229535184,
-          "input_ids": {},
+          "originalId": "1ed4a635-d8cf-40b6-a23a-55e53cb63609/release.control",
           "type": "ControlNode"
         }
       ]
     },
     {
       "id": 2225394580,
-      "nodes": [
-        {
-          "extras": {
-            "default": 1,
-            "max": 2,
-            "min": 0,
-            "name": 4245442696
-          },
-          "id": 3080815384,
-          "input_ids": {},
-          "type": "InputNode"
-        },
-        {
-          "extras": {
-            "default": 1,
-            "max": 2,
-            "min": 0,
-            "name": 4228665076
-          },
-          "id": 3025106600,
-          "input_ids": {},
-          "type": "InputNode"
-        },
-        {
-          "extras": {},
-          "id": 4245815352,
-          "input_ids": {
-            "input": 3080815384
-          },
-          "type": "FloorNode"
-        },
-        {
-          "extras": {},
-          "id": 1019892548,
-          "input_ids": {
-            "input": 3025106600
-          },
-          "type": "FloorNode"
-        },
-        {
-          "extras": {},
-          "id": 229397832,
-          "input_ids": {
-            "input1": 4245815352,
-            "input2": 2244030048
-          },
-          "type": "AddNode"
-        },
-        {
-          "extras": {},
-          "id": 3085161728,
-          "input_ids": {
-            "input1": 1019892548,
-            "input2": 4163958020
-          },
-          "type": "AddNode"
-        },
-        {
-          "extras": {},
-          "id": 894976072,
-          "input_ids": {
-            "input1": 3080815384,
-            "input2": 4245815352
-          },
-          "type": "SubtractNode"
-        },
-        {
-          "extras": {},
-          "id": 2222341,
-          "input_ids": {
-            "input1": 3025106600,
-            "input2": 1019892548
-          },
-          "type": "SubtractNode"
-        },
-        {
-          "extras": {
-            "input_target_ids": {
-              "2215386570": 1019892548,
-              "3498867377": 4245815352
-            },
-            "target_module_id": 3538703232
-          },
-          "id": 1068503828,
-          "input_ids": {},
-          "type": "ModuleNode"
-        },
-        {
-          "extras": {
-            "input_target_ids": {
-              "2215386570": 1019892548,
-              "3498867377": 229397832
-            },
-            "target_module_id": 3538703232
-          },
-          "id": 4269115996,
-          "input_ids": {},
-          "type": "ModuleNode"
-        },
-        {
-          "extras": {
-            "input_target_ids": {
-              "2215386570": 3085161728,
-              "3498867377": 4245815352
-            },
-            "target_module_id": 3538703232
-          },
-          "id": 3456859232,
-          "input_ids": {},
-          "type": "ModuleNode"
-        },
-        {
-          "extras": {
-            "input_target_ids": {
-              "2215386570": 3085161728,
-              "3498867377": 229397832
-            },
-            "target_module_id": 3538703232
-          },
-          "id": 316479860,
-          "input_ids": {},
-          "type": "ModuleNode"
-        },
-        {
-          "extras": {
-            "input_target_ids": {
-              "4113640303": 2222341
-            },
-            "target_module_id": 3426696400
-          },
-          "id": 876436224,
-          "input_ids": {},
-          "type": "ModuleNode"
-        },
-        {
-          "extras": {
-            "input_target_ids": {
-              "4113640303": 894976072
-            },
-            "target_module_id": 3426696400
-          },
-          "id": 2713193506,
-          "input_ids": {},
-          "type": "ModuleNode"
-        },
-        {
-          "extras": {
-            "input_target_ids": {
-              "1198206000": 3080815384,
-              "1518350512": 1068503828,
-              "3128921744": 1019892548,
-              "3197070284": 3025106600,
-              "3710855111": 4245815352
-            },
-            "target_module_id": 3329015966
-          },
-          "id": 3805151216,
-          "input_ids": {},
-          "type": "ModuleNode"
-        },
-        {
-          "extras": {
-            "input_target_ids": {
-              "1198206000": 3080815384,
-              "1518350512": 4269115996,
-              "3128921744": 1019892548,
-              "3197070284": 3025106600,
-              "3710855111": 229397832
-            },
-            "target_module_id": 3329015966
-          },
-          "id": 782113996,
-          "input_ids": {},
-          "type": "ModuleNode"
-        },
-        {
-          "extras": {
-            "input_target_ids": {
-              "1198206000": 3080815384,
-              "1518350512": 3456859232,
-              "3128921744": 3085161728,
-              "3197070284": 3025106600,
-              "3710855111": 4245815352
-            },
-            "target_module_id": 3329015966
-          },
-          "id": 433710192,
-          "input_ids": {},
-          "type": "ModuleNode"
-        },
-        {
-          "extras": {
-            "input_target_ids": {
-              "946927888": 3805151216,
-              "2309469208": 782113996,
-              "2588425912": 2713193506
-            },
-            "target_module_id": 3695147102
-          },
-          "id": 3373691768,
-          "input_ids": {},
-          "type": "ModuleNode"
-        },
-        {
-          "extras": {
-            "input_target_ids": {
-              "1198206000": 3080815384,
-              "1518350512": 316479860,
-              "3128921744": 3085161728,
-              "3197070284": 3025106600,
-              "3710855111": 229397832
-            },
-            "target_module_id": 3329015966
-          },
-          "id": 3096994128,
-          "input_ids": {},
-          "type": "ModuleNode"
-        },
-        {
-          "extras": {
-            "input_target_ids": {
-              "946927888": 433710192,
-              "2309469208": 3096994128,
-              "2588425912": 2713193506
-            },
-            "target_module_id": 3695147102
-          },
-          "id": 821276024,
-          "input_ids": {},
-          "type": "ModuleNode"
-        },
-        {
-          "extras": {
-            "input_target_ids": {
-              "946927888": 3373691768,
-              "2309469208": 821276024,
-              "2588425912": 876436224
-            },
-            "target_module_id": 3695147102
-          },
-          "id": 2546679024,
-          "input_ids": {},
-          "type": "ModuleNode"
-        },
-        {
-          "extras": {
-            "channel": 0
-          },
-          "id": 1235254776,
-          "input_ids": {
-            "input": 3833706792
-          },
-          "type": "OutputNode"
-        },
-        {
-          "extras": {},
-          "id": 3833706792,
-          "input_ids": {
-            "input1": 2546679024,
-            "input2": 2683296312
-          },
-          "type": "MultiplyNode"
-        },
-        {
-          "extras": {
-            "value": 1.41421356237
-          },
-          "id": 2904281040,
-          "input_ids": {},
-          "type": "ConstantNode"
-        },
-        {
-          "extras": {
-            "value": 1
-          },
-          "id": 2244030048,
-          "input_ids": {},
-          "type": "ControlNode"
-        },
-        {
-          "extras": {
-            "value": 1
-          },
-          "id": 4163958020,
-          "input_ids": {},
-          "type": "ControlNode"
-        },
-        {
-          "extras": {
-            "value": 2
-          },
-          "id": 2683296312,
-          "input_ids": {},
-          "type": "ControlNode"
-        }
-      ]
+      "nodes": []
     },
     {
       "id": 3426696400,
-      "nodes": [
-        {
-          "extras": {
-            "default": 1,
-            "max": 2,
-            "min": 0,
-            "name": 2518413108
-          },
-          "id": 4113640303,
-          "input_ids": {},
-          "type": "InputNode"
-        },
-        {
-          "extras": {
-            "channel": 0
-          },
-          "id": 937057644,
-          "input_ids": {
-            "input": 20901352
-          },
-          "type": "OutputNode"
-        },
-        {
-          "extras": {},
-          "id": 2792522624,
-          "input_ids": {
-            "input1": 4113640303,
-            "input2": 4113640303
-          },
-          "type": "MultiplyNode"
-        },
-        {
-          "extras": {},
-          "id": 958600712,
-          "input_ids": {
-            "input1": 2792522624,
-            "input2": 4113640303
-          },
-          "type": "MultiplyNode"
-        },
-        {
-          "extras": {},
-          "id": 2951786824,
-          "input_ids": {
-            "input1": 4113640303,
-            "input2": 600756232
-          },
-          "type": "MultiplyNode"
-        },
-        {
-          "extras": {
-            "value": 6
-          },
-          "id": 600756232,
-          "input_ids": {},
-          "type": "ConstantNode"
-        },
-        {
-          "extras": {},
-          "id": 96689400,
-          "input_ids": {
-            "input1": 2951786824,
-            "input2": 270830808
-          },
-          "type": "SubtractNode"
-        },
-        {
-          "extras": {
-            "value": 15
-          },
-          "id": 270830808,
-          "input_ids": {},
-          "type": "ConstantNode"
-        },
-        {
-          "extras": {},
-          "id": 2663731464,
-          "input_ids": {
-            "input1": 96689400,
-            "input2": 4113640303
-          },
-          "type": "MultiplyNode"
-        },
-        {
-          "extras": {},
-          "id": 3101868528,
-          "input_ids": {
-            "input1": 2663731464,
-            "input2": 1044187400
-          },
-          "type": "AddNode"
-        },
-        {
-          "extras": {
-            "value": 10
-          },
-          "id": 1044187400,
-          "input_ids": {},
-          "type": "ConstantNode"
-        },
-        {
-          "extras": {},
-          "id": 20901352,
-          "input_ids": {
-            "input1": 958600712,
-            "input2": 3101868528
-          },
-          "type": "MultiplyNode"
-        }
-      ]
+      "nodes": []
     },
     {
       "id": 3329015966,
-      "nodes": [
-        {
-          "extras": {
-            "default": 1,
-            "max": 2,
-            "min": 0,
-            "name": 1396217588
-          },
-          "id": 3710855111,
-          "input_ids": {},
-          "type": "InputNode"
-        },
-        {
-          "extras": {
-            "default": 1,
-            "max": 2,
-            "min": 0,
-            "name": 1412995207
-          },
-          "id": 3128921744,
-          "input_ids": {},
-          "type": "InputNode"
-        },
-        {
-          "extras": {
-            "default": 1,
-            "max": 2,
-            "min": 0,
-            "name": 4245442696
-          },
-          "id": 1198206000,
-          "input_ids": {},
-          "type": "InputNode"
-        },
-        {
-          "extras": {
-            "default": 1,
-            "max": 2,
-            "min": 0,
-            "name": 4228665076
-          },
-          "id": 3197070284,
-          "input_ids": {},
-          "type": "InputNode"
-        },
-        {
-          "extras": {
-            "default": 1,
-            "max": 2,
-            "min": 0,
-            "name": 4008263044
-          },
-          "id": 1518350512,
-          "input_ids": {},
-          "type": "InputNode"
-        },
-        {
-          "extras": {},
-          "id": 3586723624,
-          "input_ids": {
-            "input1": 1198206000,
-            "input2": 3710855111
-          },
-          "type": "SubtractNode"
-        },
-        {
-          "extras": {},
-          "id": 263532364,
-          "input_ids": {
-            "input1": 3197070284,
-            "input2": 3128921744
-          },
-          "type": "SubtractNode"
-        },
-        {
-          "extras": {},
-          "id": 2129980747,
-          "input_ids": {
-            "input": 1518350512
-          },
-          "type": "CosineNode"
-        },
-        {
-          "extras": {},
-          "id": 3365141240,
-          "input_ids": {
-            "input": 1518350512
-          },
-          "type": "SineNode"
-        },
-        {
-          "extras": {},
-          "id": 1810505932,
-          "input_ids": {
-            "input1": 263532364,
-            "input2": 3365141240
-          },
-          "type": "MultiplyNode"
-        },
-        {
-          "extras": {},
-          "id": 3596139100,
-          "input_ids": {
-            "input1": 3586723624,
-            "input2": 2129980747
-          },
-          "type": "MultiplyNode"
-        },
-        {
-          "extras": {},
-          "id": 3176223622,
-          "input_ids": {
-            "input1": 3596139100,
-            "input2": 1810505932
-          },
-          "type": "AddNode"
-        },
-        {
-          "extras": {
-            "channel": 0
-          },
-          "id": 594590680,
-          "input_ids": {
-            "input": 3176223622
-          },
-          "type": "OutputNode"
-        }
-      ]
+      "nodes": []
     },
     {
       "id": 3538703232,
-      "nodes": [
-        {
-          "extras": {
-            "channel": 0
-          },
-          "id": 2359369208,
-          "input_ids": {
-            "input": 1714391682
-          },
-          "type": "OutputNode"
-        },
-        {
-          "extras": {},
-          "id": 2216022716,
-          "input_ids": {
-            "value": 3629977524
-          },
-          "type": "RandomFromValueNode"
-        },
-        {
-          "extras": {
-            "default": 1,
-            "max": 2,
-            "min": 0,
-            "name": 4245442696
-          },
-          "id": 3498867377,
-          "input_ids": {},
-          "type": "InputNode"
-        },
-        {
-          "extras": {},
-          "id": 3629977524,
-          "input_ids": {
-            "input1": 3498867377,
-            "input2": 3329441932
-          },
-          "type": "AddNode"
-        },
-        {
-          "extras": {},
-          "id": 3329441932,
-          "input_ids": {
-            "input1": 2215386570,
-            "input2": 310650633
-          },
-          "type": "MultiplyNode"
-        },
-        {
-          "extras": {
-            "default": 1,
-            "max": 2,
-            "min": 0,
-            "name": 4228665076
-          },
-          "id": 2215386570,
-          "input_ids": {},
-          "type": "InputNode"
-        },
-        {
-          "extras": {
-            "value": 2
-          },
-          "id": 310650633,
-          "input_ids": {},
-          "type": "ConstantNode"
-        },
-        {
-          "extras": {},
-          "id": 1714391682,
-          "input_ids": {
-            "input1": 2670979524,
-            "input2": 26971000
-          },
-          "type": "SubtractNode"
-        },
-        {
-          "extras": {},
-          "id": 2670979524,
-          "input_ids": {
-            "input1": 2216022716,
-            "input2": 1550228044
-          },
-          "type": "MultiplyNode"
-        },
-        {
-          "extras": {
-            "value": 1
-          },
-          "id": 26971000,
-          "input_ids": {},
-          "type": "ControlNode"
-        },
-        {
-          "extras": {
-            "value": 2
-          },
-          "id": 1550228044,
-          "input_ids": {},
-          "type": "ControlNode"
-        }
-      ]
+      "nodes": []
     },
     {
       "id": 3695147102,
-      "nodes": [
-        {
-          "extras": {
-            "channel": 0
-          },
-          "id": 198875416,
-          "input_ids": {
-            "input": 1628385004
-          },
-          "type": "OutputNode"
-        },
-        {
-          "extras": {},
-          "id": 1628385004,
-          "input_ids": {
-            "input1": 946927888,
-            "input2": 2304054996
-          },
-          "type": "AddNode"
-        },
-        {
-          "extras": {
-            "default": 1,
-            "max": 2,
-            "min": 0,
-            "name": 3826002220
-          },
-          "id": 946927888,
-          "input_ids": {},
-          "type": "InputNode"
-        },
-        {
-          "extras": {},
-          "id": 2304054996,
-          "input_ids": {
-            "input1": 2351976612,
-            "input2": 2588425912
-          },
-          "type": "MultiplyNode"
-        },
-        {
-          "extras": {
-            "default": 1,
-            "max": 2,
-            "min": 0,
-            "name": 3876335076
-          },
-          "id": 2309469208,
-          "input_ids": {},
-          "type": "InputNode"
-        },
-        {
-          "extras": {},
-          "id": 2351976612,
-          "input_ids": {
-            "input1": 2309469208,
-            "input2": 946927888
-          },
-          "type": "SubtractNode"
-        },
-        {
-          "extras": {
-            "default": 1,
-            "max": 2,
-            "min": 0,
-            "name": 4044111268
-          },
-          "id": 2588425912,
-          "input_ids": {},
-          "type": "InputNode"
-        }
-      ]
+      "nodes": []
     }
   ]
 }
