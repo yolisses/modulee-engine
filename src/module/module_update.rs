@@ -65,6 +65,11 @@ impl Module {
         let inner_node_indexes = get_indexes_map(&self.nodes);
         self.update_input_map(outer_node_indexes, input_target_ids, &inner_node_indexes);
 
+        self.output_node_index = self
+            .nodes
+            .iter()
+            .position(|node| matches!(node, Node::OutputNode(_)));
+
         for node in &mut self.nodes {
             node.set_input_indexes(&inner_node_indexes);
         }

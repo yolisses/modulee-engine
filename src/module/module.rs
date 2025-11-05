@@ -23,6 +23,9 @@ pub struct Module {
     /// node from an outer module index.
     #[serde(skip)]
     pub(crate) input_map: VecMap<usize, usize>,
+
+    #[serde(skip)]
+    pub(crate) output_node_index: Option<usize>,
 }
 
 declare_get_id! {Module}
@@ -35,12 +38,16 @@ impl PartialEq for Module {
 
 impl Module {
     pub(crate) fn get_output_value(&self) -> f32 {
-        for node in self.nodes.iter() {
+        if let Some(output_node_index) = self.output_node_index {
+            let node = &self.nodes[output_node_index];
             if let Node::OutputNode(node) = node {
-                return node.get_value();
-            };
+                node.get_value()
+            } else {
+                0.
+            }
+        } else {
+            0.
         }
-        0.
     }
 
     pub(crate) fn update_input_nodes_values(&mut self, node_values: &[f32]) {
