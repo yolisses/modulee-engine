@@ -1,6 +1,6 @@
 use crate::{
-    declare_get_id, node::Node, node_trait::NodeTrait,
-    set_note_trait::SetNoteTrait, set_sample_rate_trait::SetSampleRateTrait,
+    declare_get_id, node::Node, node_trait::NodeTrait, set_note_trait::SetNoteTrait,
+    set_sample_rate_trait::SetSampleRateTrait,
 };
 use serde::Deserialize;
 
@@ -45,7 +45,9 @@ impl Module {
     pub(crate) fn process(&mut self, external_node_values: &[f32]) {
         for (index, node) in self.nodes.iter_mut().enumerate() {
             let value = node.process(&self.node_values, external_node_values);
-            self.node_values[index] = value;
+            unsafe {
+                *self.node_values.get_unchecked_mut(index) = value;
+            }
         }
     }
 
