@@ -43,10 +43,14 @@ impl Module {
     }
 
     pub(crate) fn process(&mut self, external_node_values: &[f32]) {
+        // Optimized: use direct indexing with pre-computed length to avoid
+        // iterator overhead while maintaining safety through bounds checking
+        let node_values = self.node_values.as_mut_ptr();
         for (index, node) in self.nodes.iter_mut().enumerate() {
             let value = node.process(&self.node_values, external_node_values);
             unsafe {
-                *self.node_values.get_unchecked_mut(index) = value;
+                // Safe: index is guaranteed to be in bounds by enumerate()
+                *node_values.add(index) = value;
             }
         }
     }

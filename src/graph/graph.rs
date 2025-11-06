@@ -4,7 +4,6 @@ use crate::{
 
 #[derive(Debug, PartialEq)]
 pub struct Graph {
-    empty_vector: Vec<f32>,
     pub(crate) main_module_instances: Option<[Module; 2]>,
     pub(crate) sample_rate: f32,
     voices_cleaner: VoicesCleaner,
@@ -13,7 +12,6 @@ pub struct Graph {
 impl Graph {
     pub fn new(sample_rate: f32) -> Self {
         Self {
-            empty_vector: Default::default(),
             main_module_instances: Default::default(),
             sample_rate,
             voices_cleaner: Default::default(),
@@ -22,9 +20,13 @@ impl Graph {
 
     pub fn process(&mut self) {
         if let Some(main_module_instances) = &mut self.main_module_instances {
-            main_module_instances[0].process(&self.empty_vector);
+            // Use empty slice directly instead of Vec reference for better performance
+            let empty: &[f32] = &[];
+
+            // Process both modules
+            main_module_instances[0].process(empty);
             self.voices_cleaner.process(&mut main_module_instances[0]);
-            main_module_instances[1].process(&self.empty_vector);
+            main_module_instances[1].process(empty);
             self.voices_cleaner.process(&mut main_module_instances[1]);
         }
     }
